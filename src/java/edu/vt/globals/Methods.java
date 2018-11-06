@@ -1,7 +1,4 @@
-/*
- * Created by Thomas Coleman on 2018.10.02
- * Copyright © 2018 Thomas Coleman. All rights reserved.
- */
+
 package edu.vt.globals;
 
 import java.util.Map;
