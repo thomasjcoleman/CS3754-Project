@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Thomas Coleman on 2018.10.30
+Copyright © 2018 Thomas Coleman. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+  <ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+      <h:outputText value="Sign In"></h:outputText>
+    </ui:define>
+
+    <ui:define name="editableContent">
+      <div align="center" style="width:70%; margin:0 auto;">
+
+        <h1>Sign In</h1>
+        <br />
+
+        <h:form>
+          <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+
+            <h:outputLabel value="Username:" for="username" />
+            <p:inputText id="username" value="#{loginManager.username}" required="true" class="inputTextFieldShort"
+                         requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username" >
+            </p:inputText>
+
+            <h:outputLabel value="Password:" for="password" />
+            <p:password id="password" value="#{loginManager.password}" feedback="false" class="inputTextFieldShort" >
+            </p:password>
+
+          </p:panelGrid>
+
+          <br/>
+          <br/>
+
+          <!-- Buttons at bottom; sign in, create account, forgot password, cancel. -->
+          <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser()}" 
+                           ajax="false" icon="fas fa-sign-in-alt" />
+          &nbsp;
+          <p:button outcome="/userAccount/CreateAccount" value="&nbsp;Create an Account" icon="fas fa-user-plus"  />
+
+          &nbsp;
+          <p:button outcome="/userPasswordChange/EnterUsername" value="Forgot Password" icon="fas fa-key"  />
+
+          &nbsp;
+          <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+        </h:form>
+
+      </div>
+      <br/><br/><br/>
+    </ui:define>
+  </ui:composition>
+</html>

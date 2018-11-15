@@ -213,6 +213,13 @@ Social Media Buttons Spin Animated
     width: 400px;
 }
 
+/* Style the Google map display */
+.map {
+    margin: 0 auto;
+    height: 600px;
+    width: 80%;
+}
+
 
 /* 
 Proportionately scale image to show on mobile devices and smaller browser windows.

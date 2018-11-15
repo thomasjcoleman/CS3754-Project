@@ -48,6 +48,10 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                   <h:link outcome="/index" class="standardText">
                     <i class="fas fa-home"></i>&nbsp;Home
                   </h:link>
+                  
+                  <h:link outcome="/findTrails/Map" class="standardText">
+                    <i class="fas fa-map-marker-alt"></i>&nbsp;Map
+                  </h:link>
 
                   <h:link outcome="/userAccount/Profile" class="standardText">
                     <p:graphicImage cache="false" class="smallProfilePhoto" 
@@ -63,6 +67,10 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                 <c:if test="#{userController.isLoggedIn() == false}">
                   <h:link outcome="/index" class="standardText">
                     <i class="fas fa-home"></i>&nbsp;Home
+                  </h:link>
+                  
+                  <h:link outcome="/findTrails/Map" class="standardText">
+                    <i class="fas fa-map-marker-alt"></i>&nbsp;Map
                   </h:link>
 
                   <h:link outcome="/SignIn" class="standardText">
