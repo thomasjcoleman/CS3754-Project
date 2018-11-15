@@ -1,4 +1,7 @@
-
+/*
+ * Created by Thomas Coleman 2018.06.15
+ * Copyright © 2018 Thomas Coleman. All rights reserved.
+ */
 package edu.vt.FacadeBeans;
 
 import edu.vt.EntityBeans.User;
@@ -9,7 +12,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserFacade extends AbstractFacade<User> {
 
-  @PersistenceContext(unitName = "Videos-ColemanPU")
+  @PersistenceContext(unitName = "Trailblazer-Team8PU")
   private EntityManager em;
 
   @Override

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Thomas Coleman on 2018.10.30
+Copyright © 2018 Thomas Coleman. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+  <!-- This template handles the page header. -->
+  <ui:composition>
+    <h:form>
+      <table border="0" cellspacing="0" cellpadding="10" width="100%">
+        <tr>
+          <!-- Left: logo -->
+          <td align="left" valign="middle" style="width:268px;">
+            <h:link outcome="/index">
+              <img src="#{resource['images:TrailblazerLogo.png']}"
+                   style="max-width:100%; height:auto; float:left; padding-left:10px; border:none;"
+                   alt="Trailblazer Logo" />
+            </h:link>
+          </td>
+
+          <!-- Center: Welcome User -->
+          <td align="center" valign="middle">
+            <!-- Welcome the user if signed in -->
+            <c:choose>
+              <c:when test="#{userController.isLoggedIn()}"> 
+                <div class="helloText">Hello, #{userController.loggedInUser.firstName}</div>
+              </c:when> 
+              <c:otherwise>
+                <h1>Hello, Guest</h1>
+              </c:otherwise>
+            </c:choose>
+          </td>
+
+          <!-- Right: Hamburger Menu Button -->
+          <td align="right" valign="middle" style="width:100px;">
+            <div tabindex="0" class="menu" style="float:right;padding-right:20px;">
+              <div class="menu-dropdown" style="right:0;">
+
+                <!-- Menu if user is logged in -->
+                <c:if test="#{userController.isLoggedIn()}">
+                  <h:link outcome="/index" class="standardText">
+                    <i class="fas fa-home"></i>&nbsp;Home
+                  </h:link>
+
+                  <h:link outcome="/userAccount/Profile" class="standardText">
+                    <p:graphicImage cache="false" class="smallProfilePhoto" 
+                                    value="#{userController.userPhoto()}"/>&nbsp;&nbsp;My Account
+                  </h:link>
+
+                  <h:commandLink action="#{userController.logout()}" class="standardText" >
+                    <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
+                  </h:commandLink>
+                </c:if>
+
+                <!-- Menu if user is ***NOT*** logged in -->
+                <c:if test="#{userController.isLoggedIn() == false}">
+                  <h:link outcome="/index" class="standardText">
+                    <i class="fas fa-home"></i>&nbsp;Home
+                  </h:link>
+
+                  <h:link outcome="/SignIn" class="standardText">
+                    <i class="fas fa-sign-in-alt"></i>&nbsp;Sign In
+                  </h:link>
+
+                  <h:link outcome="/userAccount/CreateAccount" class="standardText">
+                    <i class="fas fa-user-plus"></i>&nbsp;Create An Account
+                  </h:link>
+                </c:if>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </h:form>
+  </ui:composition>
+
+</html>

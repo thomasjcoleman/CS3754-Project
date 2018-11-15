@@ -8,15 +8,16 @@ public final class Constants {
     |             Absolute File Paths                |
     ==================================================
    */
-  public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/Coleman/DocRoot";
+  public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/tcole/OneDrive/Documents/NetBeansProjects/Trailblazer-Team8";
 
   /*
     ==================================================
     |             Relative File Paths                |
     ==================================================
    */
-  public static final String PHOTOS_RELATIVE_PATH = "/UserPhotoStorage/";
-  public static final String DEFAULT_PHOTO_RELATIVE_PATH = "/UserPhotoStorage/defaultUserPhoto.png";
+  public static final String FILES_RELATIVE_PATH = "/TrailblazerStorage/UserFileStorage/";
+  public static final String PHOTOS_RELATIVE_PATH = "/TrailblazerStorage/UserPhotoStorage/";
+  public static final String DEFAULT_PHOTO_RELATIVE_PATH = "/TrailblazerStorage/UserPhotoStorage/defaultUserPhoto.png";
 
   /* 
     ===============================================
