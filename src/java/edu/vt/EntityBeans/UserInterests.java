@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Created by Christian Dufrois on 2018.11.24
+ * Copyright © 2018 Christian Dufrois. All rights reserved.
  */
 package edu.vt.EntityBeans;
 
@@ -33,7 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
   , @NamedQuery(name = "UserInterests.findById", query = "SELECT u FROM UserInterests u WHERE u.id = :id")
   , @NamedQuery(name = "UserInterests.findByTrailname", query = "SELECT u FROM UserInterests u WHERE u.trailname = :trailname")
   , @NamedQuery(name = "UserInterests.findByInterested", query = "SELECT u FROM UserInterests u WHERE u.interested = :interested")
-  , @NamedQuery(name = "UserInterests.findByCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed")})
+  , @NamedQuery(name = "UserInterests.findByCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed")
+  , @NamedQuery(name = "UserInterests.findByUserIdAndCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed AND u.userId.id = :key")
+  , @NamedQuery(name = "UserInterests.findByUserIdAndInterested", query = "SELECT u FROM UserInterests u WHERE u.interested = :interested AND u.userId.id = :key")
+})
 public class UserInterests implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -42,15 +44,19 @@ public class UserInterests implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Integer id;
+  
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 256)
   @Column(name = "trailname")
   private String trailname;
+  
   @Column(name = "interested")
   private Boolean interested;
+  
   @Column(name = "completed")
   private Boolean completed;
+  
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   @ManyToOne
   private User userId;

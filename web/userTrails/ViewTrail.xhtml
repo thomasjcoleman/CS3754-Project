@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Christian Dufrois on 2018.11.24
+Copyright © 2018 Christian Dufrois. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ViewTrailDlg" widgetVar="TrailViewDialog" modal="true"
+                  resizable="false" appendTo="@(body)" header="#{bundle.ViewTrailTitle}">
+            <h:form id="ViewTrailForm">
+                <div align="center">
+                    <table class="viewTable" border="0" cellspacing="0" cellpadding="10" width="100%">
+                        
+                        <!-- Trail Name -->
+                        <tr>
+                            <td>
+                                <h:outputText value="#{userInteresetsController.selected.trailname}" />
+                                <br />
+                            </td>
+                        </tr>
+                        
+                        <!-- Is Completed -->
+                        <tr>
+                            <td>
+                                <h:outputText value="#{bundle.ViewTrailCompleted_title}" style="font-style: italic"/>
+                                <br />
+                                <h:outputText value="#{userInteresetsController.selected.completed}" title="#{bundle.ViewTrailCompleted_title}"/>
+                                <br />
+                            </td>
+                        </tr>
+                        
+                        <!-- Is Interested -->
+                        <tr>
+                            <td>
+                                <h:outputText value="#{bundle.ViewTrailInterested_title}" style="font-style: italic"/>
+                                <br />
+                                <h:outputText value="#{userInteresetsController.selected.interested}" title="#{bundle.ViewTrailInterested_title}"/>
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
