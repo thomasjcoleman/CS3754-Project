@@ -1,9 +1,14 @@
+/*
+ * Created by Christian Dufrois on 2018.11.24
+ * Copyright © 2018 Christian Dufrois. All rights reserved.
+ */
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.UserInterests;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.UserInterestsFacade;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,33 +28,46 @@ import javax.faces.convert.FacesConverter;
 @SessionScoped
 public class UserInterestsController implements Serializable {
 
-  @EJB
-  private edu.vt.FacadeBeans.UserInterestsFacade ejbFacade;
-  private List<UserInterests> items = null;
-  private UserInterests selected;
+    @EJB
+    private edu.vt.FacadeBeans.UserInterestsFacade ejbFacade;
 
-  public UserInterestsController() {
-  }
+    private UserInterests selected;
 
-  public UserInterests getSelected() {
-    return selected;
-  }
+    /*
+   * Manage the trails that are completed
+     */
+    private List<UserInterests> completedTrails = null;
 
-  public void setSelected(UserInterests selected) {
-    this.selected = selected;
-  }
+    /*
+   * Manage the trails that are completed
+     */
+    private List<UserInterests> interestedTrails = null;
 
-  protected void setEmbeddableKeys() {
-  }
+    public UserInterestsController() {
+    }
 
-  protected void initializeEmbeddableKey() {
-  }
+    public UserInterests getSelected() {
+        return selected;
+    }
 
-  private UserInterestsFacade getFacade() {
-    return ejbFacade;
-  }
+    public void setSelected(UserInterests selected) {
+        this.selected = selected;
+    }
 
-  public UserInterests prepareCreate() {
+    protected void setEmbeddableKeys() {
+    }
+
+    protected void initializeEmbeddableKey() {
+    }
+
+    private UserInterestsFacade getFacade() {
+        return ejbFacade;
+    }
+
+    /*
+     * If these get uncommented, make sure the correct lists are updated
+     *
+    public UserInterests prepareCreate() {
     selected = new UserInterests();
     initializeEmbeddableKey();
     return selected;
@@ -72,94 +90,102 @@ public class UserInterestsController implements Serializable {
       selected = null; // Remove selection
       items = null;    // Invalidate list of items to trigger re-query.
     }
-  }
-
-  public List<UserInterests> getItems() {
-    if (items == null) {
-      items = getFacade().findAll();
-    }
-    return items;
-  }
-
-  private void persist(PersistAction persistAction, String successMessage) {
-    if (selected != null) {
-      setEmbeddableKeys();
-      try {
-        if (persistAction != PersistAction.DELETE) {
-          getFacade().edit(selected);
-        } else {
-          getFacade().remove(selected);
+  }*/
+    public List<UserInterests> getCompletedTrails() {
+        if (completedTrails == null) {
+            int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+            completedTrails = getFacade().findCompleted(true, userPrimaryKey); // Change to findCompleted
         }
-        JsfUtil.addSuccessMessage(successMessage);
-      } catch (EJBException ex) {
-        String msg = "";
-        Throwable cause = ex.getCause();
-        if (cause != null) {
-          msg = cause.getLocalizedMessage();
+        return completedTrails;
+    }
+
+    public List<UserInterests> getInterestedTrails() {
+        if (interestedTrails == null) {
+            int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+            interestedTrails = getFacade().findInterested(true, userPrimaryKey); // Change to findInterested
         }
-        if (msg.length() > 0) {
-          JsfUtil.addErrorMessage(msg);
-        } else {
-          JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+        return interestedTrails;
+    }
+
+    private void persist(PersistAction persistAction, String successMessage) {
+        if (selected != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETE) {
+                    getFacade().edit(selected);
+                } else {
+                    getFacade().remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
         }
-      } catch (Exception ex) {
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-      }
-    }
-  }
-
-  public UserInterests getUserInterests(java.lang.Integer id) {
-    return getFacade().find(id);
-  }
-
-  public List<UserInterests> getItemsAvailableSelectMany() {
-    return getFacade().findAll();
-  }
-
-  public List<UserInterests> getItemsAvailableSelectOne() {
-    return getFacade().findAll();
-  }
-
-  @FacesConverter(forClass = UserInterests.class)
-  public static class UserInterestsControllerConverter implements Converter {
-
-    @Override
-    public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-      if (value == null || value.length() == 0) {
-        return null;
-      }
-      UserInterestsController controller = (UserInterestsController) facesContext.getApplication().getELResolver().
-              getValue(facesContext.getELContext(), null, "userInterestsController");
-      return controller.getUserInterests(getKey(value));
     }
 
-    java.lang.Integer getKey(String value) {
-      java.lang.Integer key;
-      key = Integer.valueOf(value);
-      return key;
+    public UserInterests getUserInterests(java.lang.Integer id) {
+        return getFacade().find(id);
     }
 
-    String getStringKey(java.lang.Integer value) {
-      StringBuilder sb = new StringBuilder();
-      sb.append(value);
-      return sb.toString();
+    public List<UserInterests> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
     }
 
-    @Override
-    public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-      if (object == null) {
-        return null;
-      }
-      if (object instanceof UserInterests) {
-        UserInterests o = (UserInterests) object;
-        return getStringKey(o.getId());
-      } else {
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), UserInterests.class.getName()});
-        return null;
-      }
+    public List<UserInterests> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
     }
 
-  }
+    @FacesConverter(forClass = UserInterests.class)
+    public static class UserInterestsControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            UserInterestsController controller = (UserInterestsController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "userInterestsController");
+            return controller.getUserInterests(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof UserInterests) {
+                UserInterests o = (UserInterests) object;
+                return getStringKey(o.getId());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), UserInterests.class.getName()});
+                return null;
+            }
+        }
+
+    }
 
 }
