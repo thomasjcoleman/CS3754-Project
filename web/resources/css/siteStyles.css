@@ -406,3 +406,12 @@ Skinning PrimeFaces Other UI Components
 .ui-button {
     margin-top: 10px !important;
 }
+
+/* Style the hello text used in headerTemplate */
+.helloText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    color: maroon;
+}
