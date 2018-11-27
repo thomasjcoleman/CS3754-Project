@@ -97,8 +97,10 @@ function displayAllTrails() {
       trailImage: trail.imgMedium || "../resources/images/noImage.jpg",
       trailDifficulty: trail.difficulty,
       trailRating: (trail.stars / 5) * 80,
-      trailLength: trail.length,
-      trailSummary: trail.summary
+      trailLength: trail.length || "Unspecified",
+      trailSummary: trail.summary || "No description available.",
+      trailCondition: trail.conditionStatus || "Unkonwn",
+      trailConditionDet: trail.conditionDetails || ""
     });
     marker.setMap(map);
 
@@ -115,8 +117,9 @@ function displayAllTrails() {
           "</div>" +
           "<img width='80' src='../resources/images/ratingGray.png'/><br/>" +
           "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
+          "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
         "</div></div>" +
-        trail.summary
+        this.get('trailSummary')
       );
       infoWindow.open(map, this);
     });
