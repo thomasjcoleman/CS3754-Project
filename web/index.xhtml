@@ -4,32 +4,35 @@ Created by Thomas Coleman on 2018.11.06
 Copyright © 2018 Thomas Coleman. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-  <ui:composition template="/template/siteTemplate.xhtml">
-    <ui:define name="editableContent">
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="editableContent">
 
-      <!-- Handle the image slider. -->
-      <div id="sliderFrame">
-        <div id="slider">
-          <img src="resources/images/imageSliderPhotos/photo1.png"  />
-          <img src="resources/images/imageSliderPhotos/photo2.png"  />
-          <img src="resources/images/imageSliderPhotos/photo3.png"  />
-          <img src="resources/images/imageSliderPhotos/photo4.png"  />
-          <img src="resources/images/imageSliderPhotos/photo5.png"  />
-          <img src="resources/images/imageSliderPhotos/photo6.png"  />
-          <img src="resources/images/imageSliderPhotos/photo7.png"  />
-          <img src="resources/images/imageSliderPhotos/photo8.png"  />
-          <img src="resources/images/imageSliderPhotos/photo9.png"  />
-          <img src="resources/images/imageSliderPhotos/photo10.png" />
-          <img src="resources/images/imageSliderPhotos/photo11.png" />
-          <img src="resources/images/imageSliderPhotos/photo12.png" />
-        </div>
-      </div>
-    </ui:define>
-  </ui:composition>
+            <table border="0" cellspacing="0" cellpadding="10" width="100%">
+                <tr>
+                    <td align="center" valign="middle" style="width:100px; max-height:100px">
+                        <a class="twitter-timeline" data-width="400" data-height="400" href="https://twitter.com/AmericanHiking?ref_src=twsrc%5Etfw">Tweets by AmericanHiking</a> <script async="True" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>                    
+                    </td>
+                    <td align="left" valign="middle" style="width:268px;">
+                        <!-- Handle the image slider. -->
+                        
+                        <p:galleria value="#{sliderController.sliderImages}" 
+                                    var="image" effect="slide" effectSpeed="1000" showFilmstrip="false"
+                                    panelWidth="500" panelHeight="313" showCaption="false">
+
+                            <p:graphicImage value="/resources/images/imageSliderPhotos/#{image}" 
+                                            alt="" title="" />
+
+                        </p:galleria>
+                    </td>
+                </tr>
+
+            </table>
+        </ui:define>
+    </ui:composition>
 </html>
