@@ -9,32 +9,32 @@
 ==================================================
 */
 html, body {
-    background-color: oldlace;
-    width: 100%;
-    height: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    display: table;
+  background-color: oldlace;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: table;
 }
 
 /* Style standard HTML tags body and paragraph p */
 body, p {
-    font-family: "Times New Roman", Times, Serif;
-    font-size: 12pt;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
-    color: black;
+  font-family: "Times New Roman", Times, Serif;
+  font-size: 12pt;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  color: black;
 }
 
 /* Style standard HTML tag header 1 */
 h1 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
-    color: maroon;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  color: maroon;
 }
 
 /*
@@ -43,38 +43,38 @@ h1 {
 =======================================
 */
 #page {
-    font-family: "Times New Roman", Times, Serif;
-    font-size: 12pt;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
-    color: black;
+  font-family: "Times New Roman", Times, Serif;
+  font-size: 12pt;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  color: black;
 }
 #header {
-    background-color: azure;
-    width: 100%;
-    height: 84px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    margin-bottom: 16px;
+  background-color: azure;
+  width: 100%;
+  height: 84px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  margin-bottom: 16px;
 }
 #editableContent {
-    /* height = 100% window height - (header height 84px + footer height 100px) */
-    height: calc(100% - 184px); 
-    width: 100%;
-    left: 0px;
-    right: 0px;
-    margin-top: 100px;
-    margin-bottom: 16px;
+  /* height = 100% window height - (header height 84px + footer height 100px) */
+  height: calc(100% - 184px); 
+  width: 100%;
+  left: 0px;
+  right: 0px;
+  margin-top: 100px;
+  margin-bottom: 16px;
 }
 #footer {
-    height: 100px;
-    width: 100%;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+  height: 100px;
+  width: 100%;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
 }
 
 /*
@@ -85,8 +85,8 @@ h1 {
 
 /* Set the font family for the standard HTML tag "a" for hyperlinks */
 a {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
 }
 
 a:link { text-decoration: none; }
@@ -101,23 +101,23 @@ Social Media Buttons Spin Animated
 ==================================
 */
 .social-roll {
-    height: 36px;
-    width: 36px;
-    margin: 5px;
-    float: left;
-    border-radius: 50%;
-    -webkit-transition: all ease 0.3s;  /* For WebKit */
-    -moz-transition: all ease 0.3s;     /* For Mozilla */
-    -o-transition: all ease 0.3s;       /* For Opera */
-    -ms-transition: all ease 0.3s;      /* For IE10+ */
-    transition: all ease 0.3s;          /* Generic */
+  height: 36px;
+  width: 36px;
+  margin: 5px;
+  float: left;
+  border-radius: 50%;
+  -webkit-transition: all ease 0.3s;  /* For WebKit */
+  -moz-transition: all ease 0.3s;     /* For Mozilla */
+  -o-transition: all ease 0.3s;       /* For Opera */
+  -ms-transition: all ease 0.3s;      /* For IE10+ */
+  transition: all ease 0.3s;          /* Generic */
 }
 .social-roll:hover {
-    -webkit-transform:rotate(360deg);  /* For WebKit */
-    -moz-transform:rotate(360deg);     /* For Mozilla */
-    -o-transform:rotate(360deg);       /* For Opera */
-    -ms-transform:rotate(360deg);      /* For IE10+ */
-    transform:rotate(360deg);          /* Generic */
+  -webkit-transform:rotate(360deg);  /* For WebKit */
+  -moz-transform:rotate(360deg);     /* For Mozilla */
+  -o-transform:rotate(360deg);       /* For Opera */
+  -ms-transform:rotate(360deg);      /* For IE10+ */
+  transform:rotate(360deg);          /* Generic */
 }
 
 /*
@@ -127,57 +127,57 @@ Social Media Buttons Spin Animated
 */
 
 .menu { 
-    position:relative; 
-    display:inline-block; 
-    z-index:2; 
-    padding:0; 
-    margin:0; 
-    outline:0; 
-    text-align:left; 
+  position:relative; 
+  display:inline-block; 
+  z-index:2; 
+  padding:0; 
+  margin:0; 
+  outline:0; 
+  text-align:left; 
 }
 
 .menu:before { 
-    content: "\2630 \a0 Menu"; 
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    color: white;
-    padding: 5px 10px;
-    border: 1px solid teal;
-    border-radius:6px;
-    background: teal;
+  content: "\2630 \a0 Menu"; 
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  color: white;
+  padding: 5px 10px;
+  border: 1px solid teal;
+  border-radius:6px;
+  background: teal;
 }
 .menu:focus { pointer-events:none; }
 .menu:focus .menu-dropdown { opacity:1; visibility:visible; }
 
 .menu-dropdown {
-    background: teal;
-    width: auto;
-    margin:6px 20px 0 0;
-    padding: 10px;
-    border:1px teal solid;
-    border-radius:6px;
-    pointer-events: auto;
-    position: absolute;
-    z-index: 1;
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 1s;
+  background: teal;
+  width: auto;
+  margin:6px 20px 0 0;
+  padding: 10px;
+  border:1px teal solid;
+  border-radius:6px;
+  pointer-events: auto;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 1s;
 }
 
 .menu-dropdown a {
-    background:transparent;
-    border:none;
-    outline:0;
-    display:block;
-    color:white;
-    text-decoration:none;
-    width:160px;
-    padding:5px;
+  background:transparent;
+  border:none;
+  outline:0;
+  display:block;
+  color:white;
+  text-decoration:none;
+  width:160px;
+  padding:5px;
 }
 
 .menu-dropdown a:hover {
-    background-color: lightgreen;
-    color:black;
+  background-color: lightgreen;
+  color:black;
 }
 
 /*
@@ -188,59 +188,71 @@ Social Media Buttons Spin Animated
 
 /* Style p:panelGrid Column 1 */
 .panelGridColumn1 {
-    text-align: right;
-    background-color: bisque; 
-    white-space: nowrap;
+  text-align: right;
+  background-color: bisque; 
+  white-space: nowrap;
 }
 
 /* Style p:panelGrid Column 2 */
 .panelGridColumn2 {
-    text-align: left;
-    background-color: blanchedalmond; 
-    white-space: nowrap;
+  text-align: left;
+  background-color: blanchedalmond; 
+  white-space: nowrap;
 }
 
 /* Style standard text and input text field text */
 .standardText, .inputTextField {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-style: normal;
+  font-weight: normal;
 }
 
 /* Used in CreateAccount, EditAccount, SignIn, EnterUsername, and SecurityQuestion */
 .inputTextField {
-    width: 400px;
+  width: 400px;
 }
 
 /* Used in Profile and About pages to style person's photo in a circle */
 .profilePhoto {
-    display: inline-block;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 /* Used in headerTemplate and QuestionnairesTaken to style user's small photo in a circle */
 .smallProfilePhoto {
-    display: inline-block;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    vertical-align: middle;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  vertical-align: middle;
 }
 
 /* Style the Google map display */
 .map {
-    margin: 0 auto;
-    height: 600px;
-    width: 80%;
+  margin: 0 auto;
+  height: 600px;
+  width: 80%;
+}
+.detailsMap {
+  flex: 1 1 500px;
+  margin: 10px 3%;
+  height: 500px;
+}
+
+.rating {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 /* Map info window styles */
@@ -260,11 +272,22 @@ Social Media Buttons Spin Animated
 .gm-style-iw .difficulty {
   margin-right: 10px;
 }
-.gm-style-iw .rating {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  pointer-events: none;
+
+/* Trail details page */
+.trailDetails  {
+  flex: 1 1 500px;
+  margin: 10px 7%
+}
+.trailDetails h1 {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  font-size: 24pt;
+}
+.trailDetails .difficulty {
+  float: left;
+  height: 37px;
+  margin-left: -50px;
+  margin-right: 15px;
 }
 
 /* 
@@ -272,9 +295,9 @@ Proportionately scale image to show on mobile devices and smaller browser window
 Scale the image downward, but do not enlarge it beyond its actual width size.
 */
 .scalableImage {
-    max-width: 100%;
-    height: auto;
-    border: none;
+  max-width: 100%;
+  height: auto;
+  border: none;
 }
 
 /*
@@ -285,44 +308,44 @@ Used in Profile
 */
 /* Style class for <ul> */
 .verticalMenu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 180px;
-    background-color: azure;
-    border: 1px solid darkgray;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 180px;
+  background-color: azure;
+  border: 1px solid darkgray;
 }
 
 /* Style class for <li> */
 .verticalMenuItem {
-    text-align: left;
-    border-bottom: 1px solid darkgray;
+  text-align: left;
+  border-bottom: 1px solid darkgray;
 }
 
 /* Style class for <li> and the <a> tag that defines a hyperlink */
 .verticalMenuItem a {
-    display: block;
-    color: black;
-    padding: 8px 16px;
-    text-decoration: none;  /* Do not underline the hyperlink */
+  display: block;
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;  /* Do not underline the hyperlink */
 }
 
 /* Style class for <ul>, <li> and <a> hyperlink tag */
 .verticalMenu, .verticalMenuItem a {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-style: normal;
+  font-weight: normal;
 }
 
 /* Style class for <li> last-child */
 .verticalMenuItem:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 /* Style class for <li> for mouse over state */
 .verticalMenuItem a:hover {
-    background-color: lightskyblue;
+  background-color: lightskyblue;
 }
 
 /*
@@ -332,10 +355,10 @@ Skinning PrimeFaces Galleria Image Slider
 */
 
 .ui-galleria-caption {
-    position: absolute;
-    left: 0px !important;
-    background-color: rgba(240, 255, 255, 0.8) !important;
-    padding: 0px !important;
+  position: absolute;
+  left: 0px !important;
+  background-color: rgba(240, 255, 255, 0.8) !important;
+  padding: 0px !important;
 }
 
 /*
@@ -350,35 +373,35 @@ Skinning PrimeFaces Growl Messages
 ----------------------------------
 */
 .ui-growl-item-container {
-    background: none !important;
-    background-color: lightgray !important;
-    opacity: 1.0  !important;
-    box-shadow: none;
+  background: none !important;
+  background-color: lightgray !important;
+  opacity: 1.0  !important;
+  box-shadow: none;
 }
 .ui-shadow {
-    text-shadow: none;  /* Remove message text shadow */
+  text-shadow: none;  /* Remove message text shadow */
 }
 .ui-growl-info {
-    font-size: 10pt !important;
-    color: darkgreen;   /* Color severity="info" message Summary text as Dark Green */
+  font-size: 10pt !important;
+  color: darkgreen;   /* Color severity="info" message Summary text as Dark Green */
 }
 .ui-growl-warn {
-    font-size: 10pt !important;
-    color: darkblue;    /* Color severity="warn" (warning) message Summary text as Dark Blue */
+  font-size: 10pt !important;
+  color: darkblue;    /* Color severity="warn" (warning) message Summary text as Dark Blue */
 }
 .ui-growl-error {
-    font-size: 10pt !important;
-    color: purple;      /* Color severity="error" message Summary text as Purple */
+  font-size: 10pt !important;
+  color: purple;      /* Color severity="error" message Summary text as Purple */
 }
 .ui-growl-fatal {
-    font-size: 10pt !important;
-    color: darkred;     /* Color severity="fatal" message Summary text as Dark Red */
+  font-size: 10pt !important;
+  color: darkred;     /* Color severity="fatal" message Summary text as Dark Red */
 }
 /* Close sticky="true" message box by clicking anywhere in the box */
 .ui-growl-icon-close {
-    width: 100%;
-    height: 100%;
-    background-image: none !important;
+  width: 100%;
+  height: 100%;
+  background-image: none !important;
 }
 
 /*
@@ -387,48 +410,48 @@ Skinning PrimeFaces Buttons
 ---------------------------
 */
 .ui-button {
-    border-radius: 2em !important;
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 10pt !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    text-decoration: none;
-    color: black;
-    padding-top: 3px !important; 
-    padding-bottom: 2px !important;
-    padding-left: 3px !important;
+  border-radius: 2em !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 10pt !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  text-decoration: none;
+  color: black;
+  padding-top: 3px !important; 
+  padding-bottom: 2px !important;
+  padding-left: 3px !important;
 }
 
 .ui-button .ui-icon {
-    margin-top: -0.65em !important; 
-    text-indent: 0px !important;
-    background-image: none !important;
-    margin-left: 0.52em;
+  margin-top: -0.65em !important; 
+  text-indent: 0px !important;
+  background-image: none !important;
+  margin-left: 0.52em;
 }
 
 .ui-confirm-dialog .ui-icon {
-    text-indent: 0px !important;
-    background-image: none !important;
+  text-indent: 0px !important;
+  background-image: none !important;
 }
 
 .ui-fileupload-choose .ui-icon {
-    visibility: hidden !important;
+  visibility: hidden !important;
 }
 .ui-fileupload-upload .ui-icon {
-    visibility: hidden !important;
+  visibility: hidden !important;
 }
 .ui-fileupload-cancel .ui-icon {
-    visibility: hidden !important;
+  visibility: hidden !important;
 }
 
 .ui-fileupload-choose .ui-button-text {
-    margin-left: -12px !important;
+  margin-left: -12px !important;
 }
 .ui-fileupload-upload .ui-button-text {
-    margin-left: -12px !important;
+  margin-left: -12px !important;
 }
 .ui-fileupload-cancel .ui-button-text {
-    margin-left: -12px !important;
+  margin-left: -12px !important;
 }
 
 /*
@@ -437,74 +460,74 @@ Skinning PrimeFaces Other UI Components
 ---------------------------------------
 */
 #confirmDialogBox {
-    top: 50%;
-    left: 50%;
+  top: 50%;
+  left: 50%;
 }
 
 .dataTable {
-    padding-left: 5px;
-    padding-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .ui-datatable-data, .ui-column-title, .ui-panel-titlebar, .ui-paginator, 
 .ui-dialog-content, .ui-confirm-dialog-message, .ui-widget-content {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
 }
 
 .ui-datagrid, .ui-datagrid-content, .ui-datagrid-data, .ui-datagrid-row, 
 .ui-datagrid-column {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
-    background-color: oldlace;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  background-color: oldlace;
 }
 
 .ui-panel, .ui-panel-content {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: none;
-    background-color: oldlace;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  background-color: oldlace;
 }
 
 .ui-dialog, .ui-dialog-content, .ui-dialog-buttonpane {
-    color: maroon;
-    background-color: oldlace;
+  color: maroon;
+  background-color: oldlace;
 }
 
 
 .ui-widget {
-    font-size: 12px !important;
+  font-size: 12px !important;
 }
 
 .ui-layout-north {
-    z-index: 20 !important;
-    overflow: visible !important;;
+  z-index: 20 !important;
+  overflow: visible !important;;
 }
 .ui-layout-north .ui-layout-unit-content {
-    overflow: visible !important;
+  overflow: visible !important;
 }
 
 .ui-widget-header {
-    text-align: center;
+  text-align: center;
 }
 
 .ui-button {
-    margin-top: 10px !important;
+  margin-top: 10px !important;
 }
 
 /* Style the hello text used in headerTemplate */
 .helloText {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    font-style: normal;
-    font-weight: normal;
-    color: maroon;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  font-style: normal;
+  font-weight: normal;
+  color: maroon;
 }

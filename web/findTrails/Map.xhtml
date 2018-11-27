@@ -13,7 +13,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
 
   <ui:composition template="/template/siteTemplate.xhtml">
     <c:metadata>
-      <c:event type="preRenderView" listener="#{trailController.init()}" />
+      <c:event type="preRenderView" listener="#{trailController.getMainMap()}" />
     </c:metadata>
     <ui:define name="title">
       <h:outputText value="Trail Map"></h:outputText>

@@ -33,7 +33,7 @@ function initializeMap() {
       style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
       position: google.maps.ControlPosition.BOTTOM_LEFT
     },
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.HYBRID
   });
   display();
 }
@@ -51,7 +51,7 @@ function display() {
     });
   });
 
-  if (document.getElementById("trailName") !== null) {
+  if (document.getElementById("trailGPX") !== null) {
     // If there is a specific trail named, only show that one.
     displaySingleTrail();
   } else {
@@ -66,28 +66,11 @@ function display() {
 // TODO: add trail GPX file
 function displaySingleTrail() {
   // Get the trail's information
-  var trailName = document.getElementById("trailName").value;
-  var trailLatitude = document.getElementById("trailLat").value;
-  var trailLongitude = document.getElementById("trailLon").value;
-
-  // Center the map on that trail
-  var trailLatLong = new google.maps.LatLng(trailLatitude, trailLongitude);
-  map.setCenter(trailLatLong);
-
-  // Add a new pin marker with the trail's properties
-  currentMarker = new google.maps.Marker({
-    title: trailName,
-    position: trailLatLong,
-    map: map
-  });
-  currentMarker.setMap(map);
-
-  // Instantiate a new info window for the marker and attach it
-  var infoWindow = new google.maps.InfoWindow();
-  google.maps.event.addListener(currentMarker, "click", function () {
-    infoWindow.setContent(this.get('title'));
-    infoWindow.open(map, this);
-  });
+  var trail = JSON.parse(document.getElementById("jsonData").value).trails[0];
+  
+  // Fetch the GPX file for the trail and display it on the map.
+  var gpxFile = document.getElementById("trailGPX").value;
+  loadGPXFileIntoGoogleMap(map, gpxFile)
 }
 
 
@@ -103,6 +86,7 @@ function displayAllTrails() {
       position: new google.maps.LatLng(trail.latitude, trail.longitude),
       map: map,
       title: trail.name,
+      trailId: trail.id,
       trailImage: trail.imgMedium || "../resources/images/noImage.jpg",
       trailDifficulty: trail.difficulty,
       trailRating: trail.stars,
@@ -115,21 +99,21 @@ function displayAllTrails() {
 
     google.maps.event.addListener(marker, "click", function () {
       infoWindow.setContent(
-              "<h1>" + this.get('title') + "</h1>" +
-              "<div style='overflow: auto'><div class='float50'>" +
-              "<img class='preview' src='" + this.get('trailImage') + "'/><br/>" +
-              "</div><div class='float50'>" +
-              "<img class='difficulty' title='" + difficultyRatings[this.get('trailDifficulty')] + "'" +
-              " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
-              "<div class='rating' style='width:" + (this.get('trailRating') / 5) * 80 + "px'>" +
-              "<img width='80' src='../resources/images/rating.png'/>" +
-              "</div>" +
-              "<img width='80' src='../resources/images/ratingGray.png' title='Rating: " + this.get('trailRating') + "'/><br/>" +
-              "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
-              "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
-              "</div></div>" +
-              this.get('trailSummary')
-              );
+        "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'><h1>" + this.get('title') + "</h1></a>" +
+        "<div style='overflow: auto'><div class='float50'>" +
+          "<img class='preview' src='" + this.get('trailImage') + "'/><br/>" +
+        "</div><div class='float50'>" +
+          "<img class='difficulty' title='" + difficultyRatings[this.get('trailDifficulty')] + "'" +
+          " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
+          "<div class='rating' style='width:" + (this.get('trailRating') / 5) * 80 + "px'>" +
+            "<img width='80' src='../resources/images/rating.png'/>" +
+          "</div>" +
+          "<img width='80' src='../resources/images/ratingGray.png' title='Rating: " + this.get('trailRating') + "'/><br/>" +
+          "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
+          "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
+        "</div></div>" +
+        this.get('trailSummary')
+      );
       infoWindow.open(map, this);
     });
   }
@@ -163,6 +147,30 @@ function drawRoute() {
   directionsService.route(request, function (response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
+    }
+  });
+}
+
+// Helper function to load GPX data onto the map.
+function loadGPXFileIntoGoogleMap(map, filepath) {
+  $.ajax({url: filepath,
+    dataType: "xml",
+    success: function (data) {
+      var parser = new GPXParser(data, map);
+      
+      parser.setTrackColour("blue");   // Set the track line colour
+      parser.setTrackWidth(8);              // Set the track line width
+      parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
+      parser.centerAndZoom(data);
+      parser.addTrackpointsToMap();         // Add the trackpoints
+      
+      parser.setTrackColour("#71acf0e6");   // Set the track line colour
+      parser.setTrackWidth(5);              // Set the track line width
+      parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
+      parser.centerAndZoom(data);
+      parser.addTrackpointsToMap();         // Add the trackpoints
+      parser.addRoutepointsToMap();         // Add the routepoints
+      parser.addWaypointsToMap();           // Add the waypoints
     }
   });
 }
