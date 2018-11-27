@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import org.primefaces.json.JSONArray;
@@ -29,19 +30,52 @@ public class TrailController implements Serializable {
   private final String apiUrl = "https://www.hikingproject.com/data/";
 
   // Properties
-  private List<Trail> trailList;
+  private String jsonResults;
+  private List<Trail> allTrails;
   private Trail selected;
 
   // Constructor
   public TrailController() {
   }
+  
+  // Initialization code
+  @PostConstruct
+  public void init() {
+    allTrails = getTrailsInRadius(37.227264, -80.420745, 50);
+  }
+  
+  // Getters/setters
+  public String getJsonResults() {
+    return jsonResults;
+  }
+
+  public void setJsonResults(String jsonResults) {
+    this.jsonResults = jsonResults;
+  }
+
+  public List<Trail> getAllTrails() {
+    return allTrails;
+  }
+
+  public void setAllTrails(List<Trail> allTrails) {
+    this.allTrails = allTrails;
+  }
+
+  public Trail getSelected() {
+    return selected;
+  }
+
+  public void setSelected(Trail selected) {
+    this.selected = selected;
+  }
+  
 
   // Get a trail's information via its ID.
   // TODO: testing
   public Trail getTrailByID(int ID) {
     try {
-      String jsonStr = readUrlContent(apiUrl + "get-trails-by-id?ids=" + ID + apiKey);
-      JSONObject jsonData = (JSONObject) new JSONObject(jsonStr);
+      jsonResults = readUrlContent(apiUrl + "get-trails-by-id?ids=" + ID + apiKey);
+      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       if (jsonData.optInt("success", 0) == 0) {
         Methods.showMessage("Fatal Error", "No trail found with ID " + ID + ".", "");
       } else {
@@ -59,10 +93,10 @@ public class TrailController implements Serializable {
   // Get trails within an area
   // TODO: testing
   public List<Trail> getTrailsInRadius(double lat, double lon, double maxDistance) {
-    String searchData = String.format("?lat=%f&lon=&f&maxDistance=&f", lat, lon, maxDistance);
+    String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=25", lat, lon, maxDistance);
     try {
-      String jsonStr = readUrlContent(apiUrl + "getTrails" + searchData + apiKey);
-      JSONObject jsonData = (JSONObject) new JSONObject(jsonStr);
+      jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
+      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       if (jsonData.optInt("success", 0) == 0) {
         Methods.showMessage("Fatal Error", "No trails found within range.", "");
       } else {
@@ -120,7 +154,7 @@ public class TrailController implements Serializable {
       difficulty = "Difficulty unavailable.";
     }
     Double rating = trailJson.optDouble("stars", 0);
-    String imgUrl = trailJson.optString("imgMedium", ""); // TODO: default image?
+    String imgUrl = trailJson.optString("imgMedium", "");
 
     Double length = trailJson.optDouble("length");
     Double ascentDist = trailJson.optDouble("ascent");
