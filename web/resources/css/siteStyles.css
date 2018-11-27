@@ -233,6 +233,41 @@ Social Media Buttons Spin Animated
 }
 
 
+/* Map info window styles */
+.gm-style-iw {
+  max-width: 350px;
+}
+.gm-style-iw .float50 {
+  float: left;
+  width: 50%;
+  padding-right: 10px;
+  box-sizing: border-box
+}
+.gm-style-iw .preview {
+  max-width: 100%;
+  max-height: 200px;
+}
+.gm-style-iw .difficulty {
+  margin-right: 10px;
+}
+ /* Trail details page */
+.trailDetails  {
+  flex: 1 1 500px;
+  margin: 10px 7%
+}
+.trailDetails h1 {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  font-size: 24pt;
+}
+.trailDetails .difficulty {
+  float: left;
+  height: 37px;
+  margin-left: -50px;
+  margin-right: 15px;
+}
+
+
 /* 
 Proportionately scale image to show on mobile devices and smaller browser windows.
 Scale the image downward, but do not enlarge it beyond its actual width size.
@@ -241,6 +276,28 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
   max-width: 100%;
   height: auto;
   border: none;
+}
+
+/* Used in Profile and About pages to style person's photo in a circle */
+.profilePhoto {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+ /* Used in headerTemplate and QuestionnairesTaken to style user's small photo in a circle */
+.smallProfilePhoto {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  vertical-align: middle;
 }
 
 /*
