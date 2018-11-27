@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
   @NamedQuery(name = "UserInterests.findAll", query = "SELECT u FROM UserInterests u")
   , @NamedQuery(name = "UserInterests.findById", query = "SELECT u FROM UserInterests u WHERE u.id = :id")
-  , @NamedQuery(name = "UserInterests.findByTrailname", query = "SELECT u FROM UserInterests u WHERE u.trailname = :trailname")
+  , @NamedQuery(name = "UserInterests.findByTrailID", query = "SELECT u FROM UserInterests u WHERE u.trailId = :trailid")
   , @NamedQuery(name = "UserInterests.findByInterested", query = "SELECT u FROM UserInterests u WHERE u.interested = :interested")
   , @NamedQuery(name = "UserInterests.findByCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed")
   , @NamedQuery(name = "UserInterests.findByUserIdAndCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed AND u.userId.id = :key")
