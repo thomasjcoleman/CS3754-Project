@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Thomas Coleman on 2018.10.02
+Copyright © 2018 Thomas Coleman. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+  <!-- This template handles growl messages. -->
+  <ui:composition>
+    <!-- Informational: Fade after 5 seconds -->
+    <p:growl id="growlInfoMessage" severity="info" showDetail="true" life="5000" />
+
+    <!-- Warnings: Don't fade; user clicks to close -->
+    <p:growl id="growlWarningMessage" severity="warn" showDetail="true" sticky="true" />
+
+    <!-- Errors: Fade after 10 seconds -->
+    <p:growl id="growlErrorMessage" severity="error" showDetail="false" life="10000" />
+
+    <!-- Fatal errors: Fade after 10 seconds -->
+    <p:growl id="growlFatalMessage" severity="fatal" showDetail="true" life="10000" />
+
+  </ui:composition>
+
+</html>
