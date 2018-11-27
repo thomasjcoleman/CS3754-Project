@@ -6,46 +6,189 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-  <ui:composition>
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
 
-    <p:dialog id="UserCreateDlg" widgetVar="UserCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUserTitle}">
-      <h:form id="UserCreateForm">
-        <h:panelGroup id="display">
-          <p:panelGrid columns="2" rendered="#{userController.selected != null}">
-            <p:outputLabel value="#{bundle.CreateUserLabel_id}" for="id" />
-            <p:inputText id="id" value="#{userController.selected.id}" title="#{bundle.CreateUserTitle_id}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_id}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_username}" for="username" />
-            <p:inputText id="username" value="#{userController.selected.username}" title="#{bundle.CreateUserTitle_username}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_username}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_password}" for="password" />
-            <p:inputText id="password" value="#{userController.selected.password}" title="#{bundle.CreateUserTitle_password}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_password}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_firstName}" for="firstName" />
-            <p:inputText id="firstName" value="#{userController.selected.firstName}" title="#{bundle.CreateUserTitle_firstName}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_firstName}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_middleName}" for="middleName" />
-            <p:inputText id="middleName" value="#{userController.selected.middleName}" title="#{bundle.CreateUserTitle_middleName}" />
-            <p:outputLabel value="#{bundle.CreateUserLabel_lastName}" for="lastName" />
-            <p:inputText id="lastName" value="#{userController.selected.lastName}" title="#{bundle.CreateUserTitle_lastName}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_lastName}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_address1}" for="address1" />
-            <p:inputText id="address1" value="#{userController.selected.address1}" title="#{bundle.CreateUserTitle_address1}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_address1}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_address2}" for="address2" />
-            <p:inputText id="address2" value="#{userController.selected.address2}" title="#{bundle.CreateUserTitle_address2}" />
-            <p:outputLabel value="#{bundle.CreateUserLabel_city}" for="city" />
-            <p:inputText id="city" value="#{userController.selected.city}" title="#{bundle.CreateUserTitle_city}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_city}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_state}" for="state" />
-            <p:inputText id="state" value="#{userController.selected.state}" title="#{bundle.CreateUserTitle_state}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_state}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_zipcode}" for="zipcode" />
-            <p:inputText id="zipcode" value="#{userController.selected.zipcode}" title="#{bundle.CreateUserTitle_zipcode}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_zipcode}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_securityQuestionNumber}" for="securityQuestionNumber" />
-            <p:inputText id="securityQuestionNumber" value="#{userController.selected.securityQuestionNumber}" title="#{bundle.CreateUserTitle_securityQuestionNumber}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_securityQuestionNumber}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_securityAnswer}" for="securityAnswer" />
-            <p:inputText id="securityAnswer" value="#{userController.selected.securityAnswer}" title="#{bundle.CreateUserTitle_securityAnswer}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_securityAnswer}"/>
-            <p:outputLabel value="#{bundle.CreateUserLabel_email}" for="email" />
-            <p:inputText id="email" value="#{userController.selected.email}" title="#{bundle.CreateUserTitle_email}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_email}"/>
-          </p:panelGrid>
-          <p:commandButton actionListener="#{userController.create}" value="#{bundle.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args,'UserCreateDialog');"/>
-          <p:commandButton value="#{bundle.Cancel}" onclick="UserCreateDialog.hide()"/>
-        </h:panelGroup>
-      </h:form>
-    </p:dialog>
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Create Account"></h:outputText>
+        </ui:define>
 
-  </ui:composition>
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" width="100%">
+
+                <h:form id="AccountCreationForm">
+
+                    <h1>Create an Account</h1>
+
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                        
+                        <!-- First Name -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{userController.firstName}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_firstName}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>   
+
+                        <!-- Middle Name-->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_middleName}" for="middleName" />
+                        <p:inputText id="middleName" value="#{userController.middleName}"
+                                     required="false" class="inputTextField">
+                        </p:inputText>
+
+                        <!-- Last Name -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{userController.lastName}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_lastName}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <!-- Address Line 1 -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_address1}" for="address1" />
+                        <p:inputText id="address1" value="#{userController.address1}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_address1}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <!-- Address Line 2 -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_address2}" for="address2" />
+                        <p:inputText id="address2" value="#{userController.address2}" class="inputTextField">
+                        </p:inputText>
+
+                        <!-- City -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_city}" for="city" />
+                        <p:inputText id="city" value="#{userController.city}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_city}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <!-- State Abbreviation (i.e. VA for Virginia) -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_state}" for="state" />
+                        <h:selectOneMenu id="state" value="#{userController.state}" required="true">
+                            <!--
+                            List of U.S. state postal codes is iterated over 
+                            to display the list for the user to select one.
+                            -->
+                            <f:selectItems value="#{userController.listOfStates()}" var="state"
+                                           itemLabel="#{state}" itemValue="#{state}" />
+                        </h:selectOneMenu>
+
+                        <!-- Zip/Postal Code -->
+                        <p:outputLabel id="zipcodeEntry" value="#{bundle.CreateUserLabel_zipcode}" for="zipcode" >
+                            &nbsp;<i class="fas fa-question-circle" />
+                            <!--
+                            When the user mouses over the icon, a tooltip is displayed
+                            to provide context-sensitive help information to the user.
+                            -->
+                            <p:tooltip for="zipcodeEntry" value="Enter 5 digits or 9 digits with hyphen, e.g., 24060-1804" 
+                                       showEffect="clip" hideEffect="explode" position="top" />
+                        </p:outputLabel> 
+
+                        <p:inputText id="zipcode" value="#{userController.zipcode}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_zipcode}">
+                            <f:validateLength minimum="5" />
+                            <!-- 
+                            Execute the validate() method in ZipCodeValidator.java 
+                            file to validate the ZIP code entered. 
+                            -->
+                            <f:validator validatorId="zipCodeValidator"/> 
+                        </p:inputText>
+
+                        <!-- Security Question -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_securityQuestion}" for="securityQuestion" />
+                        <p:selectOneMenu id="securityQuestion"
+                                         value="#{userController.securityQuestionNumber}" required="true" >
+                            <!--
+                            List of security questions is displayed for the user to select one
+                            -->
+                            <f:selectItems value="#{userController.security_questions}"/>
+                        </p:selectOneMenu>
+
+                        <!-- Answer to the Security Question -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_securityAnswer}" for="securityAnswer" />
+                        <p:inputText id="securityAnswer" value="#{userController.answerToSecurityQuestion}" 
+                                     required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_securityAnswer}">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+
+                        <!-- Email Address -->
+                        <p:outputLabel value="#{bundle.CreateUserLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{userController.email}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_email}">
+                            <f:validateLength minimum="2" />
+                            <!-- 
+                            Execute the validate() method in EmailValidator.java 
+                            file to validate the email address entered. 
+                            -->
+                            <f:validator validatorId="emailValidator" />  
+                        </p:inputText>
+
+                        <!-- Username -->
+                        <p:outputLabel id="usernameEntry" value="#{bundle.CreateUserLabel_username}" for="username" >
+                            &nbsp;<i class="fas fa-question-circle" />
+                            <!--
+                            When the user mouses over the icon, a tooltip is displayed
+                            to provide context-sensitive help information to the user.
+                            -->
+                            <p:tooltip for="usernameEntry" value="Enter 6 to 32 characters with capital letter, lowercase letter, number, or special character _ . - @" 
+                                       showEffect="clip" hideEffect="explode" position="top" />
+                        </p:outputLabel> 
+
+                        <p:inputText id="username" value="#{userController.username}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}">
+                            <!-- 
+                            Execute the validate() method in UsernameValidator.java 
+                            file to validate the username entered. 
+                            -->
+                            <f:validator validatorId="usernameValidator"/> 
+                        </p:inputText>
+
+                        <!-- Password -->                     
+                        <p:outputLabel id="passwordEntry" value="#{bundle.CreateUserLabel_password}" for="password" >
+                            &nbsp;<i class="fas fa-question-circle" />
+                            <!--
+                            When the user mouses over the icon, a tooltip is displayed
+                            to provide context-sensitive help information to the user.
+                            -->
+                            <p:tooltip for="passwordEntry" value="Enter 8 to 32 characters with at least 1: capital letter, lowercase letter, number, and special characters above the numbers on the keyboard."
+                                       showEffect="clip" hideEffect="explode" position="top" />
+                        </p:outputLabel>   
+
+                        <!-- 
+                        p:password changes the characters typed to bullets to hide the password as it is typed.
+                        feedback="true" displays password strength indicator.
+                        -->
+                        <p:password id="password" value="#{userController.password}" feedback="true" 
+                                    required="true" class="inputTextField" >
+                            <!-- 
+                            Execute the validate() method in PasswordValidator.java 
+                            file to validate the password entered. 
+                            -->
+                            <f:validator validatorId="passwordValidator" /> 
+                        </p:password>
+
+                        <!-- Confirm Password -->                         
+                        <p:outputLabel value="Confirm Password:" for="confirmPassword" />
+                        <p:password id="confirmPassword" value="#{userController.confirmPassword}" 
+                                    required="true" class="inputTextField"/>
+
+                    </p:panelGrid>
+                    <br />
+
+                    <!-- Creates the Submit button -->
+                    <p:commandButton id="Submit" value="Submit" action="#{userController.createAccount()}" 
+                                     ajax="false" icon="fas fa-arrow-up" />
+                    &nbsp;&nbsp;
+                    <!-- Creates the Cancel button -->
+                    <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+
+                </h:form>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+
 </html>
