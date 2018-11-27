@@ -47,9 +47,8 @@ public class UserInterests implements Serializable {
   
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 256)
-  @Column(name = "trailname")
-  private String trailname;
+  @Column(name = "trail_id")
+  private Integer trailId;
   
   @Column(name = "interested")
   private Boolean interested;
@@ -68,9 +67,9 @@ public class UserInterests implements Serializable {
     this.id = id;
   }
 
-  public UserInterests(Integer id, String trailname) {
+  public UserInterests(Integer id, Integer trailId) {
     this.id = id;
-    this.trailname = trailname;
+    this.trailId = trailId;
   }
 
   public Integer getId() {
@@ -81,12 +80,12 @@ public class UserInterests implements Serializable {
     this.id = id;
   }
 
-  public String getTrailname() {
-    return trailname;
+  public Integer getTrailId() {
+    return trailId;
   }
 
-  public void setTrailname(String trailname) {
-    this.trailname = trailname;
+  public void setTrailId(Integer trailId) {
+    this.trailId = trailId;
   }
 
   public Boolean getInterested() {

@@ -36,7 +36,7 @@ CREATE TABLE UserFile (
 
 CREATE TABLE UserInterests (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  trailname VARCHAR(256) NOT NULL,
+  trail_id INT UNSIGNED NOT NULL,
   interested BOOLEAN,
   completed BOOLEAN,
   user_id INT UNSIGNED,

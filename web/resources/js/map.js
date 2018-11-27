@@ -3,6 +3,15 @@
  * Copyright © 2018 Thomas Coleman. All rights reserved. * 
  */
 
+/* Constants */
+var difficultyRatings = {
+  green: "Easy",
+  greenBlue: "Moderately Easy",
+  blue: "Intermediate",
+  blueBlack: "Difficult",
+  black: "Very Difficult"
+};
+
 /* Global variables */
 var google;
 var map;
@@ -32,7 +41,7 @@ function initializeMap() {
 // Prepare the map object as necessary
 function display() {
   // show user's position
-  navigator.geolocation.getCurrentPosition(function(pos) {
+  navigator.geolocation.getCurrentPosition(function (pos) {
     var c = pos.coords;
     var marker = new google.maps.Marker({
       position: new google.maps.LatLng(c.latitude, c.longitude),
@@ -41,7 +50,7 @@ function display() {
       map: map
     });
   });
-  
+
   if (document.getElementById("trailName") !== null) {
     // If there is a specific trail named, only show that one.
     displaySingleTrail();
@@ -96,7 +105,7 @@ function displayAllTrails() {
       title: trail.name,
       trailImage: trail.imgMedium || "../resources/images/noImage.jpg",
       trailDifficulty: trail.difficulty,
-      trailRating: (trail.stars / 5) * 80,
+      trailRating: trail.stars,
       trailLength: trail.length || "Unspecified",
       trailSummary: trail.summary || "No description available.",
       trailCondition: trail.conditionStatus || "Unkonwn",
@@ -106,21 +115,21 @@ function displayAllTrails() {
 
     google.maps.event.addListener(marker, "click", function () {
       infoWindow.setContent(
-        "<h1>" + this.get('title') + "</h1>" +
-        "<div style='overflow: auto'><div class='float50'>" +
-          "<img class='preview' src='" + this.get('trailImage') + "'/><br/>" +
-        "</div><div class='float50'>" +
-          "<img class='difficulty' title='Difficulty'" +
-            " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
-          "<div class='rating' style='width:" + this.get('trailRating') + "px'>" +
-            "<img width='80' src='../resources/images/rating.png'/>" +
-          "</div>" +
-          "<img width='80' src='../resources/images/ratingGray.png'/><br/>" +
-          "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
-          "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
-        "</div></div>" +
-        this.get('trailSummary')
-      );
+              "<h1>" + this.get('title') + "</h1>" +
+              "<div style='overflow: auto'><div class='float50'>" +
+              "<img class='preview' src='" + this.get('trailImage') + "'/><br/>" +
+              "</div><div class='float50'>" +
+              "<img class='difficulty' title='" + difficultyRatings[this.get('trailDifficulty')] + "'" +
+              " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
+              "<div class='rating' style='width:" + (this.get('trailRating') / 5) * 80 + "px'>" +
+              "<img width='80' src='../resources/images/rating.png'/>" +
+              "</div>" +
+              "<img width='80' src='../resources/images/ratingGray.png' title='Rating: " + this.get('trailRating') + "'/><br/>" +
+              "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
+              "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
+              "</div></div>" +
+              this.get('trailSummary')
+              );
       infoWindow.open(map, this);
     });
   }

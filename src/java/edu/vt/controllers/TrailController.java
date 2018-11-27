@@ -93,7 +93,7 @@ public class TrailController implements Serializable {
   // Get trails within an area
   // TODO: testing
   public List<Trail> getTrailsInRadius(double lat, double lon, double maxDistance) {
-    String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=25", lat, lon, maxDistance);
+    String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=50", lat, lon, maxDistance);
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);

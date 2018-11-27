@@ -9,45 +9,45 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+  <ui:composition>
 
-        <p:dialog id="ViewTrailDlg" widgetVar="TrailViewDialog" modal="true"
-                  resizable="false" appendTo="@(body)" header="#{bundle.ViewTrailTitle}">
-            <h:form id="ViewTrailForm">
-                <div align="center">
-                    <table class="viewTable" border="0" cellspacing="0" cellpadding="10" width="100%">
-                        
-                        <!-- Trail Name -->
-                        <tr>
-                            <td>
-                                <h:outputText value="#{userInteresetsController.selected.trailname}" />
-                                <br />
-                            </td>
-                        </tr>
-                        
-                        <!-- Is Completed -->
-                        <tr>
-                            <td>
-                                <h:outputText value="#{bundle.ViewTrailCompleted_title}" style="font-style: italic"/>
-                                <br />
-                                <h:outputText value="#{userInteresetsController.selected.completed}" title="#{bundle.ViewTrailCompleted_title}"/>
-                                <br />
-                            </td>
-                        </tr>
-                        
-                        <!-- Is Interested -->
-                        <tr>
-                            <td>
-                                <h:outputText value="#{bundle.ViewTrailInterested_title}" style="font-style: italic"/>
-                                <br />
-                                <h:outputText value="#{userInteresetsController.selected.interested}" title="#{bundle.ViewTrailInterested_title}"/>
-                                <br />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </h:form>
-        </p:dialog>
+    <p:dialog id="ViewTrailDlg" widgetVar="TrailViewDialog" modal="true"
+              resizable="false" appendTo="@(body)" header="#{bundle.ViewTrailTitle}">
+      <h:form id="ViewTrailForm">
+        <div align="center">
+          <table class="viewTable" border="0" cellspacing="0" cellpadding="10" width="100%">
 
-    </ui:composition>
+            <!-- Trail Name -->
+            <tr>
+              <td>
+                <h:outputText value="#{userInteresetsController.selected.trailname}" />
+                <br />
+              </td>
+            </tr>
+
+            <!-- Is Completed -->
+            <tr>
+              <td>
+                <h:outputText value="#{bundle.ViewTrailCompleted_title}" style="font-style: italic"/>
+                <br />
+                <h:outputText value="#{userInteresetsController.selected.completed}" title="#{bundle.ViewTrailCompleted_title}"/>
+                <br />
+              </td>
+            </tr>
+
+            <!-- Is Interested -->
+            <tr>
+              <td>
+                <h:outputText value="#{bundle.ViewTrailInterested_title}" style="font-style: italic"/>
+                <br />
+                <h:outputText value="#{userInteresetsController.selected.interested}" title="#{bundle.ViewTrailInterested_title}"/>
+                <br />
+              </td>
+            </tr>
+          </table>
+        </div>
+      </h:form>
+    </p:dialog>
+
+  </ui:composition>
 </html>
