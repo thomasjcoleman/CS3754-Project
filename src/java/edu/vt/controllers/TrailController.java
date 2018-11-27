@@ -31,17 +31,11 @@ public class TrailController implements Serializable {
 
   // Properties
   private String jsonResults;
-  private List<Trail> allTrails;
+  private List<Trail> results;
   private Trail selected;
 
   // Constructor
   public TrailController() {
-  }
-  
-  // Initialization code
-  @PostConstruct
-  public void init() {
-    allTrails = getTrailsInRadius(37.227264, -80.420745, 50);
   }
   
   // Getters/setters
@@ -53,12 +47,12 @@ public class TrailController implements Serializable {
     this.jsonResults = jsonResults;
   }
 
-  public List<Trail> getAllTrails() {
-    return allTrails;
+  public List<Trail> getResults() {
+    return results;
   }
 
-  public void setAllTrails(List<Trail> allTrails) {
-    this.allTrails = allTrails;
+  public void setResults(List<Trail> results) {
+    this.results = results;
   }
 
   public Trail getSelected() {
@@ -69,10 +63,23 @@ public class TrailController implements Serializable {
     this.selected = selected;
   }
   
+  // Get all nearby trail data.
+  public void getMainMap() {
+    getTrailsInRadius(37.227264, -80.420745, 50);
+  }
+  
+  // Get a specific trail's data.
+  public void getTrailMap(Long ID) {
+    if (ID != null) {
+      selected = getTrailByID(ID);
+    } else if (selected != null) {
+      getTrailByID(selected.getId());
+    }
+  }
 
   // Get a trail's information via its ID.
   // TODO: testing
-  public Trail getTrailByID(int ID) {
+  public Trail getTrailByID(Long ID) {
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails-by-id?ids=" + ID + apiKey);
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
