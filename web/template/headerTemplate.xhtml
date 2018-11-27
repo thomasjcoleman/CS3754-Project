@@ -30,7 +30,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
             <!-- Welcome the user if signed in -->
             <c:choose>
               <c:when test="#{userController.isLoggedIn()}"> 
-                <div class="helloText">Hello, #{userController.loggedInUser.firstName}</div>
+                <div class="helloText">Hello, #{userController.selected.firstName}</div>
               </c:when> 
               <c:otherwise>
                 <h1>Hello, Guest</h1>
