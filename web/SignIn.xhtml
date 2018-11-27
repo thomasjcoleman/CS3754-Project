@@ -9,49 +9,55 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-  <ui:composition template="/template/siteTemplate.xhtml">
-    <ui:define name="title">
-      <h:outputText value="Sign In"></h:outputText>
-    </ui:define>
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Sign In"></h:outputText>
+        </ui:define>
 
-    <ui:define name="editableContent">
-      <div align="center" style="width:70%; margin:0 auto;">
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
 
-        <h1>Sign In</h1>
-        <br />
+                <h1>Sign In</h1>
+                <br />
 
-        <h:form>
-          <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                <h:form>
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
 
-            <h:outputLabel value="Username:" for="username" />
-            <p:inputText id="username" value="#{loginManager.username}" required="true" class="inputTextFieldShort"
-                         requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username" >
-            </p:inputText>
+                        <h:outputLabel value="Username:" for="username" />
+                        <p:inputText id="username" value="#{loginManager.username}" required="true" class="inputTextFieldShort"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username" >
+                        </p:inputText>
 
-            <h:outputLabel value="Password:" for="password" />
-            <p:password id="password" value="#{loginManager.password}" feedback="false" class="inputTextFieldShort" >
-            </p:password>
+                        <h:outputLabel value="Password:" for="password" />
+                        <p:password id="password" value="#{loginManager.password}" feedback="false" class="inputTextFieldShort" >
+                        </p:password>
 
-          </p:panelGrid>
+                    </p:panelGrid>
 
-          <br/>
-          <br/>
+                    <br/>
+                    <br/>
 
-          <!-- Buttons at bottom; sign in, create account, forgot password, cancel. -->
-          <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser()}" 
-                           ajax="false" icon="fas fa-sign-in-alt" />
-          &nbsp;
-          <p:button outcome="/userAccount/CreateAccount" value="&nbsp;Create an Account" icon="fas fa-user-plus"  />
+                    <!-- Buttons at bottom; sign in, create account, forgot password, cancel. -->
+                    <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser()}" 
+                                     ajax="false" icon="fas fa-sign-in-alt" />
+                    &nbsp;
+                    <p:button outcome="/userAccount/CreateAccount" value="&nbsp;Create an Account" icon="fas fa-user-plus"  />
 
-          &nbsp;
-          <p:button outcome="/userPasswordChange/EnterUsername" value="Forgot Password" icon="fas fa-key"  />
+                    &nbsp;
+                    <p:button outcome="/userPasswordChange/EnterUsername" value="Forgot Password" icon="fas fa-key"  />
 
-          &nbsp;
-          <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
-        </h:form>
+                    &nbsp;
+                    <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+                </h:form>
+                <p>
+                </p>
+                <!-- Google sign-in option -->
+                <script src="https://apis.google.com/js/platform.js" async="True" defer="True"></script>
+                <meta name="google-signin-client_id" content="407458853936-bsk6qkj8ecrjqaq38ol91hb1gnt5bnnc.apps.googleusercontent.com"></meta>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
-      </div>
-      <br/><br/><br/>
-    </ui:define>
-  </ui:composition>
+            </div>
+            <br/><br/><br/>
+        </ui:define>
+    </ui:composition>
 </html>

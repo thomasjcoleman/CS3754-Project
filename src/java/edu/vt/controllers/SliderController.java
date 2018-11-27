@@ -15,7 +15,7 @@ public class SliderController {
   @PostConstruct
   public void init() {
     sliderImages = new ArrayList<>();
-    for (int i = 1; i <= 12; i++) {
+    for (int i = 1; i <= 8; i++) {
       sliderImages.add("photo" + i + ".png");
     }
   }
@@ -33,40 +33,28 @@ public class SliderController {
     String imageDescription = "";
     switch (image) {
       case "photo1.png":
-        imageDescription = "";
+        imageDescription = "Appalachian Trail, Virginia, USA";
         break;
       case "photo2.png":
-        imageDescription = "";
+        imageDescription = "Yosemite National Park, California, USA";
         break;
       case "photo3.png":
-        imageDescription = "";
+        imageDescription = "Glacier National Park, Montana, USA";
         break;
       case "photo4.png":
-        imageDescription = "";
+        imageDescription = "Zion National Park, Utah, USA";
         break;
       case "photo5.png":
-        imageDescription = "";
+        imageDescription = "Julia Pfeiffer Burns State Park, California, USA";
         break;
       case "photo6.png":
-        imageDescription = "";
+        imageDescription = "The Grand Canyon, Arizona, USA";
         break;
       case "photo7.png":
-        imageDescription = "";
+        imageDescription = "Alpine Lakes Wilderness, Washington, USA";
         break;
       case "photo8.png":
-        imageDescription = "";
-        break;
-      case "photo9.png":
-        imageDescription = "";
-        break;
-      case "photo10.png":
-        imageDescription = "";
-        break;
-      case "photo11.png":
-        imageDescription = "";
-        break;
-      case "photo12.png":
-        imageDescription = "";
+        imageDescription = "Grand Teton National Park, Wyoming, USA";
         break;
     }
     return imageDescription;
