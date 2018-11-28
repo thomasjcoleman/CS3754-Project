@@ -15,6 +15,7 @@ public class Trail {
   private String summary;
   private String difficulty;
   private Double rating;
+  private Long numberOfRatings;
   private String imgUrl;
   
   private Double longitude;
@@ -34,7 +35,7 @@ public class Trail {
   public Trail() {
   }
   
-  public Trail(Long id, String name, String location, String url, String summary, String difficulty, Double rating, String imgUrl, Double longitude, Double latitude, Double length, Double ascentDist, Double descentDist, Double highestHeight, Double lowestHeight, String conditionStatus, String conditionDetails, Date conditionDate) {
+  public Trail(Long id, String name, String location, String url, String summary, String difficulty, Double rating, Long numberOfRatings, String imgUrl, Double longitude, Double latitude, Double length, Double ascentDist, Double descentDist, Double highestHeight, Double lowestHeight, String conditionStatus, String conditionDetails, Date conditionDate) {
     this.id = id;
     this.name = name;
     this.location = location;
@@ -42,6 +43,7 @@ public class Trail {
     this.summary = summary;
     this.difficulty = difficulty;
     this.rating = rating;
+    this.numberOfRatings = numberOfRatings;
     this.imgUrl = imgUrl;
     this.longitude = longitude;
     this.latitude = latitude;
@@ -110,6 +112,14 @@ public class Trail {
 
   public void setRating(Double rating) {
     this.rating = rating;
+  }
+
+  public Long getNumberOfRatings() {
+    return numberOfRatings;
+  }
+
+  public void setNumberOfRatings(Long numberOfRatings) {
+    this.numberOfRatings = numberOfRatings;
   }
 
   public String getImgUrl() {

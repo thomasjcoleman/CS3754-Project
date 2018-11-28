@@ -9,15 +9,16 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
   <ui:composition template="/template/siteTemplate.xhtml">
-    <c:metadata>
+    <f:metadata>
       <!-- Pass trail ID in url, i.e. "?id=12345" -->
-      <c:event type="preRenderView" listener="#{trailController.getTrailMap(param['id'])}" />
-    </c:metadata>
+      <f:event type="preRenderView" listener="#{trailController.getTrailMap(param['id'])}" />
+    </f:metadata>
     <ui:define name="title">
-      <h:outputText value="Trail Map"></h:outputText>
+      <h:outputText value="#{trailController.selected.name}" />
     </ui:define>
 
     <ui:define name="editableContent">
@@ -26,12 +27,53 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
         <div class="trailDetails">
           <img class="difficulty" src="#{resource['images:trailDifficulties/' += trailController.selected.difficulty += '.svg']}" />
           <h1><h:outputText value="#{trailController.selected.name}"/></h1>
+          <h2><h:outputText value="#{trailController.selected.location}"/></h2>
           <div class="rating" style="width: #{(trailController.selected.rating / 5) * 150}px">
             <img width="150" src="#{resource['images:rating.png']}"/>
           </div>
           <img width="150" src="#{resource['images:ratingGray.png']}"  title="Rating: #{trailController.selected.rating}"/>
-          <br/><br/>
-          <strong>Length: </strong><h:outputText value="#{trailController.selected.length} miles" />
+          <span class="ratingCount"><h:outputText value="#{trailController.selected.numberOfRatings} ratings"/></span>
+          <div class="trailDescription"><h:outputText value="#{trailController.selected.summary}" /></div>
+          
+          <p:graphicImage class="trailPhoto" url="#{trailController.selected.imgUrl}"/>
+          <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                       rendered="#{trailController.selected != null}" style="width: 300px; float: left;">
+            Length:
+            <h:outputText value="#{trailController.selected.length} miles" />
+            
+            Ascent:
+            <h:outputText value="#{trailController.selected.ascentDist}">
+              <f:convertNumber pattern="#0 feet"/>
+            </h:outputText>
+            
+            Descent:
+            <h:outputText value="#{trailController.selected.descentDist}">
+              <f:convertNumber pattern="#0 feet"/>
+            </h:outputText>
+            
+            Highest point:
+            <h:outputText value="#{trailController.selected.highestHeight}">
+              <f:convertNumber pattern="#0 feet"/>
+            </h:outputText>
+            
+            Lowest point:
+            <h:outputText value="#{trailController.selected.lowestHeight}">
+              <f:convertNumber pattern="#0 feet"/>
+            </h:outputText>
+            
+            Current condition:
+            <h:outputText value="#{trailController.selected.conditionStatus}" />
+            
+            <c:if test="#{!empty trailController.selected.conditionDetails}" >
+              Condition details:
+              <h:outputText value="#{trailController.selected.conditionDetails}" />
+              
+              Last updated:
+              <h:outputText value="#{trailController.selected.conditionDate}">
+                <f:convertDateTime pattern="MM-dd-yyyy, h:mm a" />
+              </h:outputText>
+            </c:if>
+          </p:panelGrid>
         </div>
       </div>
 

@@ -216,15 +216,14 @@ Social Media Buttons Spin Animated
 /* Style the Google map display */
 .map {
   margin: 0 auto;
-  height: 550px;
+  height: 520px;
   width: 80%;
 }
 .detailsMap {
-  flex: 1 1 500px;
+  flex: 1 1 250px;
   margin: 10px 3%;
   height: 500px;
 }
-
 .rating {
   position: absolute;
   display: inline-block;
@@ -256,9 +255,19 @@ Social Media Buttons Spin Animated
   margin: 10px 7%
 }
 .trailDetails h1 {
-  margin: 0 0 5px 0;
+  margin: 0;
   font-weight: bold;
   font-size: 24pt;
+}
+.trailDetails h2 {
+  margin: 0 0 5px 0;
+  color: #666;
+  font-style: italic;
+  font-size: 16pt;
+}
+.trailDetails .trailDescription {
+  margin: 5px 0 15px;
+  font-size: 14pt;
 }
 .trailDetails .difficulty {
   float: left;
@@ -266,7 +275,21 @@ Social Media Buttons Spin Animated
   margin-left: -50px;
   margin-right: 15px;
 }
-
+.trailDetails .ratingCount {
+  vertical-align: 10px;
+  margin-left: 15px;
+  font-style: italic;
+  color: #888
+}
+.trailDetails .trailPhoto {
+  float: left;
+  max-width: 400px;
+  margin: 0 10px 10px 0;
+}
+.trailDetails .panelGridColumn1 {
+  font-weight: bold;
+  width: 35%;
+}
 
 /* 
 Proportionately scale image to show on mobile devices and smaller browser windows.

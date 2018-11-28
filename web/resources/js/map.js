@@ -63,7 +63,6 @@ function display() {
 
 
 // Displays the geolocation of a single trail.
-// TODO: add trail GPX file
 function displaySingleTrail() {
   // Get the trail's information
   var trail = JSON.parse(document.getElementById("jsonData").value).trails[0];
@@ -101,7 +100,8 @@ function displayAllTrails() {
       infoWindow.setContent(
         "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'><h1>" + this.get('title') + "</h1></a>" +
         "<div style='overflow: auto'><div class='float50'>" +
-          "<img class='preview' src='" + this.get('trailImage') + "'/><br/>" +
+          "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'>" + 
+          "<img class='preview' src='" + this.get('trailImage') + "'/></a><br/>" +
         "</div><div class='float50'>" +
           "<img class='difficulty' title='" + difficultyRatings[this.get('trailDifficulty')] + "'" +
           " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
@@ -111,8 +111,8 @@ function displayAllTrails() {
           "<img width='80' src='../resources/images/ratingGray.png' title='Rating: " + this.get('trailRating') + "'/><br/>" +
           "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
           "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
-        "</div></div>" +
-        this.get('trailSummary')
+          "<div style='margin-top: 5px;'>" + this.get('trailSummary') + "</div>" +
+        "</div></div>"
       );
       infoWindow.open(map, this);
     });

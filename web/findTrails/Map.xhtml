@@ -9,12 +9,12 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
   <ui:composition template="/template/siteTemplate.xhtml">
-    <c:metadata>
-      <c:event type="preRenderView" listener="#{trailController.getMainMap()}" />
-    </c:metadata>
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{trailController.getMainMap()}" />
+    </f:metadata>
     <ui:define name="title">
       <h:outputText value="Trail Map"></h:outputText>
     </ui:define>

@@ -78,7 +78,6 @@ public class TrailController implements Serializable {
   }
 
   // Get a trail's information via its ID.
-  // TODO: testing
   public Trail getTrailByID(Long ID) {
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails-by-id?ids=" + ID + apiKey);
@@ -97,8 +96,7 @@ public class TrailController implements Serializable {
     return null;
   }
   
-  // Get trails within an area
-  // TODO: testing
+  // Get trails within an area.
   public List<Trail> getTrailsInRadius(double lat, double lon, double maxDistance) {
     String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=50", lat, lon, maxDistance);
     try {
@@ -107,7 +105,7 @@ public class TrailController implements Serializable {
       if (jsonData.optInt("success", 0) == 0) {
         Methods.showMessage("Fatal Error", "No trails found within range.", "");
       } else {
-        List<Trail> trails = new ArrayList<Trail>();
+        List<Trail> trails = new ArrayList<>();
         JSONArray trailArray = jsonData.getJSONArray("trails");
         trailArray.forEach(trailObj -> {
           trails.add(createTrailFromJSON((JSONObject) trailObj));
@@ -161,7 +159,11 @@ public class TrailController implements Serializable {
       difficulty = "Difficulty unavailable.";
     }
     Double rating = trailJson.optDouble("stars", 0);
+    Long numberOfRatings = trailJson.optLong("starVotes", 0);
     String imgUrl = trailJson.optString("imgMedium", "");
+    if (imgUrl.equals("")) {
+      imgUrl = "../resources/images/noImage.jpg";
+    }
 
     Double length = trailJson.optDouble("length");
     Double ascentDist = trailJson.optDouble("ascent");
@@ -174,9 +176,6 @@ public class TrailController implements Serializable {
       conditionStatus = "Condition status unavailable.";
     }
     String conditionDetails = trailJson.optString("conditionDetails", "");
-    if (conditionDetails.equals("")) {
-      conditionDetails = "Condition details unavailable.";
-    }
     Date conditionDate;
     String conditionDateStr = trailJson.optString("conditionDate", "");
     try {
@@ -188,8 +187,8 @@ public class TrailController implements Serializable {
     
     return new Trail(
             id, name, location, url, summary, difficulty,
-            rating, imgUrl, longitude, latitude, length,
-            ascentDist, descentDist, highestHeight, lowestHeight,
+            rating, numberOfRatings, imgUrl, longitude, latitude,
+            length, ascentDist, descentDist, highestHeight, lowestHeight,
             conditionStatus, conditionDetails, conditionDate
     );
   }
