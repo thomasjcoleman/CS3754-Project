@@ -49,6 +49,15 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <i class="fas fa-home"></i>&nbsp;Home
                   </h:link>
                   
+                  <!-- 
+                  ============================================
+                  Selecting "Trail Search" displays the dialog below
+                  ============================================
+                  -->
+                  <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
+                    <i class="fas fa-search"></i>&nbsp;Trail Search
+                  </h:link>
+                  
                   <h:link outcome="/findTrails/Map" class="standardText">
                     <i class="fas fa-map-marker-alt"></i>&nbsp;Map
                   </h:link>
@@ -69,6 +78,15 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <i class="fas fa-home"></i>&nbsp;Home
                   </h:link>
                   
+                  <!-- 
+                  ============================================
+                  Selecting "Trail Search" displays the dialog below
+                  ============================================
+                  -->
+                  <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
+                    <i class="fas fa-search"></i>&nbsp;Trail Search
+                  </h:link>
+                  
                   <h:link outcome="/findTrails/Map" class="standardText">
                     <i class="fas fa-map-marker-alt"></i>&nbsp;Map
                   </h:link>
@@ -87,6 +105,80 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
         </tr>
       </table>
     </h:form>
+    
+        <!-- 
+        ====================================================================
+        |  Clicking the TRAIL SEARCH link displays this Dialog window for  |
+        |  the user to enter a search query and click the Search button.   |
+        ====================================================================
+        -->
+        <p:dialog width="500px" position="center center" id="TrailSearchDlg" widgetVar="TrailSearchDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" header="Search Trails" responsive="true">
+            <h:form id="searchDialogForm">
+            <table border="0" align="center" cellpadding="10" cellspacing="0">
+                <div align="center" bgcolor="#FDF5E6" >
+                    <br />
+                    <h:outputLabel for="searchLatitudeField" value="Enter Latitude: " />
+
+                    <!-- 
+                    The search query entered by the user in the inputText field is set to be 
+                    the value of the latitudeQuery property of the TrailController
+                    -->
+                    <p:inputText id="searchLatitudeField" style="width:200px"
+                                 placeholder="Enter Search String"
+                                 required="true"
+                                 requiredMessage="Please enter a Search String!"
+                                 value="#{trailController.latitudeQuery}" >
+                    </p:inputText>
+                    <br /><br />
+                    
+                    <h:outputLabel for="searchLongitudeField" value="Enter Longitude: " />
+                    <p:inputText id="searchLongitudeField" style="width:200px"
+                                 placeholder="Enter Search String"
+                                 required="true"
+                                 requiredMessage="Please enter a Search String!"
+                                 value="#{trailController.longitudeQuery}" >
+                    </p:inputText>
+                    <br /><br />
+                    
+                    <h:outputLabel for="searchDistanceField" value="Enter Radius: " />
+                    <p:inputText id="searchDistanceField" style="width:200px"
+                                 placeholder="Enter Search String"
+                                 required="true"
+                                 requiredMessage="Please enter a Search String!"
+                                 value="#{trailController.distanceQuery}" >
+                    </p:inputText>
+                    <br /><br />
+                    <!--  SEARCH button:
+                    Clicking the Search button invokes the performSearch() method of the
+                    TrailController CDI @Named bean. The performSearch() method executes
+                    the search for the searchQuery property value and at the end of the execution with
+                    
+                        return "Results?faces-redirect=true";
+                    
+                    it returns "Results" as the name of the XHTML file to display.
+                    -->
+                    <p:commandButton value="Search" id="searchButton"  ajax="false" icon="fas fa-search"
+                                     action="#{trailController.performSearch()}" />
+                    &nbsp;&nbsp;
+                    
+                    <!-- CLEAR button -->                    
+                    <p:commandButton value="Clear" icon="fas fa-undo" ajax="false"
+                                     actionListener="#{trailController.clear()}" immediate="true" >
+
+                        <p:resetInput target="TrailSearchDlg" />
+                    </p:commandButton>
+                    &nbsp;&nbsp;
+                    
+                    <!-- CANCEL button -->
+                    <p:commandButton value="Cancel" onclick="PF('TrailSearchDialog').hide()" 
+                                     icon="fas fa-ban"/>
+                    <br /><br />
+                </div>
+            </table>
+            </h:form>
+        </p:dialog>
+    
   </ui:composition>
 
 </html>
