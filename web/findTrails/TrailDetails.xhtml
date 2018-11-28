@@ -34,46 +34,52 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
           <img width="150" src="#{resource['images:ratingGray.png']}"  title="Rating: #{trailController.selected.rating}"/>
           <span class="ratingCount"><h:outputText value="#{trailController.selected.numberOfRatings} ratings"/></span>
           <div class="trailDescription"><h:outputText value="#{trailController.selected.summary}" /></div>
-          
-          <p:graphicImage class="trailPhoto" url="#{trailController.selected.imgUrl}"/>
-          <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                       rendered="#{trailController.selected != null}" style="width: 300px; float: left;">
-            Length:
-            <h:outputText value="#{trailController.selected.length} miles" />
-            
-            Ascent:
-            <h:outputText value="#{trailController.selected.ascentDist}">
-              <f:convertNumber pattern="#0 feet"/>
-            </h:outputText>
-            
-            Descent:
-            <h:outputText value="#{trailController.selected.descentDist}">
-              <f:convertNumber pattern="#0 feet"/>
-            </h:outputText>
-            
-            Highest point:
-            <h:outputText value="#{trailController.selected.highestHeight}">
-              <f:convertNumber pattern="#0 feet"/>
-            </h:outputText>
-            
-            Lowest point:
-            <h:outputText value="#{trailController.selected.lowestHeight}">
-              <f:convertNumber pattern="#0 feet"/>
-            </h:outputText>
-            
-            Current condition:
-            <h:outputText value="#{trailController.selected.conditionStatus}" />
-            
-            <c:if test="#{!empty trailController.selected.conditionDetails}" >
-              Condition details:
-              <h:outputText value="#{trailController.selected.conditionDetails}" />
-              
-              Last updated:
-              <h:outputText value="#{trailController.selected.conditionDate}">
-                <f:convertDateTime pattern="MM-dd-yyyy, h:mm a" />
+
+          <div style="overflow: auto">
+            <p:graphicImage class="trailPhoto" url="#{trailController.selected.imgUrl}"/>
+            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                         rendered="#{trailController.selected != null}" style="width: 300px; float: left;">
+              Length:
+              <h:outputText value="#{trailController.selected.length} miles" />
+
+              Ascent:
+              <h:outputText value="#{trailController.selected.ascentDist}">
+                <f:convertNumber pattern="#0 feet"/>
               </h:outputText>
-            </c:if>
-          </p:panelGrid>
+
+              Descent:
+              <h:outputText value="#{trailController.selected.descentDist}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
+
+              Highest point:
+              <h:outputText value="#{trailController.selected.highestHeight}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
+
+              Lowest point:
+              <h:outputText value="#{trailController.selected.lowestHeight}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
+
+              Current condition:
+              <h:outputText value="#{trailController.selected.conditionStatus}" />
+
+              <c:if test="#{!empty trailController.selected.conditionDetails}" >
+                Condition details:
+                <h:outputText value="#{trailController.selected.conditionDetails}" />
+
+                Last updated:
+                <h:outputText value="#{trailController.selected.conditionDate}">
+                  <f:convertDateTime pattern="MM-dd-yyyy, h:mm a" />
+                </h:outputText>
+              </c:if>
+            </p:panelGrid>
+          </div>
+
+          <div align="center">
+            <p:button outcome="./TrailDirections.xhtml?id=#{param['id']}" value="Get Directions from Current Location" icon="fas fa-search"  />
+          </div>
         </div>
       </div>
 

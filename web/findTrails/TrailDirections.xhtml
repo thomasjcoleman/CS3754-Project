@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Thomas Coleman on 2018.11.15
+Copyright © 2018 Thomas Coleman. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <ui:composition template="/template/siteTemplate.xhtml">
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{trailController.getTrailMap(param['id'])}" />
+    </f:metadata>
+    <ui:define name="title">
+      <h:outputText value="Trail Map"></h:outputText>
+    </ui:define>
+
+    <ui:define name="editableContent">
+      <!-- API key specified in siteTemplate -->
+      <div id="map" class="map"></div>
+
+      <h:form id="directionsForm" style="text-align: center">
+        <p:button outcome="./TrailDetails.xhtml?id=#{param['id']}" value="Back" icon="fas fa-arrow-left"  />
+        &nbsp;&nbsp;
+        <p:commandButton value="Walking" icon="fas fa-walking" ajax="false"
+                  action="#{trailController.changeTravelMode(0)}" />
+        &nbsp;&nbsp;
+        <p:commandButton value="Driving" icon="fas fa-car" ajax="false"
+                  action="#{trailController.changeTravelMode(1)}" />
+        &nbsp;&nbsp;
+        <p:commandButton value="&nbsp;Bicycling" icon="fas fa-bicycle" ajax="false"
+                  action="#{trailController.changeTravelMode(2)}" />
+        &nbsp;&nbsp;
+        <p:commandButton value="Transit" icon="fas fa-bus" ajax="false"
+                  action="#{trailController.changeTravelMode(3)}" />
+      </h:form>
+
+
+      <input type="hidden" id="jsonData" value="#{trailController.jsonResults}" />
+      <input type="hidden" id="travelMode" value="#{trailController.travelMode}" />
+      <script type="text/javascript">
+        initializeMap();
+      </script>
+    </ui:define>
+  </ui:composition>
+
+</html>

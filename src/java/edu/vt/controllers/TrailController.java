@@ -10,12 +10,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import org.primefaces.json.JSONArray;
@@ -33,6 +33,7 @@ public class TrailController implements Serializable {
   private String jsonResults;
   private List<Trail> results;
   private Trail selected;
+  private String travelMode = "DRIVING";
 
   // Constructor
   public TrailController() {
@@ -62,7 +63,36 @@ public class TrailController implements Serializable {
   public void setSelected(Trail selected) {
     this.selected = selected;
   }
+
+  public String getTravelMode() {
+    return travelMode;
+  }
+
+  public void setTravelMode(String travelMode) {
+    this.travelMode = travelMode;
+  }
   
+  public String changeTravelMode(int type) {
+    switch (type) {
+      case 0:
+        travelMode = "WALKING";
+        break;
+      case 1:
+        travelMode = "DRIVING";
+        break;
+      case 2:
+        travelMode = "BICYCLING";
+        break;
+      case 3:
+        travelMode = "TRANSIT";
+        break;
+    }
+    
+    return "TrailDirections.xhtml?id=" + selected.getId() + "&faces-redirect=true";
+  }
+  
+  
+  /* Instance methods */
   // Get all nearby trail data.
   public void getMainMap() {
     getTrailsInRadius(37.227264, -80.420745, 50);
@@ -204,7 +234,7 @@ public class TrailController implements Serializable {
     BufferedReader reader = null;
     try {
       URL url = new URL(webServiceURL);
-      reader = new BufferedReader(new InputStreamReader(url.openStream()));
+      reader = new BufferedReader(new InputStreamReader(url.openStream(),  Charset.forName("UTF-8")));
       StringBuilder buffer = new StringBuilder();
       char[] chars = new char[10240];
 

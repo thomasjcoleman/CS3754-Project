@@ -26,7 +26,7 @@ var directionsDisplay = new google.maps.DirectionsRenderer();
 // Create and display a map centered on Virginia Tech
 function initializeMap() {
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 10,
+    zoom: 11,
     center: {lat: 37.227264, lng: -80.420745},
     mapTypeControl: true,
     mapTypeControlOptions: {
@@ -52,8 +52,11 @@ function display() {
   });
 
   if (document.getElementById("trailGPX") !== null) {
-    // If there is a specific trail named, only show that one.
+    // If there is a specific trail path given, only show that one.
     displaySingleTrail();
+  } else if (document.getElementById("travelMode") !== null) {
+    // If requested, show a route from the user's position to the trail.
+    displayRoute();
   } else {
     // Else, show all trails.
     displayAllTrails();
@@ -120,34 +123,28 @@ function displayAllTrails() {
 }
 
 // Draws the route on map showing directions to go from one location to another
-function drawRoute() {
+function displayRoute() {
   directionsDisplay.setMap(map);
-
-  /******************************* Start Geolocation Determination *******************************/
-  var startingLatitudeAsString = document.getElementById("startLat").value.toString();
-  var startingLongitudeAsString = document.getElementById("startLong").value.toString();
-  var startGeolocation = new google.maps.LatLng(startingLatitudeAsString, startingLongitudeAsString);
-
-  /**************************** Destination Geolocation Determination ****************************/
-  var destinationLatitudeAsString = document.getElementById("destinationLat").value.toString();
-  var destinationLongitudeAsString = document.getElementById("destinationLong").value.toString();
-  var endGeolocation = new google.maps.LatLng(destinationLatitudeAsString, destinationLongitudeAsString);
-
-  /********************************** Travel Mode Determination **********************************/
-  var selectedTravelMode = document.getElementById('travelMode').value;
-
-  /***************************** Directions Request Object Creation ******************************/
-  var request = {
-    origin: startGeolocation,
-    destination: endGeolocation,
-    travelMode: google.maps.TravelMode[selectedTravelMode]
-  };
-
-  /***************************** Obtaining and Displaying Directions *****************************/
-  directionsService.route(request, function (response, status) {
-    if (status === google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
-    }
+  var trail = JSON.parse(document.getElementById("jsonData").value).trails[0];
+  
+  // Get the user's position first...
+  navigator.geolocation.getCurrentPosition(function (pos) {
+    var c = pos.coords;
+    var startPos =  new google.maps.LatLng(c.latitude, c.longitude);
+    var destPos = new google.maps.LatLng(trail.latitude, trail.longitude);
+    var travelMode = document.getElementById('travelMode').value;
+    var request = {
+      origin: startPos,
+      destination: destPos,
+      travelMode: google.maps.TravelMode[travelMode]
+    };
+    
+    // get the directions
+    directionsService.route(request, function (response, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      }
+    });
   });
 }
 
@@ -158,14 +155,14 @@ function loadGPXFileIntoGoogleMap(map, filepath) {
     success: function (data) {
       var parser = new GPXParser(data, map);
       
-      parser.setTrackColour("blue");   // Set the track line colour
-      parser.setTrackWidth(8);              // Set the track line width
+      parser.setTrackColour("blue");        // Set the track line colour
+      parser.setTrackWidth(6);              // Set the track line width
       parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
       parser.centerAndZoom(data);
       parser.addTrackpointsToMap();         // Add the trackpoints
       
       parser.setTrackColour("#71acf0e6");   // Set the track line colour
-      parser.setTrackWidth(5);              // Set the track line width
+      parser.setTrackWidth(4);              // Set the track line width
       parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
       parser.centerAndZoom(data);
       parser.addTrackpointsToMap();         // Add the trackpoints
