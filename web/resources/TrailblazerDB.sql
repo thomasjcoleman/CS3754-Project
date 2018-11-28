@@ -1,6 +1,6 @@
 -- May be subject to change
 
-DROP TABLE IF EXISTS UserInterests, UserFile, UserPhoto, User;
+DROP TABLE IF EXISTS UserInterests, UserFile, UserPhoto, UserTrip, User;
 
 CREATE TABLE User (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -20,6 +20,13 @@ CREATE TABLE User (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE UserTrip (
+  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  trail_id INT UNSIGNED,
+  user_id INT UNSIGNED,
+  FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+);
+
 CREATE TABLE UserPhoto (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
   extension ENUM('jpeg', 'jpg', 'png', 'gif') NOT NULL,
@@ -30,6 +37,8 @@ CREATE TABLE UserPhoto (
 CREATE TABLE UserFile (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
   filename VARCHAR(256) NOT NULL,
+  trip_id INT UNSIGNED,
+  FOREIGN KEY (trip_id) REFERENCES UserTrip(id) ON DELETE CASCADE,
   user_id INT UNSIGNED,
   FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );

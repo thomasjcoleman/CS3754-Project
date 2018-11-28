@@ -12,13 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,13 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author tcole
  */
 @Entity
-@Table(name = "UserFile")
+@Table(name = "UserTrip")
 @XmlRootElement
 @NamedQueries({
-  @NamedQuery(name = "UserFile.findAll", query = "SELECT u FROM UserFile u")
-  , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
-  , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")})
-public class UserFile implements Serializable {
+  @NamedQuery(name = "UserTrip.findAll", query = "SELECT u FROM UserTrip u")
+  , @NamedQuery(name = "UserTrip.findById", query = "SELECT u FROM UserTrip u WHERE u.id = :id")
+  , @NamedQuery(name = "UserTrip.findByTrailId", query = "SELECT u FROM UserTrip u WHERE u.trailId = :trailId")})
+public class UserTrip implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
@@ -40,28 +36,14 @@ public class UserFile implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Integer id;
-  @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 256)
-  @Column(name = "filename")
-  private String filename;
-  @JoinColumn(name = "trip_id", referencedColumnName = "id")
-  @ManyToOne
-  private User tripId;
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
-  @ManyToOne
-  private User userId;
+  @Column(name = "trail_id")
+  private Integer trailId;
 
-  public UserFile() {
+  public UserTrip() {
   }
 
-  public UserFile(Integer id) {
+  public UserTrip(Integer id) {
     this.id = id;
-  }
-
-  public UserFile(Integer id, String filename) {
-    this.id = id;
-    this.filename = filename;
   }
 
   public Integer getId() {
@@ -72,28 +54,12 @@ public class UserFile implements Serializable {
     this.id = id;
   }
 
-  public String getFilename() {
-    return filename;
+  public Integer getTrailId() {
+    return trailId;
   }
 
-  public void setFilename(String filename) {
-    this.filename = filename;
-  }
-
-  public User getTripId() {
-    return tripId;
-  }
-
-  public void setTripId(User tripId) {
-    this.tripId = tripId;
-  }
-
-  public User getUserId() {
-    return userId;
-  }
-
-  public void setUserId(User userId) {
-    this.userId = userId;
+  public void setTrailId(Integer trailId) {
+    this.trailId = trailId;
   }
 
   @Override
@@ -106,10 +72,10 @@ public class UserFile implements Serializable {
   @Override
   public boolean equals(Object object) {
     // TODO: Warning - this method won't work in the case the id fields are not set
-    if (!(object instanceof UserFile)) {
+    if (!(object instanceof UserTrip)) {
       return false;
     }
-    UserFile other = (UserFile) object;
+    UserTrip other = (UserTrip) object;
     if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
       return false;
     }
@@ -118,7 +84,7 @@ public class UserFile implements Serializable {
 
   @Override
   public String toString() {
-    return "edu.vt.EntityBeans.UserFile[ id=" + id + " ]";
+    return "edu.vt.EntityBeans.UserTrip[ id=" + id + " ]";
   }
   
 }
