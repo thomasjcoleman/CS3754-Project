@@ -77,9 +77,34 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
             </p:panelGrid>
           </div>
 
-          <div align="center">
+          <h:form id="buttonWrap" style="text-align: center">
+            <c:if test="#{userController.isLoggedIn()}"> 
+              <!-- TODO: Mark as interested -->
+              <c:choose>
+                <c:when test="#{false}"> 
+                  <p:commandButton id="interestButton" value="Remove from interested" icon="fas fa-eye-slash" />
+                </c:when> 
+                <c:otherwise>
+                  <p:commandButton id="interestButton" value="Add to interested" icon="fas fa-eye" />
+                </c:otherwise>
+              </c:choose>
+              &nbsp;&nbsp;
+              
+              <!-- TODO: Mark as completed -->
+              <c:choose>
+                <c:when test="#{false}"> 
+                  <p:commandButton id="completeButton" value="Remove from completed" icon="fas fa-times" />
+                </c:when> 
+                <c:otherwise>
+                  <p:commandButton id="completeButton" value="Mark as completed" icon="fas fa-check" />
+                </c:otherwise>
+              </c:choose>
+              &nbsp;&nbsp;
+            </c:if> 
+            
+            <!-- Show directions -->
             <p:button outcome="./TrailDirections.xhtml?id=#{param['id']}" value="Get Directions from Current Location" icon="fas fa-search"  />
-          </div>
+          </h:form>
         </div>
       </div>
 
