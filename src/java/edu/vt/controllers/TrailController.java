@@ -95,7 +95,7 @@ public class TrailController implements Serializable {
   /* Instance methods */
   // Get all nearby trail data.
   public void getMainMap() {
-    getTrailsInRadius(37.227264, -80.420745, 50);
+    getTrailsInRadius(37.227264, -80.420745, 100);
   }
   
   // Get a specific trail's data.
@@ -128,7 +128,7 @@ public class TrailController implements Serializable {
   
   // Get trails within an area.
   public List<Trail> getTrailsInRadius(double lat, double lon, double maxDistance) {
-    String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=50", lat, lon, maxDistance);
+    String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=150", lat, lon, maxDistance);
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);

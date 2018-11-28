@@ -26,7 +26,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
         <div id="map" class="map detailsMap"></div>
         <div class="trailDetails">
           <img class="difficulty" src="#{resource['images:trailDifficulties/' += trailController.selected.difficulty += '.svg']}" />
-          <h1><h:outputText value="#{trailController.selected.name}"/></h1>
+          <a href="#{trailController.selected.url}" target="_blank"><h1><h:outputText value="#{trailController.selected.name}"/></h1></a>
           <h2><h:outputText value="#{trailController.selected.location}"/></h2>
           <div class="rating" style="width: #{(trailController.selected.rating / 5) * 150}px">
             <img width="150" src="#{resource['images:rating.png']}"/>

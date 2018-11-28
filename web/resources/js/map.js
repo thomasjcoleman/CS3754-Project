@@ -43,7 +43,7 @@ function display() {
   // show user's position
   navigator.geolocation.getCurrentPosition(function (pos) {
     var c = pos.coords;
-    var marker = new google.maps.Marker({
+    new google.maps.Marker({
       position: new google.maps.LatLng(c.latitude, c.longitude),
       title: "Your location",
       icon: "../resources/images/userLocation.png",
@@ -69,10 +69,11 @@ function display() {
 function displaySingleTrail() {
   // Get the trail's information
   var trail = JSON.parse(document.getElementById("jsonData").value).trails[0];
+  var trailLatLong = new google.maps.LatLng(trail.latitude, trail.longitude);
   
   // Fetch the GPX file for the trail and display it on the map.
   var gpxFile = document.getElementById("trailGPX").value;
-  loadGPXFileIntoGoogleMap(map, gpxFile)
+  loadGPXFileIntoGoogleMap(map, gpxFile, trailLatLong)
 }
 
 
@@ -149,7 +150,7 @@ function displayRoute() {
 }
 
 // Helper function to load GPX data onto the map.
-function loadGPXFileIntoGoogleMap(map, filepath) {
+function loadGPXFileIntoGoogleMap(map, filepath, altLatLong) {
   $.ajax({url: filepath,
     dataType: "xml",
     success: function (data) {
@@ -168,6 +169,14 @@ function loadGPXFileIntoGoogleMap(map, filepath) {
       parser.addTrackpointsToMap();         // Add the trackpoints
       parser.addRoutepointsToMap();         // Add the routepoints
       parser.addWaypointsToMap();           // Add the waypoints
+    },
+    error: function() {
+      map.setCenter(altLatLong);
+      new google.maps.Marker({
+        position: altLatLong,
+        title: "No map available for the trail",
+        map: map
+      });
     }
   });
 }
