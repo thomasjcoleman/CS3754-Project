@@ -34,6 +34,9 @@ public class TrailController implements Serializable {
   private List<Trail> results;
   private Trail selected;
   private String travelMode = "DRIVING";
+  private String latitudeQuery;
+  private String longitudeQuery;
+  private String distanceQuery;
 
   // Constructor
   public TrailController() {
@@ -58,6 +61,30 @@ public class TrailController implements Serializable {
 
   public Trail getSelected() {
     return selected;
+  }
+  
+  public String getLatitudeQuery() {
+    return latitudeQuery;
+  }
+
+  public void setLatitudeQuery(String latitudeQuery) {
+    this.latitudeQuery = latitudeQuery;
+  }
+  
+  public String getLongitudeQuery() {
+    return longitudeQuery;
+  }
+
+  public void setLongitudeQuery(String longitudeQuery) {
+    this.longitudeQuery = longitudeQuery;
+  }
+  
+  public String getDistanceQuery() {
+    return distanceQuery;
+  }
+
+  public void setDistanceQuery(String distanceQuery) {
+    this.distanceQuery = distanceQuery;
   }
 
   public void setSelected(Trail selected) {
@@ -148,6 +175,32 @@ public class TrailController implements Serializable {
               "See: " + ex.getMessage());
     }
     return null;
+  }
+  
+  // Search Trail given specific paramters
+  public String performSearch() {
+    selected = null;
+    results = new ArrayList();
+    String searchData = "?lat=" + latitudeQuery + "&lon=" + longitudeQuery + "&maxDistance=" + distanceQuery + "&maxResults=150";
+    try {
+      jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
+      //jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
+      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
+      if (jsonData.optInt("success", 0) == 0) {
+        Methods.showMessage("Fatal Error", "No trails found within range.", "");
+      } else {
+        JSONArray trailArray = jsonData.getJSONArray("trails");
+        trailArray.forEach(trailObj -> {
+          results.add(createTrailFromJSON((JSONObject) trailObj));
+        });
+        return "/findTrails/Results?faces-redirect=true";
+      }
+    } catch (Exception ex) {
+      Methods.showMessage("Fatal Error",
+              "Hiking project API is unreachable!",
+              "See: " + ex.getMessage());
+    }
+    return "";
   }
 
   /**
@@ -249,5 +302,11 @@ public class TrailController implements Serializable {
         reader.close();
       }
     }
+  }
+  
+  public void clear() {
+        latitudeQuery = null;
+        longitudeQuery = null;
+        distanceQuery = null;
   }
 }
