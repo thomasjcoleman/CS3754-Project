@@ -17,48 +17,68 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserInterestsFacade extends AbstractFacade<UserInterests> {
 
-  @PersistenceContext(unitName = "Trailblazer-Team8PU")
-  private EntityManager em;
+    @PersistenceContext(unitName = "Trailblazer-Team8PU")
+    private EntityManager em;
 
-  @Override
-  protected EntityManager getEntityManager() {
-    return em;
-  }
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
-  public UserInterestsFacade() {
-    super(UserInterests.class);
-  }
-  
-  /**
-   * Gets a list of trails that the given user did or didn't complete
-   * 
-   * @param completed Get trails user completed or not
-   * @param userId The trails for this user
-   * @return list of trails
-   */
-  public List<UserInterests> findCompleted(Boolean completed, Integer userId) {
-    List<UserInterests> completedTrails = em.createNamedQuery("UserInterests.findByUserIdAndCompleted")
+    public UserInterestsFacade() {
+        super(UserInterests.class);
+    }
+
+    /**
+     * Gets a list of trails that the given user did or didn't complete
+     *
+     * @param completed Get trails user completed or not
+     * @param userId The trails for this user
+     * @return list of trails
+     */
+    public List<UserInterests> findCompleted(Boolean completed, Integer userId) {
+        List<UserInterests> completedTrails = em.createNamedQuery("UserInterests.findByUserIdAndCompleted")
                 .setParameter("completed", completed)
                 .setParameter("key", userId)
                 .getResultList();
 
         return completedTrails;
-  }
-  
-  /**
-   * Gets a list of trails that the given user is or isn't interested in
-   * 
-   * @param interested Get trails user is or isn't interested
-   * @param userId The trails for this user
-   * @return list of trails
-   */
-  public List<UserInterests> findInterested(Boolean interested, Integer userId) {
-    List<UserInterests> interestedTrails = em.createNamedQuery("UserInterests.findByUserIdAndInterested")
+    }
+
+    /**
+     * Gets a list of trails that the given user is or isn't interested in
+     *
+     * @param interested Get trails user is or isn't interested
+     * @param userId The trails for this user
+     * @return list of trails
+     */
+    public List<UserInterests> findInterested(Boolean interested, Integer userId) {
+        List<UserInterests> interestedTrails = em.createNamedQuery("UserInterests.findByUserIdAndInterested")
                 .setParameter("interested", interested)
                 .setParameter("key", userId)
                 .getResultList();
 
         return interestedTrails;
-  }
-  
+    }
+
+    /**
+     * Gets a trail with the given values
+     *
+     * @param userId
+     * @param trailId
+     * @return
+     */
+    public UserInterests findTrail(Integer userId, Integer trailId) {
+        if (em.createNamedQuery("UserInterests.findByUserIdAndTrailID")
+                .setParameter("userId", userId)
+                .setParameter("trailId", trailId)
+                .getResultList().size() == 1) {
+            return (UserInterests) em.createNamedQuery("UserInterests.findByUserIdAndTrailID")
+                    .setParameter("userId", userId)
+                    .setParameter("trailId", trailId)
+                    .getSingleResult();
+        }
+        return null;
+    }
+
 }

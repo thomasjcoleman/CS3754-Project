@@ -37,6 +37,9 @@ public class TrailController implements Serializable {
   private String latitudeQuery;
   private String longitudeQuery;
   private String distanceQuery;
+  private String minLengthQuery;
+  private String searchDifficulty;
+  private String searchRating;
 
   // Constructor
   public TrailController() {
@@ -85,6 +88,30 @@ public class TrailController implements Serializable {
 
   public void setDistanceQuery(String distanceQuery) {
     this.distanceQuery = distanceQuery;
+  }
+  
+  public String getMinLengthQuery() {
+      return minLengthQuery;
+  }
+  
+  public void setMinLengthQuery(String minLengthQuery) {
+      this.minLengthQuery = minLengthQuery;
+  }
+  
+  public String getSearchDifficulty() {
+      return searchDifficulty;
+  }
+  
+  public void setSearchDifficulty(String searchDifficulty) {
+      this.searchDifficulty = searchDifficulty;
+  }
+  
+  public String getSearchRating() {
+      return searchRating;
+  }
+  
+  public void setSearchRating(String searchRating) {
+      this.searchRating = searchRating;
   }
 
   public void setSelected(Trail selected) {
@@ -193,6 +220,9 @@ public class TrailController implements Serializable {
         trailArray.forEach(trailObj -> {
           results.add(createTrailFromJSON((JSONObject) trailObj));
         });
+        results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty));
+        results.removeIf(p -> p.getRating() <= Double.valueOf(searchRating));
+        results.removeIf(p -> p.getLength() <= Double.valueOf(minLengthQuery));
         return "/findTrails/Results?faces-redirect=true";
       }
     } catch (Exception ex) {
@@ -308,5 +338,8 @@ public class TrailController implements Serializable {
         latitudeQuery = null;
         longitudeQuery = null;
         distanceQuery = null;
+        minLengthQuery = null;
+        searchDifficulty = null;
+        searchRating = null;
   }
 }
