@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Trail {
   // Properties
-  private Long id;
+  private Integer id;
   private String name;
   private String location;
   private String url;
@@ -35,7 +35,7 @@ public class Trail {
   public Trail() {
   }
   
-  public Trail(Long id, String name, String location, String url, String summary, String difficulty, Double rating, Long numberOfRatings, String imgUrl, Double longitude, Double latitude, Double length, Double ascentDist, Double descentDist, Double highestHeight, Double lowestHeight, String conditionStatus, String conditionDetails, Date conditionDate) {
+  public Trail(Integer id, String name, String location, String url, String summary, String difficulty, Double rating, Long numberOfRatings, String imgUrl, Double longitude, Double latitude, Double length, Double ascentDist, Double descentDist, Double highestHeight, Double lowestHeight, String conditionStatus, String conditionDetails, Date conditionDate) {
     this.id = id;
     this.name = name;
     this.location = location;
@@ -58,11 +58,11 @@ public class Trail {
   }
   
   // Getters/setters
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

@@ -126,7 +126,7 @@ public class TrailController implements Serializable {
   }
   
   // Get a specific trail's data.
-  public void getTrailMap(Long ID) {
+  public void getTrailMap(Integer ID) {
     if (ID != null) {
       selected = getTrailByID(ID);
     } else if (selected != null) {
@@ -135,7 +135,7 @@ public class TrailController implements Serializable {
   }
 
   // Get a trail's information via its ID.
-  public Trail getTrailByID(Long ID) {
+  public Trail getTrailByID(Integer ID) {
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails-by-id?ids=" + ID + apiKey);
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
@@ -210,7 +210,7 @@ public class TrailController implements Serializable {
    * @return The created trail.
    */
   private Trail createTrailFromJSON(JSONObject trailJson) {
-    Long id = trailJson.optLong("id", 0);
+    Integer id = trailJson.optInt("id", 0);
     if (id == 0) {
       return null;
     }
