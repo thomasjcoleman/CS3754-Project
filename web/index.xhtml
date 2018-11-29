@@ -4,35 +4,31 @@ Created by Thomas Coleman on 2018.11.06
 Copyright © 2018 Thomas Coleman. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <ui:composition template="/template/siteTemplate.xhtml">
-        <ui:define name="editableContent">
+  <ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="editableContent">
+      <div style="display: flex; flex-flow: row-reverse wrap; justify-content: center; width: 100%">
+        <div style="flex-grow: 0; flex-basis: 50%; margin-bottom: 15px">
+          <p:galleria value="#{sliderController.sliderImages}" 
+                      var="image" effect="slide" effectSpeed="1000" showFilmstrip="false"
+                      panelWidth="500" panelHeight="313" showCaption="false">
 
-            <table border="0" cellspacing="0" cellpadding="10" width="100%">
-                <tr>
-                    <td align="center" valign="middle" style="width:100px; max-height:100px">
-                        <a class="twitter-timeline" data-width="400" data-height="400" href="https://twitter.com/AmericanHiking?ref_src=twsrc%5Etfw">Tweets by AmericanHiking</a> <script async="True" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>                    
-                    </td>
-                    <td align="left" valign="middle" style="width:268px;">
-                        <!-- Handle the image slider. -->
-                        
-                        <p:galleria value="#{sliderController.sliderImages}" 
-                                    var="image" effect="slide" effectSpeed="1000" showFilmstrip="false"
-                                    panelWidth="500" panelHeight="313" showCaption="false">
+            <p:graphicImage value="/resources/images/imageSliderPhotos/#{image}" 
+                            alt="" title="" />
 
-                            <p:graphicImage value="/resources/images/imageSliderPhotos/#{image}" 
-                                            alt="" title="" />
-
-                        </p:galleria>
-                    </td>
-                </tr>
-
-            </table>
-        </ui:define>
-    </ui:composition>
+          </p:galleria>
+        </div>
+        <div style="flex-grow: 0; flex-basis: 500px; text-align: center;">
+          <a class="twitter-timeline" data-width="300" data-height="400"
+             href="https://twitter.com/AmericanHiking?ref_src=twsrc%5Etfw">Tweets by AmericanHiking</a>
+          <script async="True" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>                    
+        </div>
+      </div>
+    </ui:define>
+  </ui:composition>
 </html>
