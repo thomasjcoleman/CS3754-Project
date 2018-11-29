@@ -4,6 +4,7 @@
  */
 package edu.vt.controllers;
 
+import edu.vt.EntityBeans.Trail;
 import edu.vt.EntityBeans.UserInterests;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
@@ -32,6 +33,7 @@ public class UserInterestsController implements Serializable {
     private edu.vt.FacadeBeans.UserInterestsFacade ejbFacade;
 
     private UserInterests selected;
+    private UserInterests newInterest;
 
     /*
    * Manage the trails that are completed
@@ -66,31 +68,51 @@ public class UserInterestsController implements Serializable {
 
     /*
      * If these get uncommented, make sure the correct lists are updated
-     *
+     */
     public UserInterests prepareCreate() {
-    selected = new UserInterests();
-    initializeEmbeddableKey();
-    return selected;
-  }
-
-  public void create() {
-    persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsCreated"));
-    if (!JsfUtil.isValidationFailed()) {
-      items = null;    // Invalidate list of items to trigger re-query.
+        newInterest = new UserInterests();
+        initializeEmbeddableKey();
+        return newInterest;
     }
-  }
 
-  public void update() {
-    persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsUpdated"));
-  }
-
-  public void destroy() {
-    persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsDeleted"));
-    if (!JsfUtil.isValidationFailed()) {
-      selected = null; // Remove selection
-      items = null;    // Invalidate list of items to trigger re-query.
+    public void addInterested(Trail trail) {
+        prepareCreate();
+        
+        newInterest.setInterested(Boolean.TRUE);
+        newInterest.setTrailId(trail.getId());
+        
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsCreated"));
+        if (!JsfUtil.isValidationFailed()) {
+            completedTrails = null;    // Invalidate list of items to trigger re-query.
+            interestedTrails = null;
+        }
     }
-  }*/
+    
+    public void addCompleted(Trail trail) {
+        prepareCreate();
+        
+        newInterest.setInterested(Boolean.TRUE);
+        newInterest.setTrailId(trail.getId());
+        
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsCreated"));
+        if (!JsfUtil.isValidationFailed()) {
+            completedTrails = null;    // Invalidate list of items to trigger re-query.
+            interestedTrails = null;
+        }
+    }
+
+    public void update() {
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsUpdated"));
+    }
+
+    public void destroy() {
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
     public List<UserInterests> getCompletedTrails() {
         if (completedTrails == null) {
             int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
