@@ -338,5 +338,8 @@ public class TrailController implements Serializable {
         latitudeQuery = null;
         longitudeQuery = null;
         distanceQuery = null;
+        minLengthQuery = null;
+        searchDifficulty = null;
+        searchRating = null;
   }
 }
