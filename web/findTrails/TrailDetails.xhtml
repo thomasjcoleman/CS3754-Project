@@ -78,29 +78,31 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     </div>
 
                     <h:form id="buttonWrap" style="text-align: center">
-                        <c:if test="#{userController.isLoggedIn()}"> 
-                            <!-- TODO: Mark as interested -->
+                        <c:if test="#{userController.isLoggedIn()}">
                             <c:choose>
                                 <c:when test="#{userInterestsController.trailMarkedInterested(param['id'])}"> 
                                     <p:commandButton id="interestButton" value="Remove from interested" icon="fas fa-eye-slash" ajax="false"
-                                                     actionListener="#{userInterestsController.removeInterested(trailController.selected)}"/>
+                                                     actionListener="#{userInterestsController.removeInterested(trailController.selected)}"
+                                                     action="#{trailController.reload()}"/>
                                 </c:when> 
                                 <c:otherwise>
                                     <p:commandButton id="interestButton" value="Add to interested" icon="fas fa-eye" ajax="false"
-                                                     actionListener="#{userInterestsController.addInterested(trailController.selected)}" />
+                                                     actionListener="#{userInterestsController.addInterested(trailController.selected)}"
+                                                     action="#{trailController.reload()}"/>
                                 </c:otherwise>
                             </c:choose>
                             &nbsp;&nbsp;
 
-                            <!-- TODO: Mark as completed -->
                             <c:choose>
                                 <c:when test="#{userInterestsController.trailMarkedCompleted(param['id'])}"> 
                                     <p:commandButton id="completeButton" value="Remove from completed" icon="fas fa-times" ajax="false"
-                                                     actionListener="#{userInterestsController.removeCompleted(trailController.selected)}"/>
+                                                     actionListener="#{userInterestsController.removeCompleted(trailController.selected)}"
+                                                     action="#{trailController.reload()}"/>
                                 </c:when> 
                                 <c:otherwise>
                                     <p:commandButton id="completeButton" value="Mark as completed" icon="fas fa-check" ajax="false"
-                                                     actionListener="#{userInterestsController.addCompleted(trailController.selected)}"/>
+                                                     actionListener="#{userInterestsController.addCompleted(trailController.selected)}"
+                                                     action="#{trailController.reload()}"/>
                                 </c:otherwise>
                             </c:choose>
                             &nbsp;&nbsp;

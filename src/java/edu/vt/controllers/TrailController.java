@@ -334,6 +334,9 @@ public class TrailController implements Serializable {
     }
   }
   
+  public String reload() {
+    return "TrailDetails.xhtml?faces-redirect=true&id=" + selected.getId();
+  }
   public void clear() {
         latitudeQuery = null;
         longitudeQuery = null;

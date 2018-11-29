@@ -49,17 +49,25 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                   <h:link outcome="/index" class="standardText">
                     <i class="fas fa-home"></i>&nbsp;Home
                   </h:link>
-                    
-                  <h:link outcome="/userFile/ListUserFiles" class="standardText">
-                    <i class="fas fa-file"></i>&nbsp;My Trail Files
+
+                  <h:link outcome="/findTrails/Map" class="standardText">
+                    <i class="fas fa-map-marker-alt"></i>&nbsp;Map
                   </h:link>
 
                   <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
                     <i class="fas fa-search"></i>&nbsp;Trail Search
                   </h:link>
+                  
+                  <h:link outcome="/userTrails/ListInterested">
+                    <i class="fas fa-eye"></i>&nbsp;Interested Trails
+                  </h:link>
+                  
+                  <h:link outcome="/userTrails/ListCompleted">
+                    <i class="fas fa-check"></i>&nbsp;Completed Trails
+                  </h:link>
 
-                  <h:link outcome="/findTrails/Map" class="standardText">
-                    <i class="fas fa-map-marker-alt"></i>&nbsp;Map
+                  <h:link outcome="/userFile/ListUserFiles" class="standardText">
+                    <i class="fas fa-file"></i>&nbsp;My Trail Files
                   </h:link>
 
                   <h:link outcome="/send/Email" class="standardText">

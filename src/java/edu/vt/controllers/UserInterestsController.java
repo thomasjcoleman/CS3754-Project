@@ -196,7 +196,6 @@ public class UserInterestsController implements Serializable {
     public List<UserInterests> getCompletedTrails() {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         completedTrails = getFacade().findCompleted(true, userPrimaryKey); // Change to findCompleted
-        System.out.println(completedTrails.size());
         return completedTrails;
     }
 

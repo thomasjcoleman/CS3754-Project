@@ -10,70 +10,56 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template/siteTemplate.xhtml">
+  <ui:composition template="/template/siteTemplate.xhtml">
 
 
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListCompletedTrailsTitle}"></h:outputText>
-        </ui:define>
+    <ui:define name="title">
+      <h:outputText value="#{bundle.ListCompletedTrailsTitle}"></h:outputText>
+    </ui:define>
 
-        <ui:define name="editableContent">
-            <div align="center" style="width:97%">
-                <h:form id="ListCompletedForm">
-                    <p:panel header="#{bundle.ListCompletedTrailsTitle}">
-                        <p:dataTable id="datalist" value="#{userInterestsController.getCompletedTrails()}" var="item"
-                                     selectionMode="single" selection="#{userInterestsController.selected}"
-                                     reflow="true"
-                                     paginator="true"
-                                     rowKey="#{item.id}"
-                                     rows="10"
-                                     rowsPerPageTemplate="5,10,20,30,40,50"
-                                     class="dataTable"
-                                     >
+    <ui:define name="editableContent">
+      <div align="center" style="width:97%">
+        <h:form id="ListCompletedForm">
+          <p:panel header="#{bundle.ListCompletedTrailsTitle}">
+            <p:dataTable id="datalist" value="#{userInterestsController.getCompletedTrails()}" var="item"
+                         selectionMode="single" selection="#{userInterestsController.selected}"
+                         reflow="true"
+                         paginator="true"
+                         rowKey="#{item.id}"
+                         rows="10"
+                         rowsPerPageTemplate="5,10,20,30,40,50"
+                         class="dataTable"
+                         >
 
-                            <p:ajax event="rowSelect"   update="viewButton"/>
-                            <p:ajax event="rowUnselect" update="viewButton"/>
+              <p:ajax event="rowSelect"   update="viewButton"/>
+              <p:ajax event="rowUnselect" update="viewButton"/>
 
-                            <!--
-                            ==========
-                            Trail Name
-                            ==========
-                            -->
-                            <p:column sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="#{bundle.ListCompletedTrailsTitle_trailname}">
-                                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getName()}"/>
-                            </p:column>
+              <p:column headerText="Photo" style="width: 150px">
+                <p:graphicImage url="#{trailController.getTrailByID(item.trailId).getImgUrl()}" width="150px" style="float:left" />
+              </p:column>
+              
+              <p:column sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="Trail Name">
+                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getName()}"/>
+              </p:column>
 
-                            <!-- 
-                            =========
-                            Completed
-                            =========
-                            -->
-                            <p:column headerText="#{bundle.ListCompletedTrailsTitle_completed}">
-                                <h:outputText class="inputTextField" value="#{item.completed}"/>
-                            </p:column>
+              <p:column sortBy="#{trailController.getTrailByID(item.trailId).getLocation()}" headerText="Trail Location">
+                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getLocation()}"/>
+              </p:column>
 
-                            <!-- 
-                            ==========
-                            Interested
-                            ==========
-                            -->
-                            <p:column headerText="#{bundle.ListCompletedTrailsTitle_interested}">
-                                <h:outputText class="inputTextField" value="#{item.interested}"/>
-                            </p:column>
 
-                            <f:facet name="footer">
-                                <!-- VIEW button -->
-                                <p:commandButton id="viewButton" icon="fas fa-eye" value="#{bundle.View}"
-                                                 update=":ViewTrailForm" oncomplete="PF('ViewTrailDialog').show()"
-                                                 disabled="#{empty userInterestsController.selected}"/>
-                            </f:facet>
-                        </p:dataTable>
-                    </p:panel>
-                </h:form>
-            </div>
+              <f:facet name="footer">
+                <!-- VIEW button -->
+                <p:button id="viewButton" icon="fas fa-eye" value="#{bundle.View}" target="_blank"
+                          href="../findTrails/TrailDetails.xhtml?id=#{userInterestsController.selected.trailId}"
+                          disabled="#{empty userInterestsController.selected}"/>
+              </f:facet>
+            </p:dataTable>
+          </p:panel>
+        </h:form>
+      </div>
 
-            <ui:include src="/userTrails/ViewTrail.xhtml"/>
-        </ui:define>
-    </ui:composition>
+      <ui:include src="/userTrails/ViewTrail.xhtml"/>
+    </ui:define>
+  </ui:composition>
 
 </html>
