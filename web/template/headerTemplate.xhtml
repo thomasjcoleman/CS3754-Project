@@ -130,7 +130,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <p:inputText id="searchLatitudeField" style="width:200px"
                                  placeholder="Enter Search String"
                                  required="true"
-                                 requiredMessage="Please enter a Search String!"
+                                 requiredMessage="Please enter a Latitude!"
                                  value="#{trailController.latitudeQuery}" >
                     </p:inputText>
                     
@@ -138,7 +138,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <p:inputText id="searchLongitudeField" style="width:200px"
                                  placeholder="Enter Search String"
                                  required="true"
-                                 requiredMessage="Please enter a Search String!"
+                                 requiredMessage="Please enter a Longitude!"
                                  value="#{trailController.longitudeQuery}" >
                     </p:inputText>
                     
@@ -146,7 +146,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <p:inputText id="searchDistanceField" style="width:200px"
                                  placeholder="Enter Search String"
                                  required="true"
-                                 requiredMessage="Please enter a Search String!"
+                                 requiredMessage="Please enter a Distance!"
                                  value="#{trailController.distanceQuery}" >
                     </p:inputText>
                     
@@ -154,7 +154,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <p:inputText id="searchMinLengthField" style="width:200px"
                                  placeholder="Enter Search String"
                                  required="true"
-                                 requiredMessage="Please enter a Search String!"
+                                 requiredMessage="Please enter trail length!"
                                  value="#{trailController.minLengthQuery}" >
                         <f:validateDoubleRange minimum = "0.00"/>
                     </p:inputText>
@@ -174,9 +174,9 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     
                     <h:outputLabel for="searchRatingField" value="Choose Minimim Rating: " />
                     <p:selectOneMenu id="searchRatingField" value="#{trailController.searchRating}"
-                                         required="true" requiredMessage="Please Select a Difficulty Level!" >
+                                         required="true" requiredMessage="Please Select a Rating!" >
 
-                            <f:selectItem itemLabel="Select Difficulty"   itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Select Rating"   itemValue="" noSelectionOption="true"/>
                             <f:selectItem itemLabel="1 Star"  itemValue="1"/>
                             <f:selectItem itemLabel="2 Stars" itemValue="2"/>
                             <f:selectItem itemLabel="3 Stars" itemValue="3"/>
