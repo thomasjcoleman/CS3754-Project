@@ -5,6 +5,7 @@
  */
 package edu.vt.EntityBeans;
 
+import edu.vt.globals.Constants;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author tcole
+ * @author
  */
 @Entity
 @Table(name = "UserFile")
@@ -31,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
   @NamedQuery(name = "UserFile.findAll", query = "SELECT u FROM UserFile u")
   , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
-  , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")})
+  , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
+  , @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+})
 public class UserFile implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -63,6 +66,11 @@ public class UserFile implements Serializable {
     this.id = id;
     this.filename = filename;
   }
+  
+  public UserFile(String filename, User id) {
+        this.filename = filename;
+        userId = id;
+    }
 
   public Integer getId() {
     return id;
@@ -120,5 +128,9 @@ public class UserFile implements Serializable {
   public String toString() {
     return "edu.vt.EntityBeans.UserFile[ id=" + id + " ]";
   }
+  
+  public String getFilePath() {
+        return Constants.FILES_ABSOLUTE_PATH + getFilename();
+    }
   
 }
