@@ -175,19 +175,18 @@ public class UserInterestsController implements Serializable {
         }
     }
     
-    public boolean trailMarkedInterested(Trail trail) {
+    public boolean trailMarkedInterested(Integer trailId) {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
-        trail.getId();
-        UserInterests ui = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
+        UserInterests ui = getFacade().findTrail(userPrimaryKey, trailId); // Change to findCompleted
         if (ui != null) {
             return ui.getInterested();
         }
         return false;
     }
     
-    public boolean trailMarkedCompleted(Trail trail) {
+    public boolean trailMarkedCompleted(Integer trailId) {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
-        UserInterests ui = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
+        UserInterests ui = getFacade().findTrail(userPrimaryKey, trailId); // Change to findCompleted
         if (ui != null) {
             return ui.getCompleted();
         }
