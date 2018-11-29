@@ -81,7 +81,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                         <c:if test="#{userController.isLoggedIn()}"> 
                             <!-- TODO: Mark as interested -->
                             <c:choose>
-                                <c:when test="#{false}"> 
+                                <c:when test="#{!userInterestsController.trailMarkedInterested(trailController.selected)}"> 
                                     <p:commandButton id="interestButton" value="Remove from interested" icon="fas fa-eye-slash"
                                                      actionListener="#{userInterestsController.removeInterested(trailController.selected)}"/>
                                 </c:when> 
@@ -94,7 +94,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
 
                             <!-- TODO: Mark as completed -->
                             <c:choose>
-                                <c:when test="#{false}"> 
+                                <c:when test="#{!userInterestsController.trailMarkedCompleted(trailController.selected)}"> 
                                     <p:commandButton id="completeButton" value="Remove from completed" icon="fas fa-times"
                                                      actionListener="#{userInterestsController.removeCompleted(trailController.selected)}"/>
                                 </c:when> 

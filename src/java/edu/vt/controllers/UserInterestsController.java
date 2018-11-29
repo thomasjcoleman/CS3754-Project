@@ -6,6 +6,7 @@ package edu.vt.controllers;
 
 import edu.vt.EntityBeans.Trail;
 import edu.vt.EntityBeans.UserInterests;
+import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.UserInterestsFacade;
@@ -31,6 +32,9 @@ public class UserInterestsController implements Serializable {
 
     @EJB
     private edu.vt.FacadeBeans.UserInterestsFacade ejbFacade;
+    
+    @EJB
+    private UserFacade userFacade;
 
     private UserInterests selected;
     private UserInterests newInterest;
@@ -71,6 +75,8 @@ public class UserInterestsController implements Serializable {
      */
     public UserInterests prepareCreate() {
         newInterest = new UserInterests();
+        newInterest.setInterested(Boolean.FALSE);
+        newInterest.setCompleted(Boolean.FALSE);
         initializeEmbeddableKey();
         return newInterest;
     }
@@ -79,15 +85,17 @@ public class UserInterestsController implements Serializable {
 
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         newInterest = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
-        newInterest.setInterested(Boolean.TRUE);
 
         if (newInterest != null) {
+            newInterest.setInterested(Boolean.TRUE);
             persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsUpdated"));
             interestedTrails = null;
 
         } else {
             prepareCreate();
+            newInterest.setInterested(Boolean.TRUE);
             newInterest.setTrailId(trail.getId());
+            newInterest.setUserId(userFacade.getUser(userPrimaryKey));
 
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsCreated"));
             if (!JsfUtil.isValidationFailed()) {
@@ -99,15 +107,17 @@ public class UserInterestsController implements Serializable {
     public void addCompleted(Trail trail) {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         newInterest = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
-        newInterest.setCompleted(Boolean.TRUE);
 
         if (newInterest != null) {
+            newInterest.setCompleted(Boolean.TRUE);
             persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsUpdated"));
             completedTrails = null;
 
         } else {
             prepareCreate();
+            newInterest.setCompleted(Boolean.TRUE);
             newInterest.setTrailId(trail.getId());
+            newInterest.setUserId(userFacade.getUser(userPrimaryKey));
 
             persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsCreated"));
             if (!JsfUtil.isValidationFailed()) {
@@ -120,10 +130,10 @@ public class UserInterestsController implements Serializable {
 
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         newInterest = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
-        newInterest.setInterested(Boolean.FALSE);
 
         // Do something if there
         if (newInterest != null) {
+            newInterest.setInterested(Boolean.FALSE);
 
             // Remove if both are set to false
             if (!newInterest.getInterested() && !newInterest.getCompleted()) {
@@ -132,8 +142,7 @@ public class UserInterestsController implements Serializable {
                     newInterest = null; // Remove selection
                     interestedTrails = null;    // Invalidate list of items to trigger re-query.
                 }
-            }
-            // Update if not
+            } // Update if not
             else {
                 persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsDeleted"));
                 newInterest = null; // Remove selection
@@ -145,10 +154,10 @@ public class UserInterestsController implements Serializable {
     public void removeCompleted(Trail trail) {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         newInterest = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
-        newInterest.setCompleted(Boolean.FALSE);
 
         // Do something if there
         if (newInterest != null) {
+            newInterest.setCompleted(Boolean.FALSE);
 
             // Remove if both are set to false
             if (!newInterest.getInterested() && !newInterest.getCompleted()) {
@@ -157,14 +166,32 @@ public class UserInterestsController implements Serializable {
                     newInterest = null; // Remove selection
                     completedTrails = null;    // Invalidate list of items to trigger re-query.
                 }
-            }
-            // Update if not
+            } // Update if not
             else {
                 persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("UserInterestsDeleted"));
                 newInterest = null; // Remove selection
                 completedTrails = null;
             }
         }
+    }
+    
+    public boolean trailMarkedInterested(Trail trail) {
+        int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+        trail.getId();
+        UserInterests ui = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
+        if (ui != null) {
+            return ui.getInterested();
+        }
+        return false;
+    }
+    
+    public boolean trailMarkedCompleted(Trail trail) {
+        int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+        UserInterests ui = getFacade().findTrail(userPrimaryKey, trail.getId()); // Change to findCompleted
+        if (ui != null) {
+            return ui.getCompleted();
+        }
+        return false;
     }
 
     public List<UserInterests> getCompletedTrails() {
