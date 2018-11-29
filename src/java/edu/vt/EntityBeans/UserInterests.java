@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
   , @NamedQuery(name = "UserInterests.findByCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed")
   , @NamedQuery(name = "UserInterests.findByUserIdAndCompleted", query = "SELECT u FROM UserInterests u WHERE u.completed = :completed AND u.userId.id = :key")
   , @NamedQuery(name = "UserInterests.findByUserIdAndInterested", query = "SELECT u FROM UserInterests u WHERE u.interested = :interested AND u.userId.id = :key")
+  , @NamedQuery(name = "UserInterests.findByUserIdAndTrailID", query = "SELECT u FROM UserInterests u WHERE u.userId.id = :userId AND u.trailId = :trailId")
 })
 public class UserInterests implements Serializable {
 

@@ -61,4 +61,24 @@ public class UserInterestsFacade extends AbstractFacade<UserInterests> {
         return interestedTrails;
     }
 
+    /**
+     * Gets a trail with the given values
+     *
+     * @param userId
+     * @param trailId
+     * @return
+     */
+    public UserInterests findTrail(Integer userId, Integer trailId) {
+        if (em.createNamedQuery("UserInterests.findByUserIdAndTrailID")
+                .setParameter("userId", userId)
+                .setParameter("trailId", trailId)
+                .getResultList().size() == 1) {
+            return (UserInterests) em.createNamedQuery("UserInterests.findByUserIdAndTrailID")
+                    .setParameter("userId", userId)
+                    .setParameter("trailId", trailId)
+                    .getSingleResult();
+        }
+        return null;
+    }
+
 }
