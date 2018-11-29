@@ -21,8 +21,8 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
             <div align="center" style="width:97%">
                 <h:form id="ListCompletedForm">
                     <p:panel header="#{bundle.ListCompletedTrailsTitle}">
-                        <p:dataTable id="datalist" value="#{userInteresetsController.completedTrails}" var="item"
-                                     selectionMode="single" selection="#{userInteresetsController.selected}"
+                        <p:dataTable id="datalist" value="#{userInterestsController.getCompletedTrails()}" var="item"
+                                     selectionMode="single" selection="#{userInterestsController.selected}"
                                      reflow="true"
                                      paginator="true"
                                      rowKey="#{item.id}"
@@ -35,21 +35,12 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             <p:ajax event="rowUnselect" update="viewButton"/>
 
                             <!--
-                            ========
-                            Trail ID
-                            ========
-                            -->
-                            <p:column headerText="#{bundle.ListCompletedTrailsTitle_id}" style="text-align: center; width:60px;">
-                                <h:outputText class="inputTextField" value="#{item.id}"/>
-                            </p:column>
-
-                            <!--
                             ==========
                             Trail Name
                             ==========
                             -->
-                            <p:column sortBy="#{item.trailname}" headerText="#{bundle.ListCompletedTrailsTitle_trailname}">
-                                <h:outputText class="inputTextField" value="#{item.trailname}"/>
+                            <p:column sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="#{bundle.ListCompletedTrailsTitle_trailname}">
+                                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getName()}"/>
                             </p:column>
 
                             <!-- 
@@ -57,7 +48,7 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             Completed
                             =========
                             -->
-                            <p:column sortBy="#{item.completed}" headerText="#{bundle.ListCompletedTrailsTitle_completed}">
+                            <p:column headerText="#{bundle.ListCompletedTrailsTitle_completed}">
                                 <h:outputText class="inputTextField" value="#{item.completed}"/>
                             </p:column>
 
@@ -66,15 +57,15 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             Interested
                             ==========
                             -->
-                            <p:column sortBy="#{item.completed}" headerText="#{bundle.ListCompletedTrailsTitle_interested}">
-                                <h:outputText class="inputTextField" value="#{item.completed}"/>
+                            <p:column headerText="#{bundle.ListCompletedTrailsTitle_interested}">
+                                <h:outputText class="inputTextField" value="#{item.interested}"/>
                             </p:column>
 
                             <f:facet name="footer">
                                 <!-- VIEW button -->
                                 <p:commandButton id="viewButton" icon="fas fa-eye" value="#{bundle.View}"
                                                  update=":ViewTrailForm" oncomplete="PF('ViewTrailDialog').show()"
-                                                 disabled="#{empty userInteresetsController.selected}"/>
+                                                 disabled="#{empty userInterestsController.selected}"/>
                             </f:facet>
                         </p:dataTable>
                     </p:panel>

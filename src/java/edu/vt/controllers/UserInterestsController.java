@@ -32,7 +32,7 @@ public class UserInterestsController implements Serializable {
 
     @EJB
     private edu.vt.FacadeBeans.UserInterestsFacade ejbFacade;
-    
+
     @EJB
     private UserFacade userFacade;
 
@@ -174,7 +174,7 @@ public class UserInterestsController implements Serializable {
             }
         }
     }
-    
+
     public boolean trailMarkedInterested(Integer trailId) {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         UserInterests ui = getFacade().findTrail(userPrimaryKey, trailId); // Change to findCompleted
@@ -183,7 +183,7 @@ public class UserInterestsController implements Serializable {
         }
         return false;
     }
-    
+
     public boolean trailMarkedCompleted(Integer trailId) {
         int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
         UserInterests ui = getFacade().findTrail(userPrimaryKey, trailId); // Change to findCompleted
@@ -194,18 +194,15 @@ public class UserInterestsController implements Serializable {
     }
 
     public List<UserInterests> getCompletedTrails() {
-        if (completedTrails == null) {
-            int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
-            completedTrails = getFacade().findCompleted(true, userPrimaryKey); // Change to findCompleted
-        }
+        int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+        completedTrails = getFacade().findCompleted(true, userPrimaryKey); // Change to findCompleted
+        System.out.println(completedTrails.size());
         return completedTrails;
     }
 
     public List<UserInterests> getInterestedTrails() {
-        if (interestedTrails == null) {
-            int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
-            interestedTrails = getFacade().findInterested(true, userPrimaryKey); // Change to findInterested
-        }
+        int userPrimaryKey = (int) Methods.sessionMap().get("user_id");
+        interestedTrails = getFacade().findInterested(true, userPrimaryKey); // Change to findInterested
         return interestedTrails;
     }
 
