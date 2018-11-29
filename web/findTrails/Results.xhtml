@@ -46,23 +46,27 @@ Created by Matthew Croll on October 14, 2018.
                   <f:facet name="header">
                     <h:outputText value="#{aSearchedTrail.name}"/>
                   </f:facet>
-                  <br/>
-
-                  <!-- by -->
-                  <h:outputText value="located at" style="float:left"/>
-                  <br/>
 
                   <!-- Trail Location -->
                   <h:outputText value="#{aSearchedTrail.location}" style="float:left"/>
+
+                  <!-- Difficult / rating -->
+                  <div style="margin-top: 5px">
+                    <img src="#{resource['images:trailDifficulties/' += aSearchedTrail.difficulty += '.svg']}" style="margin-right: 5px" />
+                    <div class="rating" style="width: #{(aSearchedTrail.rating / 5) * 80}px">
+                      <img width="80" src="#{resource['images:rating.png']}"/>
+                    </div>
+                    <img width="80" src="#{resource['images:ratingGray.png']}"  title="Rating: #{aSearchedTrail.rating}"/>
+                  </div>
 
                 </h:panelGrid>
 
                 <!-- 
                 *** INFO button ***
                 -->
-                <p:link style="width:20px;float:right;" 
-                               outcome="/findTrails/TrailDetails?id=#{aSearchedTrail.id}" 
-                               title="View Searched Trail Details">
+                <p:link style="width:20px;float:right;" target="_blank"
+                        outcome="/findTrails/TrailDetails?id=#{aSearchedTrail.id}" 
+                        title="View Searched Trail Details">
                   <i class="fa fa-info-circle fa-2x"></i>
                 </p:link>     
 
