@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="Play Video"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" width="100%">
+                <h1>#{userFileController.cleanedFileNameForSelected()}</h1>
+
+                <c:choose>
+                    <!-- 
+                    Acceptable Video Formats: MP4, OGG, WEBM, and MOV
+                    -->
+                    <c:when test = "${userFileController.isVideo()}">
+
+                        <!--
+                        Play Video                      
+                        <video> does not automatically insert the app name (/Trailblazer-Team8) in front of
+                        the relative filepath for the selected file. Therefore, insert the app name here
+                        with the EL expression: #{facesContext.externalContext.requestContextPath}
+                        -->
+                        <video class="scalableVideo" preload="auto" controls="controls" 
+                            src="#{facesContext.externalContext.requestContextPath}#{userFileController.selectedFileRelativePath()}" />    
+
+                    </c:when>
+
+                    <c:otherwise>
+                        <!-- Alert User -->
+                        <h:outputText class="alertUser" 
+                                      value="Only video files of type MP4, MOV, OGG or WEBM can be played!" />
+                        <br />
+                    </c:otherwise>
+                </c:choose>
+
+                <br />
+                <!-- Back Button -->
+                <p:button outcome="/userFile/ListUserFiles" value="Back" icon="fas fa-arrow-left"  />
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+</html>
