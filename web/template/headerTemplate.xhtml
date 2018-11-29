@@ -119,6 +119,8 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
             <table border="0" align="center" cellpadding="10" cellspacing="0">
                 <div align="center" bgcolor="#FDF5E6" >
                     <br />
+                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                     style="width: 300px; float: left;">
                     <h:outputLabel for="searchLatitudeField" value="Enter Latitude: " />
 
                     <!-- 
@@ -131,7 +133,6 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                                  requiredMessage="Please enter a Search String!"
                                  value="#{trailController.latitudeQuery}" >
                     </p:inputText>
-                    <br /><br />
                     
                     <h:outputLabel for="searchLongitudeField" value="Enter Longitude: " />
                     <p:inputText id="searchLongitudeField" style="width:200px"
@@ -140,7 +141,6 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                                  requiredMessage="Please enter a Search String!"
                                  value="#{trailController.longitudeQuery}" >
                     </p:inputText>
-                    <br /><br />
                     
                     <h:outputLabel for="searchDistanceField" value="Enter Max Distance: " />
                     <p:inputText id="searchDistanceField" style="width:200px"
@@ -149,7 +149,6 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                                  requiredMessage="Please enter a Search String!"
                                  value="#{trailController.distanceQuery}" >
                     </p:inputText>
-                    <br /><br />
                     
                     <h:outputLabel for="searchMinLengthField" value="Enter Minimum Length: " />
                     <p:inputText id="searchMinLengthField" style="width:200px"
@@ -159,7 +158,6 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                                  value="#{trailController.minLengthQuery}" >
                         <f:validateDoubleRange minimum = "0.00"/>
                     </p:inputText>
-                    <br /><br />
                     
                     <h:outputLabel for="searchDifficultyField" value="Choose Difficulty: " />
                     <p:selectOneMenu id="searchDifficultyField" value="#{trailController.searchDifficulty}"
@@ -173,7 +171,6 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                             <f:selectItem itemLabel="Very Difficult" itemValue="black"/>
 
                     </p:selectOneMenu>
-                    <br /><br />
                     
                     <h:outputLabel for="searchRatingField" value="Choose Minimim Rating: " />
                     <p:selectOneMenu id="searchRatingField" value="#{trailController.searchRating}"
@@ -187,8 +184,8 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                             <f:selectItem itemLabel="5 Stars" itemValue="5"/>
 
                     </p:selectOneMenu>
-                    
-                    
+                    </p:panelGrid>
+                        
                     <br /><br />
                     <!--  SEARCH button:
                     Clicking the Search button invokes the performSearch() method of the
@@ -199,6 +196,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     
                     it returns "Results" as the name of the XHTML file to display.
                     -->
+                    <center>
                     <p:commandButton value="Search" id="searchButton"  ajax="false" icon="fas fa-search"
                                      action="#{trailController.performSearch()}" />
                     &nbsp;&nbsp;
@@ -214,6 +212,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <!-- CANCEL button -->
                     <p:commandButton value="Cancel" onclick="PF('TrailSearchDialog').hide()" 
                                      icon="fas fa-ban"/>
+                    </center>
                     <br /><br />
                 </div>
             </table>
