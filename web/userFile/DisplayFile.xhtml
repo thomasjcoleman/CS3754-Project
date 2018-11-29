@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Display File"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center">
+                <h1>#{userFileController.cleanedFileNameForSelected()}</h1>
+                
+                <c:choose>
+                    <c:when test = "${userFileController.isImage()}">
+                        <!-- 
+                        isImage() returns true if the file is an image file of type JPG, JPEG, PNG, or GIF
+                        
+                        <h:graphicImage> automatically inserts the app name (/Trailblazer-Team8) in front of
+                        the relative filepath for the selected file.
+                        -->
+                        <h:graphicImage class="scalableImage" 
+                                        value="#{userFileController.selectedFileRelativePath()}" />
+                        <br />
+                    </c:when>
+
+                    <c:when test = "${userFileController.isViewable()}">
+                        <!-- 
+                        isViewable() returns true if the file is of type CSS, CSV, HTML, JAVA, PDF, SQL, or TXT
+                        
+                        <iframe> does not automatically insert the app name (/Trailblazer-Team8) in front of
+                        the relative filepath for the selected file. Therefore, we insert the app name here
+                        with the EL expression: #{facesContext.externalContext.requestContextPath}
+                        -->
+                        <div>
+                            <iframe src="#{facesContext.externalContext.requestContextPath}#{userFileController.selectedFileRelativePath()}" 
+                                    width="90%" height="400px" scrolling="yes" />
+                        </div>
+                    </c:when>
+
+                    <c:otherwise>
+                        <!-- Alert User -->
+                        <h:outputText class="alertUser" 
+                                      value="Only files of type JPG, JPEG, PNG, GIF, CSS, CSV, HTML, JAVA, PDF, SQL, or TXT can be displayed!" />
+                        <br />
+                    </c:otherwise>
+                </c:choose>
+                <br />
+                <!-- Back Button -->
+                <p:button outcome="/userFile/ListUserFiles" value="Back" icon="fas fa-arrow-left" />
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+</html>
