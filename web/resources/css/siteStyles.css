@@ -1,7 +1,7 @@
-/*****************************************************
-*   Cascading Style Sheets (CSS) Style Definitions   *
-*   Composed by Thomas Coleman for the Recipes app.  *
-*****************************************************/
+/*********************************************************
+*   Cascading Style Sheets (CSS) Style Definitions       *
+*   Composed by Thomas Coleman for the Trailblazer app.  *
+**********************************************************/
 
 /*
 ==================================================
@@ -289,6 +289,14 @@ Social Media Buttons Spin Animated
 .trailDetails .panelGridColumn1 {
   font-weight: bold;
   width: 35%;
+}
+.trailDetails .panelGridColumn2 {
+  white-space: normal;
+}
+
+/* Trail search */
+.columnTrailPhoto {
+  width: 185px;
 }
 
 /* 

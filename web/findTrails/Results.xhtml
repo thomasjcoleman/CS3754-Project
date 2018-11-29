@@ -3,87 +3,79 @@
 Created by Matthew Croll on October 14, 2018.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+  <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
-    <!-- This page is constructed based on the siteTemplate -->
-    <ui:composition template="/template/siteTemplate.xhtml">
-        <ui:define name="title">
-            <!-- Set the page title -->
-            <h:outputText value="Trail Search Results"></h:outputText>
-        </ui:define>
+  <!-- This page is constructed based on the siteTemplate -->
+  <ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+      <!-- Set the page title -->
+      <h:outputText value="Trail Search Results"></h:outputText>
+    </ui:define>
 
-        <!-- Create the content for this page below -->
-        <ui:define name="editableContent">
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
 
-            <div align="center" style="width:97%" bgcolor="#FDF5E6" >
+      <div align="center" style="width:97%" bgcolor="#FDF5E6" >
 
-                <h:form id="SearchedTrailsForm">
-                    <p:dataGrid id="searchedTrails" value="#{trailController.results}" var="aSearchedTrail"
-                                columns="2" layout="grid"
-                                rows="6" paginator="true"  
-                                rowsPerPageTemplate="6,12,18,24,30,36,42,48,54" 
-                                >
+        <h:form id="SearchedTrailsForm">
+          <p:dataGrid id="searchedTrails" value="#{trailController.results}" var="aSearchedTrail"
+                      columns="2" layout="grid"
+                      rows="6" paginator="true"  
+                      rowsPerPageTemplate="6,12,18,24,30,36,42,48,54" 
+                      >
 
-                        <f:facet name="header">
-                            Trail Search Results
-                        </f:facet>
+            <f:facet name="header">
+              Trail Search Results
+            </f:facet>
 
-                        <!-- The p:panel defines a data grid cell displaying aSearchedTrail data -->
-                        <p:panel  style="text-align:left" > 
-                            
-                            <h:panelGrid columns="3" style="width:100%" 
-                                         columnClasses="columnRecipePhoto, columnMiddlePart, columnInfoButton">                                    
-                                <p:graphicImage url="#{aSearchedTrail.imgUrl}" width="100px" style="float:left" /> 
-                      
-                                <h:panelGrid style="width:100%; margin-left:10px">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{aSearchedTrail.name}"/>
-                                    </f:facet>             
-                                    <br/>                                    
-                                    
-                                    <!-- by -->
-                                    <h:outputText value="located at" style="float:left"/>
-                                    <br/>
-                                    
-                                    <!-- Trail Location -->
-                                    <h:outputText value="#{aSearchedTrail.location}" style="float:left"/>
-                                    
-                                </h:panelGrid>
-                                
-                                <!-- 
-                                *** INFO button ***
-                                The "title" attribute value is shown as a tooltip text when the mouse is moved over the info icon.
-                                -->
-                                <p:commandLink style="width:20px;float:right;" 
-                                               action="/findTrails/TrailDetails?faces-redirect=true" 
-                                               title="View Searched Trail Details">
-                                    
-                                    <!-- Display the Info Icon -->
-                                    <i class="fa fa-info-circle fa-2x"></i>
-                                    <!-- 
-                                    When the Info Icon is clicked on (selected), the TrailController.selected method
-                                    is invoked to set the selected current trail object to the aSearchedTrail object. 
-                                    -->
-                                    <f:setPropertyActionListener target="#{trailController.selected}" value="#{aSearchedTrail}" />
-                                </p:commandLink>     
-                                
-                            </h:panelGrid>
-                            
-                        </p:panel>
-                    </p:dataGrid>     
-                </h:form>
-            </div>           
-           
-        </ui:define>
-        
-    </ui:composition>
-    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+            <!-- The p:panel defines a data grid cell displaying aSearchedTrail data -->
+            <p:panel  style="text-align:left" > 
+
+              <h:panelGrid columns="3" style="width:100%" 
+                           columnClasses="columnTrailPhoto, columnMiddlePart, columnInfoButton">                                    
+                <p:graphicImage url="#{aSearchedTrail.imgUrl}" width="150px" style="float:left" />
+
+                <h:panelGrid style="width:100%; margin-left:10px">
+                  <f:facet name="header">
+                    <h:outputText value="#{aSearchedTrail.name}"/>
+                  </f:facet>
+                  <br/>
+
+                  <!-- by -->
+                  <h:outputText value="located at" style="float:left"/>
+                  <br/>
+
+                  <!-- Trail Location -->
+                  <h:outputText value="#{aSearchedTrail.location}" style="float:left"/>
+
+                </h:panelGrid>
+
+                <!-- 
+                *** INFO button ***
+                -->
+                <p:link style="width:20px;float:right;" 
+                               outcome="/findTrails/TrailDetails?id=#{aSearchedTrail.id}" 
+                               title="View Searched Trail Details">
+                  <i class="fa fa-info-circle fa-2x"></i>
+                </p:link>     
+
+              </h:panelGrid>
+
+            </p:panel>
+          </p:dataGrid>     
+        </h:form>
+      </div>           
+
+    </ui:define>
+
+  </ui:composition>
+  <!-- Do not enter tags after the composition line since they are ignored by JSF -->
 
 </html>
