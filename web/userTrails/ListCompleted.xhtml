@@ -34,7 +34,7 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             <p:ajax event="rowSelect"   update="viewButton"/>
                             <p:ajax event="rowUnselect" update="viewButton"/>
 
-                            <!-- 
+                            <!--
                             ========
                             Trail ID
                             ========
@@ -43,7 +43,7 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                                 <h:outputText class="inputTextField" value="#{item.id}"/>
                             </p:column>
 
-                            <!-- 
+                            <!--
                             ==========
                             Trail Name
                             ==========
@@ -51,7 +51,7 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             <p:column sortBy="#{item.trailname}" headerText="#{bundle.ListCompletedTrailsTitle_trailname}">
                                 <h:outputText class="inputTextField" value="#{item.trailname}"/>
                             </p:column>
-                            
+
                             <!-- 
                             =========
                             Completed
@@ -60,7 +60,7 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             <p:column sortBy="#{item.completed}" headerText="#{bundle.ListCompletedTrailsTitle_completed}">
                                 <h:outputText class="inputTextField" value="#{item.completed}"/>
                             </p:column>
-                            
+
                             <!-- 
                             ==========
                             Interested
