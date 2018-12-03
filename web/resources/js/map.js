@@ -42,8 +42,11 @@ function initializeAutocomplete() {
   // Attach autocomplete fields
   var inputs = document.getElementsByClassName("googleMapsAutocomplete");
   if (inputs.length > 0) {
-    autocomplete = new google.maps.places.Autocomplete(inputs[0]);
+    var input = inputs[0];
+    var $input = $(input);
+    autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', function () {
+      $input.data("autocompleted", true);
       var place = this.getPlace();
       if (place) {
         var latlng = place.geometry.location;
@@ -51,6 +54,21 @@ function initializeAutocomplete() {
         document.getElementById("searchDialogForm:searchLongitudeField").value = latlng.lng();
       }
     });
+    $(inputs[0]).on("change", function () {
+      // value changed, but was not picked from the autocomplete menu
+      $input.removeData("autocompleted");
+      var address = input.value;
+      if (address) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'address': address}, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK && !$input.data("autocompleted")) {
+            var latlng = results[0].geometry.location;
+            document.getElementById("searchDialogForm:searchLatitudeField").value = latlng.lat();
+            document.getElementById("searchDialogForm:searchLongitudeField").value = latlng.lng();
+          }
+        });
+      }
+    })
   }
 }
 

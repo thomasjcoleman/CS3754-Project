@@ -141,7 +141,8 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                              placeholder="Enter Location" required="true"
                              requiredMessage="Please enter a Location!" />
 
-                <h:inputHidden id="searchLatitudeField"
+                <h:inputHidden id="searchLatitudeField" required="true"
+                               requiredMessage="Location was not findable!"
                                value="#{trailController.latitudeQuery}" />
                 <h:inputHidden id="searchLongitudeField"
                                value="#{trailController.longitudeQuery}" />
