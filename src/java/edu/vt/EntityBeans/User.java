@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
   , @NamedQuery(name = "User.findBySecurityQuestionNumber", query = "SELECT u FROM User u WHERE u.securityQuestionNumber = :securityQuestionNumber")
   , @NamedQuery(name = "User.findBySecurityAnswer", query = "SELECT u FROM User u WHERE u.securityAnswer = :securityAnswer")
   , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+  , @NamedQuery(name = "User.findByPhoneNumber", query = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber")
+  , @NamedQuery(name = "User.findByPhoneCarrier", query = "SELECT u FROM User u WHERE u.phoneCarrier = :phoneCarrier")
   , @NamedQuery(name = "User.findByGoogleId", query = "SELECT u FROM User u WHERE u.googleId = :googleId")})
 public class User implements Serializable {
 
@@ -115,6 +117,16 @@ public class User implements Serializable {
   @Size(min = 1, max = 128)
   @Column(name = "email")
   private String email;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 128)
+  @Column(name = "phone_number")
+  private String phoneNumber;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 128)
+  @Column(name = "phone_carrier")
+  private String phoneCarrier;
   @Column(name = "google_id")
   private Integer googleId;
   @OneToMany(mappedBy = "userId")
@@ -131,7 +143,7 @@ public class User implements Serializable {
     this.id = id;
   }
 
-  public User(Integer id, String username, String password, String firstName, String lastName, String address1, String city, String state, String zipcode, int securityQuestionNumber, String securityAnswer, String email) {
+  public User(Integer id, String username, String password, String firstName, String lastName, String address1, String city, String state, String zipcode, int securityQuestionNumber, String securityAnswer, String email, String phoneNumber, String phoneCarrier, Integer googleId) {
     this.id = id;
     this.username = username;
     this.password = password;
@@ -144,6 +156,9 @@ public class User implements Serializable {
     this.securityQuestionNumber = securityQuestionNumber;
     this.securityAnswer = securityAnswer;
     this.email = email;
+    this.phoneNumber = phoneNumber;
+    this.phoneCarrier = phoneCarrier;
+    this.googleId = googleId;
   }
 
   public Integer getId() {
@@ -258,6 +273,22 @@ public class User implements Serializable {
     this.email = email;
   }
 
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getPhoneCarrier() {
+    return phoneCarrier;
+  }
+
+  public void setPhoneCarrier(String phoneCarrier) {
+    this.phoneCarrier = phoneCarrier;
+  }
+  
   public Integer getGoogleId() {
     return googleId;
   }
@@ -265,7 +296,7 @@ public class User implements Serializable {
   public void setGoogleId(Integer googleId) {
     this.googleId = googleId;
   }
-  
+
   @XmlTransient
   public Collection<UserPhoto> getUserPhotoCollection() {
     return userPhotoCollection;
@@ -317,5 +348,5 @@ public class User implements Serializable {
   public String toString() {
     return id.toString();
   }
-  
+
 }

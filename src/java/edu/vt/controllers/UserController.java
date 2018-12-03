@@ -54,6 +54,8 @@ public class UserController implements Serializable {
   private String answerToSecurityQuestion;
 
   private String email;
+  private String phoneNumber;
+  private String phoneCarrier;
 
   private Map<String, Object> security_questions;
 
@@ -187,6 +189,22 @@ public class UserController implements Serializable {
     this.email = email;
   }
 
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getPhoneCarrier() {
+    return phoneCarrier;
+  }
+
+  public void setPhoneCarrier(String phoneCarrier) {
+    this.phoneCarrier = phoneCarrier;
+  }
+
   /*
     private Map<String, Object> security_questions;
         String      int
@@ -314,6 +332,8 @@ public class UserController implements Serializable {
       newUser.setSecurityQuestionNumber(securityQuestionNumber);
       newUser.setSecurityAnswer(answerToSecurityQuestion);
       newUser.setEmail(email);
+      newUser.setPhoneNumber(phoneNumber);
+      newUser.setPhoneCarrier(phoneCarrier);
       newUser.setUsername(username);
 
       // securely hash the password
@@ -352,6 +372,8 @@ public class UserController implements Serializable {
       editUser.setState(this.selected.getState());
       editUser.setZipcode(this.selected.getZipcode());
       editUser.setEmail(this.selected.getEmail());
+      editUser.setPhoneNumber(this.selected.getPhoneNumber());
+      editUser.setPhoneCarrier(this.selected.getPhoneCarrier());
 
       // Store the changes in the database
       getUserFacade().edit(editUser);
@@ -405,6 +427,7 @@ public class UserController implements Serializable {
     address1 = address2 = city = state = zipcode = "";
     securityQuestionNumber = 0;
     answerToSecurityQuestion = email = "";
+    phoneNumber = phoneCarrier = "";
     selected = null;
 
     Methods.preserveMessages();

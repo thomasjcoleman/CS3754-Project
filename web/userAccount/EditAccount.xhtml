@@ -84,6 +84,25 @@
                             <f:validateLength minimum="2" />
                             <f:validator validatorId="emailValidator" />  
                         </p:inputText>
+                        
+                        <!-- Phone Number -->
+                        <p:outputLabel value="#{bundle.EditUserLabel_phoneNumber}" for="phoneNumber" />
+                        <p:inputMask id="phoneNumber" class="standardText"
+                                     required="true" requiredMessage="#{bundle.EditUserRequiredMessage_phoneNumber}" 
+                                     value="#{userController.selected.phoneNumber}" mask="(999) 999-9999" />
+                        
+                        <!-- Phone Carrier -->
+                        <p:outputLabel for="phoneCarrier" value="#{bundle.EditUserLabel_phoneCarrier}" class="standardText" />
+                        <p:selectOneMenu id="phoneCarrier" value="#{userController.selected.phoneCarrier}"
+                                         required="true" requiredMessage="#{bundle.EditUserRequiredMessage_phoneCarrier}" 
+                                         class="standardText" >
+                            <f:selectItem itemLabel="Select a Carrier"  itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="AT&amp;T"          itemValue="mms.att.net" />
+                            <f:selectItem itemLabel="Sprint"            itemValue="pm.sprint.com" />
+                            <f:selectItem itemLabel="T-Mobile"          itemValue="tmomail.net" />
+                            <f:selectItem itemLabel="Verizon"           itemValue="vzwpix.com" />
+                            <f:selectItem itemLabel="Virgin Mobile"     itemValue="vmpix.com" />
+                        </p:selectOneMenu>
 
                         <!-- Username is listed in an uneditable mode and cannot be changed -->
                         <h:outputText value="#{bundle.ViewUserLabel_username}" />

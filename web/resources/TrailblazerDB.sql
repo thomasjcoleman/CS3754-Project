@@ -16,7 +16,9 @@ CREATE TABLE User (
   zipcode VARCHAR(10) NOT NULL,
   security_question_number INT NOT NULL,
   security_answer VARCHAR(128) NOT NULL,
-  email VARCHAR(128) NOT NULL,      
+  email VARCHAR(128) NOT NULL,
+  phone_number VARCHAR(128) NOT NULL,
+  phone_carrier VARCHAR(128) NOT NULL,
   google_id INT,
   PRIMARY KEY (id)
 );
