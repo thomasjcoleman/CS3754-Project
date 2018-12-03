@@ -57,11 +57,11 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                   <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
                     <i class="fas fa-search"></i>&nbsp;Trail Search
                   </h:link>
-                  
+
                   <h:link outcome="/userTrails/ListInterested">
                     <i class="fas fa-eye"></i>&nbsp;Interested Trails
                   </h:link>
-                  
+
                   <h:link outcome="/userTrails/ListCompleted">
                     <i class="fas fa-check"></i>&nbsp;Completed Trails
                   </h:link>
@@ -124,33 +124,28 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
     ====================================================================
     -->
     <p:dialog width="500px" position="center center" id="TrailSearchDlg" widgetVar="TrailSearchDialog" 
-              modal="true" resizable="false" appendTo="@(body)" header="Search Trails" responsive="true">
+              modal="true" resizable="false" appendTo="@(body)" header="Search Trails" responsive="true"
+              onShow="initializeAutocomplete()">
       <h:form id="searchDialogForm">
         <table border="0" align="center" cellpadding="10" cellspacing="0">
           <div align="center" bgcolor="#FDF5E6" >
             <br />
             <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
                          style="width: 300px; float: left;">
-              <h:outputLabel for="searchLatitudeField" value="Enter Latitude: " />
 
-              <!-- 
-              The search query entered by the user in the inputText field is set to be 
-              the value of the latitudeQuery property of the TrailController
-              -->
-              <p:inputText id="searchLatitudeField" style="width:200px"
-                           placeholder="Enter Latitude"
-                           required="true"
-                           requiredMessage="Please enter a Latitude!"
-                           value="#{trailController.latitudeQuery}" >
-              </p:inputText>
+              <!-- Fetch a location's latitude and longitude. -->
+              <h:outputLabel for="searchLocationField" value="Enter Location: " />
+              <h:panelGroup>
+                <p:inputText id="searchLocationField" class="googleMapsAutocomplete"
+                             style="width:200px" value="#{trailController.locationQuery}"
+                             placeholder="Enter Location" required="true"
+                             requiredMessage="Please enter a Location!" />
 
-              <h:outputLabel for="searchLongitudeField" value="Enter Longitude: " />
-              <p:inputText id="searchLongitudeField" style="width:200px"
-                           placeholder="Enter Longitude"
-                           required="true"
-                           requiredMessage="Please enter a Longitude!"
-                           value="#{trailController.longitudeQuery}" >
-              </p:inputText>
+                <h:inputHidden id="searchLatitudeField"
+                               value="#{trailController.latitudeQuery}" />
+                <h:inputHidden id="searchLongitudeField"
+                               value="#{trailController.longitudeQuery}" />
+              </h:panelGroup>
 
               <h:outputLabel for="searchDistanceField" value="Enter Max Distance Away (miles): " />
               <p:inputText id="searchDistanceField" style="width:200px"

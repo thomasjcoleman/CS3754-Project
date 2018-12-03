@@ -34,6 +34,8 @@ public class TrailController implements Serializable {
   private List<Trail> results;
   private Trail selected;
   private String travelMode = "DRIVING";
+
+  private String locationQuery;
   private String latitudeQuery;
   private String longitudeQuery;
   private String distanceQuery;
@@ -44,7 +46,7 @@ public class TrailController implements Serializable {
   // Constructor
   public TrailController() {
   }
-  
+
   // Getters/setters
   public String getJsonResults() {
     return jsonResults;
@@ -65,7 +67,15 @@ public class TrailController implements Serializable {
   public Trail getSelected() {
     return selected;
   }
-  
+
+  public String getLocationQuery() {
+    return locationQuery;
+  }
+
+  public void setLocationQuery(String locationQuery) {
+    this.locationQuery = locationQuery;
+  }
+
   public String getLatitudeQuery() {
     return latitudeQuery;
   }
@@ -73,7 +83,7 @@ public class TrailController implements Serializable {
   public void setLatitudeQuery(String latitudeQuery) {
     this.latitudeQuery = latitudeQuery;
   }
-  
+
   public String getLongitudeQuery() {
     return longitudeQuery;
   }
@@ -81,7 +91,7 @@ public class TrailController implements Serializable {
   public void setLongitudeQuery(String longitudeQuery) {
     this.longitudeQuery = longitudeQuery;
   }
-  
+
   public String getDistanceQuery() {
     return distanceQuery;
   }
@@ -89,29 +99,29 @@ public class TrailController implements Serializable {
   public void setDistanceQuery(String distanceQuery) {
     this.distanceQuery = distanceQuery;
   }
-  
+
   public String getMinLengthQuery() {
-      return minLengthQuery;
+    return minLengthQuery;
   }
-  
+
   public void setMinLengthQuery(String minLengthQuery) {
-      this.minLengthQuery = minLengthQuery;
+    this.minLengthQuery = minLengthQuery;
   }
-  
+
   public String getSearchDifficulty() {
-      return searchDifficulty;
+    return searchDifficulty;
   }
-  
+
   public void setSearchDifficulty(String searchDifficulty) {
-      this.searchDifficulty = searchDifficulty;
+    this.searchDifficulty = searchDifficulty;
   }
-  
+
   public String getSearchRating() {
-      return searchRating;
+    return searchRating;
   }
-  
+
   public void setSearchRating(String searchRating) {
-      this.searchRating = searchRating;
+    this.searchRating = searchRating;
   }
 
   public void setSelected(Trail selected) {
@@ -125,7 +135,7 @@ public class TrailController implements Serializable {
   public void setTravelMode(String travelMode) {
     this.travelMode = travelMode;
   }
-  
+
   public String changeTravelMode(int type) {
     switch (type) {
       case 0:
@@ -141,17 +151,16 @@ public class TrailController implements Serializable {
         travelMode = "TRANSIT";
         break;
     }
-    
+
     return "TrailDirections.xhtml?id=" + selected.getId() + "&faces-redirect=true";
   }
-  
-  
+
   /* Instance methods */
   // Get all nearby trail data.
   public void getMainMap() {
     getTrailsInRadius(37.227264, -80.420745, 100);
   }
-  
+
   // Get a specific trail's data.
   public void getTrailMap(Integer ID) {
     if (ID != null) {
@@ -179,7 +188,7 @@ public class TrailController implements Serializable {
     }
     return null;
   }
-  
+
   // Get trails within an area.
   public List<Trail> getTrailsInRadius(double lat, double lon, double maxDistance) {
     String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=150", lat, lon, maxDistance);
@@ -203,12 +212,12 @@ public class TrailController implements Serializable {
     }
     return null;
   }
-  
+
   // Search Trail given specific paramters
   public String performSearch() {
     selected = null;
     results = new ArrayList();
-    String searchData = "?lat=" + latitudeQuery + "&lon=" + longitudeQuery + "&maxDistance=" + distanceQuery + "&maxResults=150";
+    String searchData = "?lat=" + latitudeQuery + "&lon=" + longitudeQuery + "&maxDistance=" + distanceQuery + "&maxResults=250";
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
       //jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
@@ -220,9 +229,9 @@ public class TrailController implements Serializable {
         trailArray.forEach(trailObj -> {
           results.add(createTrailFromJSON((JSONObject) trailObj));
         });
-        results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty));
-        results.removeIf(p -> p.getRating() <= Double.valueOf(searchRating));
-        results.removeIf(p -> p.getLength() <= Double.valueOf(minLengthQuery));
+        results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty)
+                || p.getRating() <= Double.valueOf(searchRating)
+                || p.getLength() <= Double.valueOf(minLengthQuery));
         return "/findTrails/Results?faces-redirect=true";
       }
     } catch (Exception ex) {
@@ -253,7 +262,7 @@ public class TrailController implements Serializable {
     if (latitude == Double.NaN) {
       return null;
     }
-    
+
     String name = trailJson.optString("name", "");
     if (name.equals("")) {
       name = "Name unavailable.";
@@ -283,7 +292,7 @@ public class TrailController implements Serializable {
     Double descentDist = trailJson.optDouble("descent");
     Double highestHeight = trailJson.optDouble("high");
     Double lowestHeight = trailJson.optDouble("low");
-    
+
     String conditionStatus = trailJson.optString("conditionStatus", "");
     if (conditionStatus.equals("")) {
       conditionStatus = "Condition status unavailable.";
@@ -297,7 +306,7 @@ public class TrailController implements Serializable {
     } catch (ParseException ex) {
       conditionDate = null;
     }
-    
+
     return new Trail(
             id, name, location, url, summary, difficulty,
             rating, numberOfRatings, imgUrl, longitude, latitude,
@@ -317,7 +326,7 @@ public class TrailController implements Serializable {
     BufferedReader reader = null;
     try {
       URL url = new URL(webServiceURL);
-      reader = new BufferedReader(new InputStreamReader(url.openStream(),  Charset.forName("UTF-8")));
+      reader = new BufferedReader(new InputStreamReader(url.openStream(), Charset.forName("UTF-8")));
       StringBuilder buffer = new StringBuilder();
       char[] chars = new char[10240];
 
@@ -333,16 +342,18 @@ public class TrailController implements Serializable {
       }
     }
   }
-  
+
   public String reload() {
     return "TrailDetails.xhtml?faces-redirect=true&id=" + selected.getId();
   }
+
   public void clear() {
-        latitudeQuery = null;
-        longitudeQuery = null;
-        distanceQuery = null;
-        minLengthQuery = null;
-        searchDifficulty = null;
-        searchRating = null;
+    locationQuery = null;
+    latitudeQuery = null;
+    longitudeQuery = null;
+    distanceQuery = null;
+    minLengthQuery = null;
+    searchDifficulty = null;
+    searchRating = null;
   }
 }

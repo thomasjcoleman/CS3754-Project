@@ -5,8 +5,8 @@
 
 /* Constants */
 var difficultyRatings = {
-  green: "Easy",
-  greenBlue: "Moderately Easy",
+  green: "Beginner",
+  greenBlue: "Easy",
   blue: "Intermediate",
   blueBlack: "Difficult",
   black: "Very Difficult"
@@ -36,6 +36,25 @@ function initializeMap() {
     mapTypeId: google.maps.MapTypeId.HYBRID
   });
   display();
+}
+
+function initializeAutocomplete() {
+  // Attach autocomplete fields
+  var inputs = document.getElementsByClassName("googleMapsAutocomplete");
+  if (inputs.length > 0) {
+    autocomplete = new google.maps.places.Autocomplete(inputs[0]);
+    autocomplete.addListener('place_changed', function () {
+      var place = this.getPlace();
+      if (place) {
+        var latlng = place.geometry.location;
+        document.getElementById("searchDialogForm:searchLatitudeField").value = latlng.lat();
+        document.getElementById("searchDialogForm:searchLongitudeField").value = latlng.lng();
+      } else {
+        document.getElementById("searchDialogForm:searchLatitudeField").value = "";
+        document.getElementById("searchDialogForm:searchLongitudeField").value = "";
+      }
+    });
+  }
 }
 
 // Prepare the map object as necessary
@@ -70,7 +89,7 @@ function displaySingleTrail() {
   // Get the trail's information
   var trail = JSON.parse(document.getElementById("jsonData").value).trails[0];
   var trailLatLong = new google.maps.LatLng(trail.latitude, trail.longitude);
-  
+
   // Fetch the GPX file for the trail and display it on the map.
   var gpxFile = document.getElementById("trailGPX").value;
   loadGPXFileIntoGoogleMap(map, gpxFile, trailLatLong)
@@ -102,22 +121,22 @@ function displayAllTrails() {
 
     google.maps.event.addListener(marker, "click", function () {
       infoWindow.setContent(
-        "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'><h1>" + this.get('title') + "</h1></a>" +
-        "<div style='overflow: auto'><div class='float50'>" +
-          "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'>" + 
-          "<img class='preview' src='" + this.get('trailImage') + "'/></a><br/>" +
-        "</div><div class='float50'>" +
-          "<img class='difficulty' title='" + difficultyRatings[this.get('trailDifficulty')] + "'" +
-          " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
-          "<div class='rating' style='width:" + (this.get('trailRating') / 5) * 80 + "px'>" +
-            "<img width='80' src='../resources/images/rating.png'/>" +
-          "</div>" +
-          "<img width='80' src='../resources/images/ratingGray.png' title='Rating: " + this.get('trailRating') + "'/><br/>" +
-          "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
-          "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
-          "<div style='margin-top: 5px;'>" + this.get('trailSummary') + "</div>" +
-        "</div></div>"
-      );
+              "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'><h1>" + this.get('title') + "</h1></a>" +
+              "<div style='overflow: auto'><div class='float50'>" +
+              "<a href='./TrailDetails.xhtml?id=" + this.get('trailId') + "' target='_blank'>" +
+              "<img class='preview' src='" + this.get('trailImage') + "'/></a><br/>" +
+              "</div><div class='float50'>" +
+              "<img class='difficulty' title='" + difficultyRatings[this.get('trailDifficulty')] + "'" +
+              " src='../resources/images/trailDifficulties/" + this.get('trailDifficulty') + ".svg' />" +
+              "<div class='rating' style='width:" + (this.get('trailRating') / 5) * 80 + "px'>" +
+              "<img width='80' src='../resources/images/rating.png'/>" +
+              "</div>" +
+              "<img width='80' src='../resources/images/ratingGray.png' title='Rating: " + this.get('trailRating') + "'/><br/>" +
+              "<strong>Length:</strong> " + this.get('trailLength') + " miles<br/>" +
+              "<strong>Condition:</strong> <span title='" + this.get('trailConditionDet') + "'/>" + this.get('trailCondition') + "</span><br/>" +
+              "<div style='margin-top: 5px;'>" + this.get('trailSummary') + "</div>" +
+              "</div></div>"
+              );
       infoWindow.open(map, this);
     });
   }
@@ -127,11 +146,11 @@ function displayAllTrails() {
 function displayRoute() {
   directionsDisplay.setMap(map);
   var trail = JSON.parse(document.getElementById("jsonData").value).trails[0];
-  
+
   // Get the user's position first...
   navigator.geolocation.getCurrentPosition(function (pos) {
     var c = pos.coords;
-    var startPos =  new google.maps.LatLng(c.latitude, c.longitude);
+    var startPos = new google.maps.LatLng(c.latitude, c.longitude);
     var destPos = new google.maps.LatLng(trail.latitude, trail.longitude);
     var travelMode = document.getElementById('travelMode').value;
     var request = {
@@ -139,7 +158,7 @@ function displayRoute() {
       destination: destPos,
       travelMode: google.maps.TravelMode[travelMode]
     };
-    
+
     // get the directions
     directionsService.route(request, function (response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
@@ -155,13 +174,13 @@ function loadGPXFileIntoGoogleMap(map, filepath, altLatLong) {
     dataType: "xml",
     success: function (data) {
       var parser = new GPXParser(data, map);
-      
+
       parser.setTrackColour("blue");        // Set the track line colour
       parser.setTrackWidth(6);              // Set the track line width
       parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
       parser.centerAndZoom(data);
       parser.addTrackpointsToMap();         // Add the trackpoints
-      
+
       parser.setTrackColour("#71acf0e6");   // Set the track line colour
       parser.setTrackWidth(4);              // Set the track line width
       parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
@@ -170,7 +189,7 @@ function loadGPXFileIntoGoogleMap(map, filepath, altLatLong) {
       parser.addRoutepointsToMap();         // Add the routepoints
       parser.addWaypointsToMap();           // Add the waypoints
     },
-    error: function() {
+    error: function () {
       map.setCenter(altLatLong);
       new google.maps.Marker({
         position: altLatLong,

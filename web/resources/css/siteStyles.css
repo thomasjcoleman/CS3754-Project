@@ -295,6 +295,9 @@ Social Media Buttons Spin Animated
 }
 
 /* Trail search */
+.pac-container {
+  z-index: 2000;
+}
 .columnTrailPhoto {
   width: 185px;
 }
