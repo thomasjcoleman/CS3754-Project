@@ -62,7 +62,7 @@ h1 {
 }
 #editableContent {
   /* height = 100% window height - (header height 84px + footer height 100px) */
-  height: calc(100% - 184px); 
+  height: calc(100% - 216px); 
   width: 100%;
   left: 0px;
   right: 0px;
