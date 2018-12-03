@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Thomas Coleman on 2018.11.15
+Copyright © 2018 Thomas Coleman. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  <ui:composition template="/template/siteTemplate.xhtml">
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{trailController.getTrailMap(userTripController.selected.trailId)}" />
+    </f:metadata>
+    <ui:define name="title">
+      <h:outputText value="Geolocated File"></h:outputText>
+    </ui:define>
+
+    <ui:define name="editableContent">
+      <!-- API key specified in siteTemplate -->
+      <div id="map" class="map"></div>
+      
+      
+      <input type="hidden" id="jsonData" value="#{trailController.jsonResults}" />
+      <input type="hidden" id="trailGPX" value="../TrailblazerStorage/gpxStorage/#{trailController.selected.id}.gpx" />
+      <input type="hidden" id="geocodedData" value="#{trailController.jsonGeocode}" />
+      <script type="text/javascript">
+        initializeMap();
+      </script>
+    </ui:define>
+  </ui:composition>
+
+</html>

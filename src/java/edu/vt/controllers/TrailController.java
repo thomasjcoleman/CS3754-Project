@@ -31,6 +31,8 @@ public class TrailController implements Serializable {
 
   // Properties
   private String jsonResults;
+  private String jsonGeocode;
+  
   private List<Trail> results;
   private Trail selected;
   private String travelMode = "DRIVING";
@@ -54,6 +56,14 @@ public class TrailController implements Serializable {
 
   public void setJsonResults(String jsonResults) {
     this.jsonResults = jsonResults;
+  }
+
+  public String getJsonGeocode() {
+    return jsonGeocode;
+  }
+
+  public void setJsonGeocode(String jsonGeocode) {
+    this.jsonGeocode = jsonGeocode;
   }
 
   public List<Trail> getResults() {
