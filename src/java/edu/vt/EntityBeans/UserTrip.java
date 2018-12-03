@@ -6,6 +6,7 @@
 package edu.vt.EntityBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
   @NamedQuery(name = "UserTrip.findAll", query = "SELECT u FROM UserTrip u")
   , @NamedQuery(name = "UserTrip.findById", query = "SELECT u FROM UserTrip u WHERE u.id = :id")
-  , @NamedQuery(name = "UserTrip.findByTrailId", query = "SELECT u FROM UserTrip u WHERE u.trailId = :trailId")})
+  , @NamedQuery(name = "UserTrip.findByTrailId", query = "SELECT u FROM UserTrip u WHERE u.trailId = :trailId")
+  , @NamedQuery(name = "UserSurvey.findByTripDate", query = "SELECT u FROM UserTrip u WHERE u.tripDate = :tripDate")})
 public class UserTrip implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -36,8 +41,14 @@ public class UserTrip implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Integer id;
+  @Basic(optional = false)
   @Column(name = "trail_id")
   private Integer trailId;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "trip_date")
+  @Temporal(TemporalType.DATE)
+  private Date tripDate;
 
   public UserTrip() {
   }
@@ -62,6 +73,14 @@ public class UserTrip implements Serializable {
     this.trailId = trailId;
   }
 
+  public Date getTripDate() {
+    return tripDate;
+  }
+
+  public void setTripDate(Date tripDate) {
+    this.tripDate = tripDate;
+  }
+  
   @Override
   public int hashCode() {
     int hash = 0;

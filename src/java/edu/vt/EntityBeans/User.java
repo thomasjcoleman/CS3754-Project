@@ -44,7 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
   , @NamedQuery(name = "User.findByZipcode", query = "SELECT u FROM User u WHERE u.zipcode = :zipcode")
   , @NamedQuery(name = "User.findBySecurityQuestionNumber", query = "SELECT u FROM User u WHERE u.securityQuestionNumber = :securityQuestionNumber")
   , @NamedQuery(name = "User.findBySecurityAnswer", query = "SELECT u FROM User u WHERE u.securityAnswer = :securityAnswer")
-  , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
+  , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+  , @NamedQuery(name = "User.findByGoogleId", query = "SELECT u FROM User u WHERE u.googleId = :googleId")})
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -114,6 +115,8 @@ public class User implements Serializable {
   @Size(min = 1, max = 128)
   @Column(name = "email")
   private String email;
+  @Column(name = "google_id")
+  private Integer googleId;
   @OneToMany(mappedBy = "userId")
   private Collection<UserPhoto> userPhotoCollection;
   @OneToMany(mappedBy = "userId")
@@ -255,6 +258,14 @@ public class User implements Serializable {
     this.email = email;
   }
 
+  public Integer getGoogleId() {
+    return googleId;
+  }
+
+  public void setGoogleId(Integer googleId) {
+    this.googleId = googleId;
+  }
+  
   @XmlTransient
   public Collection<UserPhoto> getUserPhotoCollection() {
     return userPhotoCollection;

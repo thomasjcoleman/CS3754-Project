@@ -17,12 +17,14 @@ CREATE TABLE User (
   security_question_number INT NOT NULL,
   security_answer VARCHAR(128) NOT NULL,
   email VARCHAR(128) NOT NULL,      
+  google_id INT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE UserTrip (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
   trail_id INT UNSIGNED,
+  trip_date DATE NOT NULL,
   user_id INT UNSIGNED,
   FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
