@@ -49,9 +49,6 @@ function initializeAutocomplete() {
         var latlng = place.geometry.location;
         document.getElementById("searchDialogForm:searchLatitudeField").value = latlng.lat();
         document.getElementById("searchDialogForm:searchLongitudeField").value = latlng.lng();
-      } else {
-        document.getElementById("searchDialogForm:searchLatitudeField").value = "";
-        document.getElementById("searchDialogForm:searchLongitudeField").value = "";
       }
     });
   }
