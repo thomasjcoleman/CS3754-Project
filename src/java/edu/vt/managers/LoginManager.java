@@ -124,11 +124,14 @@ public class LoginManager implements Serializable {
         if (pcode.equals(passcode)) {
             pcode = null;
             initializeSessionMap(user);
+            Methods.preserveMessages();
+            Methods.showMessage("Information", "Login Successful", "Welcome User!");
             return "/userAccount/Profile.xhtml?faces-redirect=true";
         }
         
         pcode = null;
-      
+        Methods.preserveMessages();
+        Methods.showMessage("Fatal Error", "Invalid Code!", "Please sign in again!");
         return "/index.xhtml?faces-redirect=true";
     }
 
