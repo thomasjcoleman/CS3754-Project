@@ -53,20 +53,23 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                 </p>
                 <!-- Google sign-in option -->
                 <meta name="google-signin-client_id" content="751078263019-3iu1pu0ttsri9q3o2r9fl5uptuchiun1.apps.googleusercontent.com"></meta>
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div> 
                 <script>
                     function onSignIn(googleUser) {
                         var profile = googleUser.getBasicProfile();
-                        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-                        console.log('Name: ' + profile.getName());
+                        console.log('ID: ' + profile.getId());
+                        console.log('Full Name: ' + profile.getName());
+                        console.log('Given Name: ' + profile.getGivenName());
+                        console.log('Family Name: ' + profile.getFamilyName());
                         console.log('Image URL: ' + profile.getImageUrl());
-                        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                        console.log('Email: ' + profile.getEmail());
                     }
-                </script>
+                </script> 
                 <script src="https://apis.google.com/js/platform.js?onload=renderButton" async="True" defer="True"></script>
 
             </div>
             <br/><br/><br/>
+
         </ui:define>
     </ui:composition>
 </html>
