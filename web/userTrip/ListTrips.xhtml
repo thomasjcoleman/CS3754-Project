@@ -66,8 +66,8 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
 
               <f:facet name="footer">
                 <!-- VIEW button -->
-                <p:button id="viewButton" icon="fas fa-eye" value="#{bundle.View}" target="_blank"
-                          href="../userFile/ListTripFiles.xhtml"
+                <p:button id="viewButton" icon="fas fa-eye" value="#{bundle.View}"
+                          outcome="/userFile/ListTripFiles"
                           disabled="#{empty userTripController.selected}"/>
 
                 <!-- EDIT button -->
