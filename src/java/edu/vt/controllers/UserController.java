@@ -6,13 +6,14 @@ package edu.vt.controllers;
 
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserPhoto;
-import edu.vt.EntityBeans.UserFile;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.FacadeBeans.UserFileFacade;
 import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Password;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -23,10 +24,13 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import java.io.IOException;
+import java.net.URL;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
+import org.imgscalr.Scalr;
 
 @Named("userController")
 @SessionScoped
@@ -58,6 +62,7 @@ public class UserController implements Serializable {
   private String phoneCarrier;
 
   private String googleId;
+  private String googlePhoto;
 
   private Map<String, Object> security_questions;
 
@@ -213,6 +218,14 @@ public class UserController implements Serializable {
 
   public void setGoogleId(String googleId) {
     this.googleId = googleId;
+  }
+
+  public String getGooglePhoto() {
+    return googlePhoto;
+  }
+
+  public void setGooglePhoto(String googlePhoto) {
+    this.googlePhoto = googlePhoto;
   }
 
   /*
@@ -541,6 +554,25 @@ public class UserController implements Serializable {
         // add the user to the database
         getUserFacade().create(user);
         Methods.showMessage("Information", "Success!", "User Account is Successfully Created!");
+
+        // now to try and get the profile image...
+        if (!googlePhoto.equals("")) {
+          try {
+            String ext = googlePhoto.substring(googlePhoto.lastIndexOf('.') + 1);
+            UserPhoto newPhoto = new UserPhoto(ext, user);
+            getUserPhotoFacade().create(newPhoto);
+            UserPhoto inputPhoto = getUserPhotoFacade().findPhotosByUserPrimaryKey(user.getId()).get(0);
+
+            // read the URL into new file objects and save it
+            BufferedImage uploadedPhoto = ImageIO.read(new URL(googlePhoto));
+            BufferedImage thumbnailPhoto = Scalr.resize(uploadedPhoto, Constants.THUMBNAIL_SIZE);
+            File thumbnailPhotoFile = new File(Constants.PHOTOS_ABSOLUTE_PATH, inputPhoto.getThumbnailFileName());
+            ImageIO.write(thumbnailPhoto, inputPhoto.getExtension(), thumbnailPhotoFile);
+
+          } catch (IOException ex) {
+          }
+
+        }
 
       } catch (EJBException | Password.CannotPerformOperationException ex) {
         username = "";

@@ -193,7 +193,7 @@
       <!-- Dialog for Security Question and Answer for User Account Deletion -->
       <p:dialog position="center center" id="SecurityQuestionDlg" widgetVar="SecurityQuestionDialog" 
                 modal="true" resizable="false" appendTo="@(body)" header="Security Question" 
-                showEffect="blind" hideEffect="fade">
+                showEffect="blind" hideEffect="fade" onShow="#{userController.setEmail('')}">
 
         <h:form id="SecurityQuestionForm">
           <fieldset>

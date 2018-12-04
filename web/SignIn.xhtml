@@ -57,17 +57,12 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
         <script>
           function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Full Name: ' + profile.getName());
-            console.log('Given Name: ' + profile.getGivenName());
-            console.log('Family Name: ' + profile.getFamilyName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
             document.getElementById("googleSignin:firstName").value = profile.getGivenName();
             document.getElementById("googleSignin:lastName").value = profile.getFamilyName();
             document.getElementById("googleSignin:email").value = profile.getEmail();
             document.getElementById("googleSignin:username").value = profile.getId();
             document.getElementById("googleSignin:googleId").value = profile.getId();
+            document.getElementById("googleSignin:googlePhoto").value = profile.getImageUrl();
             $("#googleSignin [type='submit']").click();
           }
         </script> 
@@ -78,6 +73,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
           <h:inputHidden id="email" value="#{userController.email}"/>
           <h:inputHidden id="username" value="#{userController.username}"/>
           <h:inputHidden id="googleId" value="#{userController.googleId}" />
+          <h:inputHidden id="googlePhoto" value="#{userController.googlePhoto}" />
           <p:commandButton action="#{userController.loginGoogleUser()}" ajax="false" />
         </h:form>
 

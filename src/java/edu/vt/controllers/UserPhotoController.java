@@ -121,7 +121,6 @@ public class UserPhotoController implements Serializable {
     try {
       // delete old photo if it exists
       deletePhoto();
-
       User signedInUser = (User) Methods.sessionMap().get("user");
 
       // get image type file extension, or default to png if none found
