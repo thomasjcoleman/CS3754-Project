@@ -37,7 +37,7 @@ public class UserTripFacade extends AbstractFacade<UserTrip> {
    * primaryKey
    */
   public List<UserTrip> findTripsByUserPrimaryKey(Integer primaryKey) {
-    return (List<UserTrip>) em.createNamedQuery("UserPhoto.findTripsByUserDatabasePrimaryKey")
+    return (List<UserTrip>) em.createNamedQuery("UserTrip.findTripsByUserDatabasePrimaryKey")
             .setParameter("primaryKey", primaryKey)
             .getResultList();
   }

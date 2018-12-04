@@ -51,6 +51,22 @@ public class UserFacade extends AbstractFacade<User> {
   }
 
   /**
+   * @param googleId is is the google ID attribute of the user to find
+   * @return object reference of the User entity whose user name is username
+   */
+  public User findByGoogleId(String googleId) {
+    if (em.createQuery("SELECT c FROM User c WHERE c.googleId = :googleId")
+            .setParameter("googleId", googleId)
+            .getResultList().isEmpty()) {
+      return null;
+    } else {
+      return (User) (em.createQuery("SELECT c FROM User c WHERE c.googleId = :googleId")
+              .setParameter("googleId", googleId)
+              .getSingleResult());
+    }
+  }
+
+  /**
    * Deletes the User entity whose primary key is id
    *
    * @param id is the Primary Key of the User entity in a table row in the

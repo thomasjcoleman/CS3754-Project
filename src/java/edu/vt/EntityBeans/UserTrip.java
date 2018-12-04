@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
   @NamedQuery(name = "UserTrip.findAll", query = "SELECT u FROM UserTrip u")
   , @NamedQuery(name = "UserTrip.findById", query = "SELECT u FROM UserTrip u WHERE u.id = :id")
   , @NamedQuery(name = "UserTrip.findByTrailId", query = "SELECT u FROM UserTrip u WHERE u.trailId = :trailId")
-  , @NamedQuery(name = "UserSurvey.findByTripDate", query = "SELECT u FROM UserTrip u WHERE u.tripDate = :tripDate")})
+  , @NamedQuery(name = "UserTrip.findByTripDate", query = "SELECT u FROM UserTrip u WHERE u.tripDate = :tripDate")
+  , @NamedQuery(name = "UserTrip.findTripsByUserDatabasePrimaryKey", query = "SELECT u FROM UserTrip u WHERE u.userId.id = :primaryKey")})
 public class UserTrip implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -58,6 +61,10 @@ public class UserTrip implements Serializable {
   @Column(name = "trip_date")
   @Temporal(TemporalType.DATE)
   private Date tripDate;
+  
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @ManyToOne
+  private User userId;
 
   public UserTrip() {
   }
@@ -96,6 +103,14 @@ public class UserTrip implements Serializable {
 
   public void setTripDate(Date tripDate) {
     this.tripDate = tripDate;
+  }
+
+  public User getUserId() {
+    return userId;
+  }
+
+  public void setUserId(User userId) {
+    this.userId = userId;
   }
   
   @Override

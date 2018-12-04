@@ -87,7 +87,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                                     value="#{userController.userPhoto()}"/>&nbsp;&nbsp;My Account
                   </h:link>
 
-                  <h:commandLink action="#{userController.logout()}" class="standardText" >
+                  <h:commandLink action="#{userController.logout()}" class="standardText" onclick="signOutGoogle()" >
                     <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
                   </h:commandLink>
                 </c:if>

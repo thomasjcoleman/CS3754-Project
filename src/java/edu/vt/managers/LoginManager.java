@@ -70,36 +70,6 @@ public class LoginManager implements Serializable {
         return userFacade;
     }
 
-    public void loginGoogleUser(String google_id, String name, String email) throws Exception {
-        System.out.println("Function called: " + google_id + ", " + name + ", " + email + "001");
-        userController.logout();
-        User user = getUserFacade().findByUsername("GoogleUser" + google_id);
-        if (user == null) //need to create a new user
-        {
-            System.out.println("User is null");
-            userController.setFirstName("First name: " + name);
-            userController.setMiddleName(" ");
-            userController.setLastName("Google User");
-            userController.setAddress1(" ");
-            userController.setAddress2(" ");
-            userController.setCity(" ");
-            userController.setState(" ");
-            userController.setZipcode(" ");
-            userController.setSecurityQuestionNumber(0);
-            userController.setAnswerToSecurityQuestion(" ");
-            userController.setEmail(email);
-            userController.setPhoneNumber(" ");
-            userController.setPhoneCarrier("");
-            userController.setUsername("GoogleUser" + google_id);
-            userController.setPassword("password");
-            userController.setConfirmPassword("password");
-            
-            user = getUserFacade().findByUsername("GoogleUser" + google_id); //update the user in the user controller
-        }
-        System.out.println("Username: " + user.getUsername());
-        //return "/userAccount/Profile.xhtml?faces-redirect=true";
-    }
-
     /* Instance Methods */
     // Sign in the user and redirect to their profile page.
     public String loginUser() throws AddressException, MessagingException {

@@ -26,7 +26,7 @@ import javax.faces.convert.FacesConverter;
 public class UserTripController implements Serializable {
 
   @EJB
-  private edu.vt.FacadeBeans.UserTripFacade ejbFacade;
+  private edu.vt.FacadeBeans.UserTripFacade userTripFacade;
 
   private List<UserTrip> items = null;
   private UserTrip selected;
@@ -49,7 +49,7 @@ public class UserTripController implements Serializable {
   }
 
   private UserTripFacade getFacade() {
-    return ejbFacade;
+    return userTripFacade;
   }
 
   public UserTrip prepareCreate() {
@@ -59,6 +59,8 @@ public class UserTripController implements Serializable {
   }
 
   public String create() {
+    User signedInUser = (User) Methods.sessionMap().get("user");
+    selected.setUserId(signedInUser);
     persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserTripCreated"));
     if (!JsfUtil.isValidationFailed()) {
       items = null;    // Invalidate list of items to trigger re-query.
