@@ -239,9 +239,13 @@ public class TrailController implements Serializable {
         trailArray.forEach(trailObj -> {
           results.add(createTrailFromJSON((JSONObject) trailObj));
         });
-        results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty)
-                || p.getRating() <= Double.valueOf(searchRating)
-                || p.getLength() <= Double.valueOf(minLengthQuery));
+        if (!searchDifficulty.equals("0")) {
+            results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty));
+        }
+        if (Double.valueOf(searchRating) != 0) {
+            results.removeIf(p -> p.getRating() < Double.valueOf(searchRating));
+        }
+        results.removeIf(p -> p.getLength() < Double.valueOf(minLengthQuery));
         return "/findTrails/Results?faces-redirect=true";
       }
     } catch (Exception ex) {
