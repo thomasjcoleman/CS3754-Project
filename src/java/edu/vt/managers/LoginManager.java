@@ -117,6 +117,19 @@ public class LoginManager implements Serializable {
         }
     }
     
+    public void sendCode() throws AddressException, MessagingException {
+        String enteredUsername = getUsername();
+        User user = getUserFacade().findByUsername(enteredUsername);
+        
+        randomNumber = Math.floor(100000 + Math.random() * 900000);
+        pcode = randomNumber.toString().substring(0, 4);
+        TextMessageController send = new TextMessageController();
+        send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
+        send.setCellPhoneNumber(user.getPhoneNumber());
+        send.setMmsTextMessage(pcode);
+        send.sendTextMessage();
+    }
+    
     public String twoFactorLogin() {
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);

@@ -36,9 +36,9 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
           <br />
           <div align="center">
             <!-- SAVE button -->
-            <p:commandButton actionListener="#{userTripController.create}" value="#{bundle.Save}" 
+            <p:commandButton value="#{bundle.Save}" 
                              icon="fas fa-save" ajax="false"
-                             action="userTrip/List">
+                             action="#{userTripController.create}">
               <f:setPropertyActionListener target="#{userTripController.selected.trailId}" value="#{trailController.selected.id}" />
             </p:commandButton>
             &nbsp;
