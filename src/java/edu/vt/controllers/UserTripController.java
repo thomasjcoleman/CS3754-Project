@@ -1,9 +1,11 @@
 package edu.vt.controllers;
 
+import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserTrip;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.UserTripFacade;
+import edu.vt.globals.Methods;
 
 import java.io.Serializable;
 import java.util.List;
@@ -79,7 +81,8 @@ public class UserTripController implements Serializable {
 
   public List<UserTrip> getItems() {
     if (items == null) {
-      items = getFacade().findAll();
+      User signedInUser = (User) Methods.sessionMap().get("user");
+      items = getFacade().findTripsByUserPrimaryKey(signedInUser.getId());
     }
     return items;
   }

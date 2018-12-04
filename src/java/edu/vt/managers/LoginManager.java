@@ -94,8 +94,6 @@ public class LoginManager implements Serializable {
             userController.setPassword("password");
             userController.setConfirmPassword("password");
             
-            userController.createAccount2();  //no redirect
-
             user = getUserFacade().findByUsername("GoogleUser" + google_id); //update the user in the user controller
         }
         System.out.println("Username: " + user.getUsername());
