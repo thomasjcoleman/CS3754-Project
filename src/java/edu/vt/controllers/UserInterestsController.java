@@ -13,6 +13,7 @@ import edu.vt.FacadeBeans.UserInterestsFacade;
 import edu.vt.globals.Methods;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,10 +26,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("userInterestsController")
 @SessionScoped
 public class UserInterestsController implements Serializable {
+    @Inject private TrailController tc;
 
     @EJB
     private edu.vt.FacadeBeans.UserInterestsFacade ejbFacade;
@@ -285,5 +288,43 @@ public class UserInterestsController implements Serializable {
         }
 
     }
-
+    public double getMiles()
+    {
+        double sum = 0;
+        completedTrails = getCompletedTrails();
+        if (completedTrails == null) {
+            return 0;
+        }
+        for (int i = 0; i < completedTrails.size(); i++)
+        {
+            sum += tc.getTrailByID(completedTrails.get(i).getTrailId()).getLength();
+        }
+        return sum;
+    }
+    
+    public double getAscent()
+    {
+        double sum = 0;
+        completedTrails = getCompletedTrails();
+        if (completedTrails == null) {
+            return 0;
+        }
+        for (int i = 0; i < completedTrails.size(); i++)
+        {
+            sum += tc.getTrailByID(completedTrails.get(i).getTrailId()).getAscentDist();
+        }
+        return sum;
+    }
+    
+    public String getEverestStat()
+    {
+        DecimalFormat df = new DecimalFormat("#.###");
+        return df.format(getAscent() / 29029);
+    }
+    
+    public int getNumTrails()
+    {
+        completedTrails = getCompletedTrails(); 
+        return completedTrails == null ? 0 : completedTrails.size();
+    }
 }
