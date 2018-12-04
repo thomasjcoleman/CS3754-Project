@@ -6,21 +6,14 @@ import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.globals.Methods;
 import edu.vt.controllers.TextMessageController;
-import java.io.IOException;
 import java.util.Properties;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Named(value = "loginManager")
@@ -110,11 +103,11 @@ public class LoginManager implements Serializable {
                 return "";
             }
 
-            pcode = Math.floor((Math.random() * 1000) + 1);
+            pcode = Math.floor((Math.random() * 10000) + 1);
             TextMessageController send = new TextMessageController();
             send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
             send.setCellPhoneNumber(user.getPhoneNumber());
-            send.setMmsTextMessage(pcode.toString());
+            send.setMmsTextMessage(pcode.toString().replace(".0", ""));
             send.sendTextMessage();
             
             return "/TwoFactorSignIn.xhtml?faces-redirect=true";
@@ -125,7 +118,7 @@ public class LoginManager implements Serializable {
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
         
-        if (pcode.toString().equals(passcode)) {
+        if (pcode.toString().replace(".0", "").equals(passcode)) {
             pcode = null;
             initializeSessionMap(user);
             return "/userAccount/Profile.xhtml?faces-redirect=true";
