@@ -166,10 +166,9 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
               </p:inputText>
 
               <h:outputLabel for="searchDifficultyField" value="Choose Difficulty: " />
-              <p:selectOneMenu id="searchDifficultyField" value="#{trailController.searchDifficulty}"
-                               required="true" requiredMessage="Please Select a Difficulty Level!" >
+              <p:selectOneMenu id="searchDifficultyField" value="#{trailController.searchDifficulty}" >
 
-                <f:selectItem itemLabel="Select Difficulty"   itemValue="" noSelectionOption="true"/>
+                <f:selectItem itemLabel="Any"   itemValue="0" noSelectionOption="true"/>
                 <f:selectItem itemLabel="Beginner" itemValue="green"/>
                 <f:selectItem itemLabel="Easy"      itemValue="greenBlue"/>
                 <f:selectItem itemLabel="Intermediate" itemValue="blue"/>
@@ -179,10 +178,9 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
               </p:selectOneMenu>
 
               <h:outputLabel for="searchRatingField" value="Choose Minimim Rating: " />
-              <p:selectOneMenu id="searchRatingField" value="#{trailController.searchRating}"
-                               required="true" requiredMessage="Please Select a Rating!" >
+              <p:selectOneMenu id="searchRatingField" value="#{trailController.searchRating}">
 
-                <f:selectItem itemLabel="Select Rating"   itemValue="" noSelectionOption="true"/>
+                <f:selectItem itemLabel="Any"   itemValue="0" noSelectionOption="true"/>
                 <f:selectItem itemLabel="1 Star"  itemValue="1"/>
                 <f:selectItem itemLabel="2 Stars" itemValue="2"/>
                 <f:selectItem itemLabel="3 Stars" itemValue="3"/>

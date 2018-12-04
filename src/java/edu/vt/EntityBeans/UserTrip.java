@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,6 +45,11 @@ public class UserTrip implements Serializable {
   @Basic(optional = false)
   @Column(name = "trail_id")
   private Integer trailId;
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 256)
+  @Column(name = "trip_name")
+  private String tripName;
   @Basic(optional = false)
   @NotNull
   @Column(name = "trip_date")
@@ -73,6 +79,14 @@ public class UserTrip implements Serializable {
     this.trailId = trailId;
   }
 
+  public String getTripName() {
+    return tripName;
+  }
+
+  public void setTripName(String tripName) {
+    this.tripName = tripName;
+  }
+  
   public Date getTripDate() {
     return tripDate;
   }
