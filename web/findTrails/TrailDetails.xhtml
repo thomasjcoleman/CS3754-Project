@@ -4,7 +4,7 @@ Created by Thomas Coleman on 2018.11.15
 Copyright © 2018 Thomas Coleman. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -12,114 +12,124 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <ui:composition template="/template/siteTemplate.xhtml">
-        <f:metadata>
-            <!-- Pass trail ID in url, i.e. "?id=12345" -->
-            <f:event type="preRenderView" listener="#{trailController.getTrailMap(param['id'])}" />
-        </f:metadata>
-        <ui:define name="title">
-            <h:outputText value="#{trailController.selected.name}" />
-        </ui:define>
+  <ui:composition template="/template/siteTemplate.xhtml">
+    <f:metadata>
+      <!-- Pass trail ID in url, i.e. "?id=12345" -->
+      <f:event type="preRenderView" listener="#{trailController.getTrailMap(param['id'])}" />
+    </f:metadata>
+    <ui:define name="title">
+      <h:outputText value="#{trailController.selected.name}" />
+    </ui:define>
 
-        <ui:define name="editableContent">
-            <div style="display: flex; flex-flow: row wrap">
-                <div id="map" class="map detailsMap"></div>
-                <div class="trailDetails">
-                    <img class="difficulty" src="#{resource['images:trailDifficulties/' += trailController.selected.difficulty += '.svg']}" />
-                    <a href="#{trailController.selected.url}" target="_blank"><h1><h:outputText value="#{trailController.selected.name}"/></h1></a>
-                    <h2><h:outputText value="#{trailController.selected.location}"/></h2>
-                    <div class="rating" style="width: #{(trailController.selected.rating / 5) * 150}px">
-                        <img width="150" src="#{resource['images:rating.png']}"/>
-                    </div>
-                    <img width="150" src="#{resource['images:ratingGray.png']}"  title="Rating: #{trailController.selected.rating}"/>
-                    <span class="ratingCount"><h:outputText value="#{trailController.selected.numberOfRatings} ratings"/></span>
-                    <div class="trailDescription"><h:outputText value="#{trailController.selected.summary}" /></div>
+    <ui:define name="editableContent">
+      <div style="display: flex; flex-flow: row wrap">
+        <div id="map" class="map detailsMap"></div>
+        <div class="trailDetails">
+          <img class="difficulty" src="#{resource['images:trailDifficulties/' += trailController.selected.difficulty += '.svg']}" />
+          <a href="#{trailController.selected.url}" target="_blank"><h1><h:outputText value="#{trailController.selected.name}"/></h1></a>
+          <h2><h:outputText value="#{trailController.selected.location}"/></h2>
+          <div class="rating" style="width: #{(trailController.selected.rating / 5) * 150}px">
+            <img width="150" src="#{resource['images:rating.png']}"/>
+          </div>
+          <img width="150" src="#{resource['images:ratingGray.png']}"  title="Rating: #{trailController.selected.rating}"/>
+          <span class="ratingCount"><h:outputText value="#{trailController.selected.numberOfRatings} ratings"/></span>
+          <div class="trailDescription"><h:outputText value="#{trailController.selected.summary}" /></div>
 
-                    <div style="overflow: auto">
-                        <p:graphicImage class="trailPhoto" url="#{trailController.selected.imgUrl}"/>
-                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                                     rendered="#{trailController.selected != null}" style="width: 300px; float: left;">
-                            Length:
-                            <h:outputText value="#{trailController.selected.length} miles" />
+          <div style="overflow: auto">
+            <p:graphicImage class="trailPhoto" url="#{trailController.selected.imgUrl}"/>
+            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                         rendered="#{trailController.selected != null}" style="width: 300px; float: left;">
+              Length:
+              <h:outputText value="#{trailController.selected.length} miles" />
 
-                            Ascent:
-                            <h:outputText value="#{trailController.selected.ascentDist}">
-                                <f:convertNumber pattern="#0 feet"/>
-                            </h:outputText>
+              Ascent:
+              <h:outputText value="#{trailController.selected.ascentDist}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
 
-                            Descent:
-                            <h:outputText value="#{trailController.selected.descentDist}">
-                                <f:convertNumber pattern="#0 feet"/>
-                            </h:outputText>
+              Descent:
+              <h:outputText value="#{trailController.selected.descentDist}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
 
-                            Highest point:
-                            <h:outputText value="#{trailController.selected.highestHeight}">
-                                <f:convertNumber pattern="#0 feet"/>
-                            </h:outputText>
+              Highest point:
+              <h:outputText value="#{trailController.selected.highestHeight}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
 
-                            Lowest point:
-                            <h:outputText value="#{trailController.selected.lowestHeight}">
-                                <f:convertNumber pattern="#0 feet"/>
-                            </h:outputText>
+              Lowest point:
+              <h:outputText value="#{trailController.selected.lowestHeight}">
+                <f:convertNumber pattern="#0 feet"/>
+              </h:outputText>
 
-                            Current condition:
-                            <h:outputText value="#{trailController.selected.conditionStatus}" />
+              Current condition:
+              <h:outputText value="#{trailController.selected.conditionStatus}" />
 
-                            <c:if test="#{!empty trailController.selected.conditionDetails}" >
-                                Condition details:
-                                <h:outputText value="#{trailController.selected.conditionDetails}" />
+              <c:if test="#{!empty trailController.selected.conditionDetails}" >
+                Condition details:
+                <h:outputText value="#{trailController.selected.conditionDetails}" />
 
-                                Last updated:
-                                <h:outputText value="#{trailController.selected.conditionDate}">
-                                    <f:convertDateTime pattern="MM-dd-yyyy, h:mm a" />
-                                </h:outputText>
-                            </c:if>
-                        </p:panelGrid>
-                    </div>
+                Last updated:
+                <h:outputText value="#{trailController.selected.conditionDate}">
+                  <f:convertDateTime pattern="MM-dd-yyyy, h:mm a" />
+                </h:outputText>
+              </c:if>
+            </p:panelGrid>
+          </div>
 
-                    <h:form id="buttonWrap" style="text-align: center">
-                        <c:if test="#{userController.isLoggedIn()}">
-                            <c:choose>
-                                <c:when test="#{userInterestsController.trailMarkedInterested(param['id'])}"> 
-                                    <p:commandButton id="interestButton" value="Remove from interested" icon="fas fa-eye-slash" ajax="false"
-                                                     actionListener="#{userInterestsController.removeInterested(trailController.selected)}"
-                                                     action="#{trailController.reload()}"/>
-                                </c:when> 
-                                <c:otherwise>
-                                    <p:commandButton id="interestButton" value="Add to interested" icon="fas fa-eye" ajax="false"
-                                                     actionListener="#{userInterestsController.addInterested(trailController.selected)}"
-                                                     action="#{trailController.reload()}"/>
-                                </c:otherwise>
-                            </c:choose>
-                            &nbsp;&nbsp;
+          <h:form id="buttonWrap" style="text-align: center">
+            <c:if test="#{userController.isLoggedIn()}">
+              <!-- Create Trip -->
+              <p:commandButton id="createTripButton" value="Create Trip For This Trail" icon="fas fa-walking"
+                               actionListener="#{userTripController.prepareCreate}" 
+                               update=":UserTripCreateDlg" oncomplete="PF('UserTripCreateDialog').show()" />
+              &nbsp;&nbsp;
 
-                            <c:choose>
-                                <c:when test="#{userInterestsController.trailMarkedCompleted(param['id'])}"> 
-                                    <p:commandButton id="completeButton" value="Remove from completed" icon="fas fa-times" ajax="false"
-                                                     actionListener="#{userInterestsController.removeCompleted(trailController.selected)}"
-                                                     action="#{trailController.reload()}"/>
-                                </c:when> 
-                                <c:otherwise>
-                                    <p:commandButton id="completeButton" value="Mark as completed" icon="fas fa-check" ajax="false"
-                                                     actionListener="#{userInterestsController.addCompleted(trailController.selected)}"
-                                                     action="#{trailController.reload()}"/>
-                                </c:otherwise>
-                            </c:choose>
-                            &nbsp;&nbsp;
-                        </c:if> 
+              <!-- User interests -->
+              <c:choose>
+                <c:when test="#{userInterestsController.trailMarkedInterested(param['id'])}"> 
+                  <p:commandButton id="interestButton" value="Remove from interested" icon="fas fa-eye-slash" ajax="false"
+                                   actionListener="#{userInterestsController.removeInterested(trailController.selected)}"
+                                   action="#{trailController.reload()}"/>
+                </c:when> 
+                <c:otherwise>
+                  <p:commandButton id="interestButton" value="Add to interested" icon="fas fa-eye" ajax="false"
+                                   actionListener="#{userInterestsController.addInterested(trailController.selected)}"
+                                   action="#{trailController.reload()}"/>
+                </c:otherwise>
+              </c:choose>
+              &nbsp;&nbsp;
 
-                        <!-- Show directions -->
-                        <p:button outcome="./TrailDirections.xhtml?id=#{param['id']}" value="Get Directions from Current Location" icon="fas fa-search"  />
-                    </h:form>
-                </div>
-            </div>
+              <!-- Completed trails -->
+              <c:choose>
+                <c:when test="#{userInterestsController.trailMarkedCompleted(param['id'])}"> 
+                  <p:commandButton id="completeButton" value="Remove from completed" icon="fas fa-times" ajax="false"
+                                   actionListener="#{userInterestsController.removeCompleted(trailController.selected)}"
+                                   action="#{trailController.reload()}"/>
+                </c:when> 
+                <c:otherwise>
+                  <p:commandButton id="completeButton" value="Mark as completed" icon="fas fa-check" ajax="false"
+                                   actionListener="#{userInterestsController.addCompleted(trailController.selected)}"
+                                   action="#{trailController.reload()}"/>
+                </c:otherwise>
+              </c:choose>
+              &nbsp;&nbsp;
+            </c:if> 
 
-            <input type="hidden" id="jsonData" value="#{trailController.jsonResults}" />
-            <input type="hidden" id="trailGPX" value="../TrailblazerStorage/gpxStorage/#{trailController.selected.id}.gpx" />
-            <script type="text/javascript">
-                initializeMap();
-            </script>
-        </ui:define>
-    </ui:composition>
+            <!-- Show directions -->
+            <p:button outcome="./TrailDirections.xhtml?id=#{param['id']}" value="Get Directions from Current Location" icon="fas fa-search"  />
+          </h:form>
+        </div>
+      </div>
+
+      <input type="hidden" id="jsonData" value="#{trailController.jsonResults}" />
+      <input type="hidden" id="trailGPX" value="../TrailblazerStorage/gpxStorage/#{trailController.selected.id}.gpx" />
+      <script type="text/javascript">
+        initializeMap();
+      </script>
+
+      <ui:include src="/userTrip/Create.xhtml"/>
+    </ui:define>
+  </ui:composition>
 
 </html>

@@ -19,13 +19,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-// TODO
 @Named("userTripController")
 @SessionScoped
 public class UserTripController implements Serializable {
 
   @EJB
   private edu.vt.FacadeBeans.UserTripFacade ejbFacade;
+  
   private List<UserTrip> items = null;
   private UserTrip selected;
 
