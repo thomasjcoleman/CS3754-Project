@@ -22,8 +22,6 @@ Copyright © 2018 Matthew Croll. All rights reserved.
 
                 <h:form>
                     <p:panelGrid columns="2" styleClass="ui-noborder" columnClasses="panelGridColumn3, panelGridColumn3">
-                        <p:commandButton style="margin-bottom:10px" id="submit" value="Submit" action="#{loginManager.twoFactorLogin()}" 
-                                        ajax="false" icon="fas fa-sign-in-alt"/>
                         <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
 
                             <h:outputLabel value="Enter 4 Digit Passcode:" for="passcode" />
@@ -31,6 +29,8 @@ Copyright © 2018 Matthew Croll. All rights reserved.
                                      requiredMessage="Please enter passcode" label="Passcode" >
                             </p:inputText>
                         </p:panelGrid>
+                        <p:commandButton style="margin-bottom:10px" id="submit" value="Submit" action="#{loginManager.twoFactorLogin()}" 
+                                        ajax="false" icon="fas fa-sign-in-alt"/>
                     </p:panelGrid>
                     <br/>
                     <br/>
