@@ -5,11 +5,23 @@ import edu.vt.globals.Password;
 import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.globals.Methods;
-
+import edu.vt.controllers.TextMessageController;
+import java.io.IOException;
+import java.util.Properties;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 @Named(value = "loginManager")
 @SessionScoped
@@ -19,6 +31,11 @@ public class LoginManager implements Serializable {
     /* Instance variables */
     private String username;
     private String password;
+    private String passcode;
+    private Double pcode;
+    Properties emailServerProperties;   // java.util.Properties
+    Session emailSession;               // javax.mail.Session  
+    MimeMessage mimeEmailMessage;       // javax.mail.internet.MimeMessage
 
     @EJB
     private UserFacade userFacade;
@@ -43,6 +60,14 @@ public class LoginManager implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getPasscode() {
+        return passcode;
+    }
+    
+    public void setPasscode(String passcode) {
+        this.passcode = passcode;
+    }
 
     public UserFacade getUserFacade() {
         return userFacade;
@@ -50,7 +75,7 @@ public class LoginManager implements Serializable {
 
     /* Instance Methods */
     // Sign in the user and redirect to their profile page.
-    public String loginUser() {
+    public String loginUser() throws AddressException, MessagingException {
         Methods.preserveMessages();
         
         String enteredUsername = getUsername();
@@ -85,10 +110,30 @@ public class LoginManager implements Serializable {
                 return "";
             }
 
-            // Redirect to show the Profile page
+            pcode = Math.floor((Math.random() * 1000) + 1);
+            TextMessageController send = new TextMessageController();
+            send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
+            send.setCellPhoneNumber(user.getPhoneNumber());
+            send.setMmsTextMessage(pcode.toString());
+            send.sendTextMessage();
+            
+            return "/TwoFactorSignIn.xhtml?faces-redirect=true";
+        }
+    }
+    
+    public String twoFactorLogin() {
+        String enteredUsername = getUsername();
+        User user = getUserFacade().findByUsername(enteredUsername);
+        
+        if (pcode.toString().equals(passcode)) {
+            pcode = null;
             initializeSessionMap(user);
             return "/userAccount/Profile.xhtml?faces-redirect=true";
         }
+        
+        pcode = null;
+      
+        return "/index.xhtml?faces-redirect=true";
     }
 
     // Initialize the session map with attributes we care about
