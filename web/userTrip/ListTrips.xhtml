@@ -44,22 +44,22 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                             <!--
                             Trail Name
                             -->
-                            <p:column sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="#{bundle.ListUserTripTitle_trailName}">
-                                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getName()}"/>
+                            <p:column class="listValue" sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="#{bundle.ListUserTripTitle_trailName}">
+                                <h:outputText value="#{trailController.getTrailByID(item.trailId).getName()}"/>
                             </p:column>
 
                             <!--
                             Trip Name
                             -->
-                            <p:column sortBy="#{item.tripName}" headerText="#{bundle.ListUserTripTitle_tripName}">
-                                <h:outputText class="inputTextField" value="#{item.tripName}"/>
+                            <p:column class="listValue" sortBy="#{item.tripName}" headerText="#{bundle.ListUserTripTitle_tripName}">
+                                <h:outputText value="#{item.tripName}"/>
                             </p:column>
 
                             <!--
                             Trip Date
                             -->
-                            <p:column sortBy="#{item.tripDate}" headerText="#{bundle.ListUserTripTitle_tripDate}">
-                                <h:outputText class="inputTextField" value="#{item.tripDate}"/>
+                            <p:column class="listValue" sortBy="#{item.tripDate}" headerText="#{bundle.ListUserTripTitle_tripDate}">
+                                <h:outputText value="#{item.tripDate}"/>
                             </p:column>
 
                             <f:facet name="footer">

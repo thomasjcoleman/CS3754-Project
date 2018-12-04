@@ -4,7 +4,7 @@ Created by Thomas Coleman on 2018.10.30
 Copyright © 2018 Thomas Coleman. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -12,214 +12,214 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-  <!-- This template handles the page header. -->
-  <ui:composition>
-    <h:form>
-      <table border="0" cellspacing="0" cellpadding="10" width="100%">
-        <tr>
-          <!-- Left: logo -->
-          <td align="left" valign="middle" style="width:268px;">
-            <h:link outcome="/index">
-              <img src="#{resource['images:TrailblazerLogo.png']}"
-                   style="max-width:100%; height:auto; max-height:64px; max-width:215px; float:left; padding-left:10px; border:none;"
-                   alt="Trailblazer Logo" />
-            </h:link>
-          </td>
+    <!-- This template handles the page header. -->
+    <ui:composition>
+        <h:form>
+            <table border="0" cellspacing="0" cellpadding="10" width="100%">
+                <tr>
+                    <!-- Left: logo -->
+                    <td align="left" valign="middle" style="width:268px;">
+                        <h:link outcome="/index">
+                            <img src="#{resource['images:TrailblazerLogo.png']}"
+                                 style="max-width:100%; height:auto; max-height:64px; max-width:215px; float:left; padding-left:10px; border:none;"
+                                 alt="Trailblazer Logo" />
+                        </h:link>
+                    </td>
 
-          <!-- Center: Welcome User -->
-          <td align="center" valign="middle">
-            <!-- Welcome the user if signed in -->
-            <c:choose>
-              <c:when test="#{userController.isLoggedIn()}"> 
-                <div class="helloText">Hello, #{userController.selected.firstName}</div>
-              </c:when> 
-              <c:otherwise>
-                <h1>Hello, Guest</h1>
-              </c:otherwise>
-            </c:choose>
-          </td>
+                    <!-- Center: Welcome User -->
+                    <td align="center" valign="middle">
+                        <!-- Welcome the user if signed in -->
+                        <c:choose>
+                            <c:when test="#{userController.isLoggedIn()}"> 
+                                <div class="helloText">Hello, #{userController.selected.firstName}</div>
+                            </c:when> 
+                            <c:otherwise>
+                                <h1>Hello, Guest</h1>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
 
-          <!-- Right: Hamburger Menu Button -->
-          <td align="right" valign="middle" style="width:100px;">
-            <div tabindex="0" class="menu" style="float:right;padding-right:20px;">
-              <div class="menu-dropdown" style="right:0;">
+                    <!-- Right: Hamburger Menu Button -->
+                    <td align="right" valign="middle" style="width:100px;">
+                        <div tabindex="0" class="menu" style="float:right;padding-right:20px;">
+                            <div class="menu-dropdown" style="right:0;">
 
-                <!-- Menu if user is logged in -->
-                <c:if test="#{userController.isLoggedIn()}">
-                  <h:link outcome="/index" class="standardText">
-                    <i class="fas fa-home"></i>&nbsp;Home
-                  </h:link>
+                                <!-- Menu if user is logged in -->
+                                <c:if test="#{userController.isLoggedIn()}">
+                                    <h:link outcome="/index" class="standardText">
+                                        <i class="fas fa-home"></i>&nbsp;Home
+                                    </h:link>
 
-                  <h:link outcome="/findTrails/Map" class="standardText">
-                    <i class="fas fa-map-marker-alt"></i>&nbsp;Map
-                  </h:link>
+                                    <h:link outcome="/findTrails/Map" class="standardText">
+                                        <i class="fas fa-map-marker-alt"></i>&nbsp;Map
+                                    </h:link>
 
-                  <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
-                    <i class="fas fa-search"></i>&nbsp;Trail Search
-                  </h:link>
+                                    <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
+                                        <i class="fas fa-search"></i>&nbsp;Trail Search
+                                    </h:link>
 
-                  <h:link outcome="/userTrails/ListInterested">
-                    <i class="fas fa-eye"></i>&nbsp;Interested Trails
-                  </h:link>
+                                    <h:link outcome="/userTrip/ListTrips" class="standardText">
+                                        <i class="fas fa-file"></i>&nbsp;Hiking Trips
+                                    </h:link>
 
-                  <h:link outcome="/userTrails/ListCompleted">
-                    <i class="fas fa-check"></i>&nbsp;Completed Trails
-                  </h:link>
+                                    <h:link outcome="/userTrails/ListInterested" class="standardText">
+                                        <i class="fas fa-eye"></i>&nbsp;Interested Trails
+                                    </h:link>
 
-                  <h:link outcome="/userFile/ListUserFiles" class="standardText">
-                    <i class="fas fa-file"></i>&nbsp;My Trail Files
-                  </h:link>
-                    
-                  <h:link outcome="/statistics/ViewStatistics" class="standardText">
-                    <i class="fas fa-calculator"></i>&nbsp;Statistics
-                  </h:link>
+                                    <h:link outcome="/userTrails/ListCompleted" class="standardText">
+                                        <i class="fas fa-check"></i>&nbsp;Completed Trails
+                                    </h:link>
 
-                  <h:link outcome="/send/Email" class="standardText">
-                    <i class="far fa-envelope"></i>&nbsp;Send Email Invites
-                  </h:link>
+                                    <h:link outcome="/statistics/ViewStatistics" class="standardText">
+                                        <i class="fas fa-calculator"></i>&nbsp;View Statistics
+                                    </h:link>
 
-                  <h:link outcome="/send/TextMessage" class="standardText">
-                    <i class="far fa-comment-dots"></i>&nbsp;Send Text Invites
-                  </h:link>
+                                    <h:link outcome="/send/Email" class="standardText">
+                                        <i class="far fa-envelope"></i>&nbsp;Send Email Invites
+                                    </h:link>
 
-                  <h:link outcome="/userAccount/Profile" class="standardText">
-                    <p:graphicImage cache="false" class="smallProfilePhoto" 
-                                    value="#{userController.userPhoto()}"/>&nbsp;&nbsp;My Account
-                  </h:link>
+                                    <h:link outcome="/send/TextMessage" class="standardText">
+                                        <i class="far fa-comment-dots"></i>&nbsp;Send Text Invites
+                                    </h:link>
 
-                  <h:commandLink action="#{userController.logout()}" class="standardText" >
-                    <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
-                  </h:commandLink>
-                </c:if>
+                                    <h:link outcome="/userAccount/Profile" class="standardText">
+                                        <p:graphicImage cache="false" class="smallProfilePhoto" 
+                                                        value="#{userController.userPhoto()}"/>&nbsp;&nbsp;My Account
+                                    </h:link>
 
-                <!-- Menu if user is ***NOT*** logged in -->
-                <c:if test="#{userController.isLoggedIn() == false}">
-                  <h:link outcome="/index" class="standardText">
-                    <i class="fas fa-home"></i>&nbsp;Home
-                  </h:link>
+                                    <h:commandLink action="#{userController.logout()}" class="standardText" >
+                                        <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
+                                    </h:commandLink>
+                                </c:if>
 
-                  <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
-                    <i class="fas fa-search"></i>&nbsp;Trail Search
-                  </h:link>
+                                <!-- Menu if user is ***NOT*** logged in -->
+                                <c:if test="#{userController.isLoggedIn() == false}">
+                                    <h:link outcome="/index" class="standardText">
+                                        <i class="fas fa-home"></i>&nbsp;Home
+                                    </h:link>
 
-                  <h:link outcome="/findTrails/Map" class="standardText">
-                    <i class="fas fa-map-marker-alt"></i>&nbsp;Map
-                  </h:link>
+                                    <h:link onclick="PF('TrailSearchDialog').show();return false;" class="standardText">
+                                        <i class="fas fa-search"></i>&nbsp;Trail Search
+                                    </h:link>
 
-                  <h:link outcome="/SignIn" class="standardText">
-                    <i class="fas fa-sign-in-alt"></i>&nbsp;Sign In
-                  </h:link>
+                                    <h:link outcome="/findTrails/Map" class="standardText">
+                                        <i class="fas fa-map-marker-alt"></i>&nbsp;Map
+                                    </h:link>
 
-                  <h:link outcome="/userAccount/CreateAccount" class="standardText">
-                    <i class="fas fa-user-plus"></i>&nbsp;Create An Account
-                  </h:link>
-                </c:if>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </h:form>
+                                    <h:link outcome="/SignIn" class="standardText">
+                                        <i class="fas fa-sign-in-alt"></i>&nbsp;Sign In
+                                    </h:link>
 
-    <!-- 
-    ====================================================================
-    |  Clicking the TRAIL SEARCH link displays this Dialog window for  |
-    |  the user to enter a search query and click the Search button.   |
-    ====================================================================
-    -->
-    <p:dialog width="500px" position="center center" id="TrailSearchDlg" widgetVar="TrailSearchDialog" 
-              modal="true" resizable="false" appendTo="@(body)" header="Search Trails" responsive="true"
-              onShow="initializeAutocomplete()">
-      <h:form id="searchDialogForm">
-        <table border="0" align="center" cellpadding="10" cellspacing="0">
-          <div align="center" bgcolor="#FDF5E6" >
-            <br />
-            <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
-                         style="width: 300px; float: left;">
+                                    <h:link outcome="/userAccount/CreateAccount" class="standardText">
+                                        <i class="fas fa-user-plus"></i>&nbsp;Create An Account
+                                    </h:link>
+                                </c:if>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
 
-              <!-- Fetch a location's latitude and longitude. -->
-              <h:outputLabel for="searchLocationField" value="Enter Location: " />
-              <h:panelGroup>
-                <p:inputText id="searchLocationField" class="googleMapsAutocomplete"
-                             style="width:200px" value="#{trailController.locationQuery}"
-                             placeholder="Enter Location" required="true"
-                             requiredMessage="Please enter a Location!" />
+        <!-- 
+        ====================================================================
+        |  Clicking the TRAIL SEARCH link displays this Dialog window for  |
+        |  the user to enter a search query and click the Search button.   |
+        ====================================================================
+        -->
+        <p:dialog width="500px" position="center center" id="TrailSearchDlg" widgetVar="TrailSearchDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" header="Search Trails" responsive="true"
+                  onShow="initializeAutocomplete()">
+            <h:form id="searchDialogForm">
+                <table border="0" align="center" cellpadding="10" cellspacing="0">
+                    <div align="center" bgcolor="#FDF5E6" >
+                        <br />
+                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                                     style="width: 300px; float: left;">
 
-                <h:inputHidden id="searchLatitudeField" required="true"
-                               requiredMessage="Location was not findable!"
-                               value="#{trailController.latitudeQuery}" />
-                <h:inputHidden id="searchLongitudeField"
-                               value="#{trailController.longitudeQuery}" />
-              </h:panelGroup>
+                            <!-- Fetch a location's latitude and longitude. -->
+                            <h:outputLabel for="searchLocationField" value="Enter Location: " />
+                            <h:panelGroup>
+                                <p:inputText id="searchLocationField" class="googleMapsAutocomplete"
+                                             style="width:200px" value="#{trailController.locationQuery}"
+                                             placeholder="Enter Location" required="true"
+                                             requiredMessage="Please enter a Location!" />
 
-              <h:outputLabel for="searchDistanceField" value="Enter Max Distance Away (miles): " />
-              <p:inputText id="searchDistanceField" style="width:200px"
-                           placeholder="Enter Distance"
-                           required="true"
-                           requiredMessage="Please enter a Distance!"
-                           value="#{trailController.distanceQuery}" >
-              </p:inputText>
+                                <h:inputHidden id="searchLatitudeField" required="true"
+                                               requiredMessage="Location was not findable!"
+                                               value="#{trailController.latitudeQuery}" />
+                                <h:inputHidden id="searchLongitudeField"
+                                               value="#{trailController.longitudeQuery}" />
+                            </h:panelGroup>
 
-              <h:outputLabel for="searchMinLengthField" value="Enter Minimum Trail Length (miles): " />
-              <p:inputText id="searchMinLengthField" style="width:200px"
-                           placeholder="Enter trail length"
-                           required="true"
-                           requiredMessage="Please enter trail length!"
-                           value="#{trailController.minLengthQuery}" >
-                <f:validateDoubleRange minimum = "0.00"/>
-              </p:inputText>
+                            <h:outputLabel for="searchDistanceField" value="Enter Max Distance Away (miles): " />
+                            <p:inputText id="searchDistanceField" style="width:200px"
+                                         placeholder="Enter Distance"
+                                         required="true"
+                                         requiredMessage="Please enter a Distance!"
+                                         value="#{trailController.distanceQuery}" >
+                            </p:inputText>
 
-              <h:outputLabel for="searchDifficultyField" value="Choose Difficulty: " />
-              <p:selectOneMenu id="searchDifficultyField" value="#{trailController.searchDifficulty}" >
+                            <h:outputLabel for="searchMinLengthField" value="Enter Minimum Trail Length (miles): " />
+                            <p:inputText id="searchMinLengthField" style="width:200px"
+                                         placeholder="Enter trail length"
+                                         required="true"
+                                         requiredMessage="Please enter trail length!"
+                                         value="#{trailController.minLengthQuery}" >
+                                <f:validateDoubleRange minimum = "0.00"/>
+                            </p:inputText>
 
-                <f:selectItem itemLabel="Any"   itemValue="0" noSelectionOption="true"/>
-                <f:selectItem itemLabel="Beginner" itemValue="green"/>
-                <f:selectItem itemLabel="Easy"      itemValue="greenBlue"/>
-                <f:selectItem itemLabel="Intermediate" itemValue="blue"/>
-                <f:selectItem itemLabel="Difficult" itemValue="blueBlack"/>
-                <f:selectItem itemLabel="Very Difficult" itemValue="black"/>
+                            <h:outputLabel for="searchDifficultyField" value="Choose Difficulty: " />
+                            <p:selectOneMenu id="searchDifficultyField" value="#{trailController.searchDifficulty}" >
 
-              </p:selectOneMenu>
+                                <f:selectItem itemLabel="Any"   itemValue="0" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Beginner" itemValue="green"/>
+                                <f:selectItem itemLabel="Easy"      itemValue="greenBlue"/>
+                                <f:selectItem itemLabel="Intermediate" itemValue="blue"/>
+                                <f:selectItem itemLabel="Difficult" itemValue="blueBlack"/>
+                                <f:selectItem itemLabel="Very Difficult" itemValue="black"/>
 
-              <h:outputLabel for="searchRatingField" value="Choose Minimim Rating: " />
-              <p:selectOneMenu id="searchRatingField" value="#{trailController.searchRating}">
+                            </p:selectOneMenu>
 
-                <f:selectItem itemLabel="Any"   itemValue="0" noSelectionOption="true"/>
-                <f:selectItem itemLabel="1 Star"  itemValue="1"/>
-                <f:selectItem itemLabel="2 Stars" itemValue="2"/>
-                <f:selectItem itemLabel="3 Stars" itemValue="3"/>
-                <f:selectItem itemLabel="4 Stars" itemValue="4"/>
-                <f:selectItem itemLabel="5 Stars" itemValue="5"/>
+                            <h:outputLabel for="searchRatingField" value="Choose Minimim Rating: " />
+                            <p:selectOneMenu id="searchRatingField" value="#{trailController.searchRating}">
 
-              </p:selectOneMenu>
-            </p:panelGrid>
+                                <f:selectItem itemLabel="Any"   itemValue="0" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="1 Star"  itemValue="1"/>
+                                <f:selectItem itemLabel="2 Stars" itemValue="2"/>
+                                <f:selectItem itemLabel="3 Stars" itemValue="3"/>
+                                <f:selectItem itemLabel="4 Stars" itemValue="4"/>
+                                <f:selectItem itemLabel="5 Stars" itemValue="5"/>
 
-            <br /><br />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
 
-            <!--  SEARCH button -->
-            <center>
-              <p:commandButton value="Search" id="searchButton"  ajax="false" icon="fas fa-search"
-                               action="#{trailController.performSearch()}" />
-              &nbsp;&nbsp;
+                        <br /><br />
 
-              <!-- CLEAR button -->                    
-              <p:commandButton value="Clear" icon="fas fa-undo" ajax="false"
-                               actionListener="#{trailController.clear()}" immediate="true" >
+                        <!--  SEARCH button -->
+                        <center>
+                            <p:commandButton value="Search" id="searchButton"  ajax="false" icon="fas fa-search"
+                                             action="#{trailController.performSearch()}" />
+                            &nbsp;&nbsp;
 
-                <p:resetInput target="TrailSearchDlg" />
-              </p:commandButton>
-              &nbsp;&nbsp;
+                            <!-- CLEAR button -->                    
+                            <p:commandButton value="Clear" icon="fas fa-undo" ajax="false"
+                                             actionListener="#{trailController.clear()}" immediate="true" >
 
-              <!-- CANCEL button -->
-              <p:commandButton value="Cancel" onclick="PF('TrailSearchDialog').hide()" 
-                               icon="fas fa-ban"/>
-            </center>
-            <br /><br />
-          </div>
-        </table>
-      </h:form>
-    </p:dialog>
+                                <p:resetInput target="TrailSearchDlg" />
+                            </p:commandButton>
+                            &nbsp;&nbsp;
 
-  </ui:composition>
+                            <!-- CANCEL button -->
+                            <p:commandButton value="Cancel" onclick="PF('TrailSearchDialog').hide()" 
+                                             icon="fas fa-ban"/>
+                        </center>
+                        <br /><br />
+                    </div>
+                </table>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
 
 </html>
