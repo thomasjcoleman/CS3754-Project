@@ -22,11 +22,15 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
     <ui:define name="editableContent">
       <!-- API key specified in siteTemplate -->
       <div id="map" class="map"></div>
-      
-      
+
+      <div style="text-align: center">
+        <!-- Back Button -->
+        <p:button outcome="/userFile/ListTripFiles" value="Back" icon="fas fa-arrow-left" />
+      </div>
+
       <input type="hidden" id="jsonData" value="#{trailController.jsonResults}" />
       <input type="hidden" id="trailGPX" value="../TrailblazerStorage/gpxStorage/#{trailController.selected.id}.gpx" />
-      <input type="hidden" id="geocodedData" value="#{trailController.jsonGeocode}" />
+      <input type="hidden" id="geocodedData" value="#{trailController.getFileGeocoding(userFileController.selected.filename)}" />
       <script type="text/javascript">
         initializeMap();
       </script>

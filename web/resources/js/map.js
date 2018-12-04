@@ -108,6 +108,23 @@ function displaySingleTrail() {
   // Fetch the GPX file for the trail and display it on the map.
   var gpxFile = document.getElementById("trailGPX").value;
   loadGPXFileIntoGoogleMap(map, gpxFile, trailLatLong)
+
+  // If there is location data, show location on map
+  var geocodeInput = document.getElementById("geocodedData");
+  if (geocodeInput && geocodeInput.value) {
+    var data = eval("(" + geocodeInput.value + ")");
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(data.lat, data.lng),
+      title: data.filename,
+      map: map
+    });
+
+    var infoWindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, "click", function () {
+      infoWindow.setContent("<img src='.." + data.filepath + "' width=150 />");
+      infoWindow.open(map, this);
+    });
+  }
 }
 
 
@@ -132,7 +149,6 @@ function displayAllTrails() {
       trailCondition: trail.conditionStatus || "Unkonwn",
       trailConditionDet: trail.conditionDetails || ""
     });
-    marker.setMap(map);
 
     google.maps.event.addListener(marker, "click", function () {
       infoWindow.setContent(

@@ -5,8 +5,10 @@
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.Trail;
+import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
@@ -21,6 +23,12 @@ import javax.enterprise.context.SessionScoped;
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.lang.GeoLocation;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.GpsDirectory;
+import java.util.Collection;
+
 @SessionScoped
 @Named(value = "trailController")
 public class TrailController implements Serializable {
@@ -31,8 +39,7 @@ public class TrailController implements Serializable {
 
   // Properties
   private String jsonResults;
-  private String jsonGeocode;
-  
+
   private List<Trail> results;
   private Trail selected;
   private String travelMode = "DRIVING";
@@ -56,14 +63,6 @@ public class TrailController implements Serializable {
 
   public void setJsonResults(String jsonResults) {
     this.jsonResults = jsonResults;
-  }
-
-  public String getJsonGeocode() {
-    return jsonGeocode;
-  }
-
-  public void setJsonGeocode(String jsonGeocode) {
-    this.jsonGeocode = jsonGeocode;
   }
 
   public List<Trail> getResults() {
@@ -240,10 +239,10 @@ public class TrailController implements Serializable {
           results.add(createTrailFromJSON((JSONObject) trailObj));
         });
         if (!searchDifficulty.equals("0")) {
-            results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty));
+          results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty));
         }
         if (Double.valueOf(searchRating) != 0) {
-            results.removeIf(p -> p.getRating() < Double.valueOf(searchRating));
+          results.removeIf(p -> p.getRating() < Double.valueOf(searchRating));
         }
         results.removeIf(p -> p.getLength() < Double.valueOf(minLengthQuery));
         return "/findTrails/Results?faces-redirect=true";
@@ -327,6 +326,29 @@ public class TrailController implements Serializable {
             length, ascentDist, descentDist, highestHeight, lowestHeight,
             conditionStatus, conditionDetails, conditionDate
     );
+  }
+
+  /**
+   * Get geocoding data in JSON format for a file.
+   * @param filename The name of the file to open.
+   */
+  public String getFileGeocoding(String filename) {
+    File imgFile = new File(Constants.FILES_ABSOLUTE_PATH, filename);
+    try {
+      Metadata metadata = ImageMetadataReader.readMetadata(imgFile);
+      Collection<GpsDirectory> gpsDirectories = metadata.getDirectoriesOfType(GpsDirectory.class);
+      for (GpsDirectory gpsDirectory : gpsDirectories) {
+        // Try to read out the location, making sure it's non-zero
+        GeoLocation geoLocation = gpsDirectory.getGeoLocation();
+        if (geoLocation != null && !geoLocation.isZero()) {
+          // Add to the output JSON
+          return String.format("{filename: '%s', filepath: '%s', lat: %f, lng: %f}",
+                  filename, Constants.FILES_RELATIVE_PATH + filename, geoLocation.getLatitude(), geoLocation.getLongitude());
+        }
+      }
+    } catch (Exception e) {
+    }
+    return "";
   }
 
   /**

@@ -35,11 +35,11 @@
                          rowsPerPageTemplate="5,10,20,30,40,50"
                          class="dataTable" >
 
-              <p:ajax event="rowSelect" update="uploadButton downloadButton deleteButton displayButton playButton">
+              <p:ajax event="rowSelect" update="uploadButton downloadButton deleteButton displayButton playButton geolocateButton">
                 #{userFileController.setSelectedRowNumber(rowNumber)};
               </p:ajax>
 
-              <p:ajax event="rowUnselect" update="uploadButton downloadButton deleteButton displayButton playButton"/>
+              <p:ajax event="rowUnselect" update="uploadButton downloadButton deleteButton displayButton playButton geolocateButton"/>
 
               <!--
               FIle ID
@@ -135,6 +135,15 @@
                 <p:commandButton id="playButton" value="Play Video File" 
                                  action="/userFile/PlayVideo?faces-redirect=true" 
                                  ajax="false" icon="fas fa-play"  
+                                 disabled="#{empty userFileController.selected}" />
+
+
+                <!--
+                Geolocate File Button
+                -->
+                <p:commandButton id="geolocateButton" value="Geolocate File" 
+                                 action="/userFile/GeolocateFile?faces-redirect=true" 
+                                 ajax="false" icon="fas fa-globe"  
                                  disabled="#{empty userFileController.selected}" />
               </f:facet>
 
