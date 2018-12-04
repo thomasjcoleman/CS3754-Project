@@ -19,21 +19,31 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
         </ui:define>
 
         <ui:define name="editableContent">
-            <h:form id="statsForm">
-                <center>
-                    <h1>Hiking Statistics</h1>
-
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
-                        <p:outputLabel value="Miles Hiked"/>
-                    </p:panelGrid>
+            <center>
+                    <p:outputLabel value="Hiking Statistics" class="statsPageHeader" />
+                    <p></p>
+                        <p:outputLabel value="You have hiked " class="statsHeader" />
+                        <p:outputLabel value="#{userInterestsController.getNumTrails()}" class="statsInfo" />
+                        <p:outputLabel value=" trails" class="statsHeader" />
+                        <p></p>
+                        <p:outputLabel value="For a total distance of " class="statsHeader"/>
+                        <p:outputLabel value="#{userInterestsController.getMiles()}" class="statsInfo"/>
+                        <p:outputLabel value=" miles" class="statsHeader" />
+                        <p></p>
+                        <p:outputLabel value="With a total ascent of " class="statsHeader"/>
+                        <p:outputLabel value="#{userInterestsController.getAscent()}" class="statsInfo"/>
+                        <p:outputLabel value=" feet" class="statsHeader" />
+                        <p></p>
+                        <p:outputLabel value="That is the equivalent of climbing Mt. Everest " class="statsHeader"/>
+                        <p:outputLabel value="#{userInterestsController.getEverestStat()}" class="statsInfo"/>
+                        <p:outputLabel value=" times" class="statsHeader" />
                     <br />
                     &nbsp;&nbsp;
                     <!-- Creates the Cancel button -->
-                    <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
+                    <p:button outcome="/userAccount/Profile" value="Cancel" icon="fas fa-ban"  />
                 </center>
-                </h:form>
-            
         </ui:define>
+            
     </ui:composition>
 
 </html>
