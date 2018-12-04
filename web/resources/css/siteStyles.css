@@ -611,3 +611,28 @@ Used in Profile
 .verticalMenuItem a:hover {
     background-color: lightskyblue;
 }
+
+.statsHeader {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    color: black !important;
+}
+
+.statsInfo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    color: maroon !important;
+}
+
+.statsPageHeader {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28pt !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    color: black !important;
+    text-decoration: underline;
+}
