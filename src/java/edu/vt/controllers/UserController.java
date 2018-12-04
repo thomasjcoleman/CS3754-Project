@@ -296,14 +296,25 @@ public class UserController implements Serializable {
   public void securityAnswerSubmit() {
     User signedInUser = (User) Methods.sessionMap().get("user");
 
-    String actualSecurityAnswer = signedInUser.getSecurityAnswer();
-    String enteredSecurityAnswer = getAnswerToSecurityQuestion();
+    if (signedInUser.getGoogleId() == null) {
+      String actualSecurityAnswer = signedInUser.getSecurityAnswer();
+      String enteredSecurityAnswer = getAnswerToSecurityQuestion();
 
-    if (actualSecurityAnswer.equals(enteredSecurityAnswer)) {
-      // correct answer; delete account
-      deleteAccount();
+      if (actualSecurityAnswer.equals(enteredSecurityAnswer)) {
+        // correct answer; delete account
+        deleteAccount();
+      } else {
+        Methods.showMessage("Error", "Answer to the Security Question is Incorrect!", "");
+      }
     } else {
-      Methods.showMessage("Error", "Answer to the Security Question is Incorrect!", "");
+      // For google accounts, we only validate the email account is entered correctly
+      String actualEmail = signedInUser.getEmail();
+      if (email.equals(actualEmail)) {
+        // correct answer; delete account
+        deleteAccount();
+      } else {
+        Methods.showMessage("Error", "Answer to the Security Question is Incorrect!", "");
+      }
     }
   }
 

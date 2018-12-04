@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
   <!-- This page is constructed based on the siteTemplate -->
   <ui:composition template="/template/siteTemplate.xhtml">
@@ -80,12 +81,14 @@
                   </h:link>
                 </li>
 
-                <li class="verticalMenuItem">
-                  <!-- Change Password -->
-                  <h:link outcome="/userPasswordChange/EnterUsername">
-                    <i class="fas fa-key"></i>&nbsp;Change Password
-                  </h:link>
-                </li>
+                <c:if test="#{empty userController.selected.googleId}">
+                  <li class="verticalMenuItem">
+                    <!-- Change Password (not available if signed in through Google) -->
+                    <h:link outcome="/userPasswordChange/EnterUsername">
+                      <i class="fas fa-key"></i>&nbsp;Change Password
+                    </h:link>
+                  </li>
+                </c:if>
 
                 <li class="verticalMenuItem">
                   <!-- Delete Account -->
@@ -123,7 +126,7 @@
 
                 <li class="verticalMenuItem">
                   <!-- Sign Out -->
-                  <h:commandLink action="#{userController.logout()}">
+                  <h:commandLink action="#{userController.logout()}" onclick="signOutGoogle()">
                     <i class="fas fa-sign-out-alt"></i>&nbsp;Sign Out
                   </h:commandLink>
                 </li>
@@ -194,22 +197,35 @@
 
         <h:form id="SecurityQuestionForm">
           <fieldset>
-            <div style="margin-bottom:20px">
-              <h:outputLabel for="answer" value="#{userController.getSelectedSecurityQuestion()}"/>
-            </div>
-
-            <div style="margin-bottom:10px">
-              <p:inputText id="answer" value="#{userController.answerToSecurityQuestion}" required="true" 
-                           requiredMessage="Please enter your answer to the security question!" 
-                           class="inputTextField" />
-            </div>
+            <c:choose>
+              <c:when test="#{empty userController.selected.googleId}">
+                <div style="margin-bottom:20px">
+                  <h:outputLabel for="answer" value="#{userController.getSelectedSecurityQuestion()}"/>
+                </div>
+                <div style="margin-bottom:10px">
+                  <p:inputText id="answer" value="#{userController.answerToSecurityQuestion}" required="true" 
+                               requiredMessage="Please enter your answer to the security question!" 
+                               class="inputTextField" />
+                </div>
+              </c:when>
+              <c:otherwise>
+                <div style="margin-bottom:20px">
+                  <h:outputLabel for="answer" value="Enter your email to confirm."/>
+                </div>
+                <div style="margin-bottom:10px">
+                  <p:inputText id="answer" value="#{userController.email}" required="true" 
+                               requiredMessage="Please enter your email!" 
+                               class="inputTextField" />
+                </div>
+              </c:otherwise>
+            </c:choose>
             <br/>
             <div align="center">
               <!-- Creates the Submit button -->
               <p:commandButton id="Submit" value="Submit" icon="fas fa-arrow-up" ajax="false"
                                action="#{userController.securityAnswerSubmit()}"
                                update=":growlInfoMessage, :growlErrorMessage, :growlFatalMessage, :growlWarningMessage"
-                               oncomplete="PF('SecurityQuestionDialog').hide()"/>
+                               oncomplete="PF('SecurityQuestionDialog').hide()"  onclick="signOutGoogle()"/>
               &nbsp;
               <!-- Creates the Cancel button -->
               <p:commandButton id="cancel" value="Cancel" icon="fas fa-ban" immediate="true"
