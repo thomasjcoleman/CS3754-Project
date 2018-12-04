@@ -63,8 +63,28 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                         console.log('Family Name: ' + profile.getFamilyName());
                         console.log('Image URL: ' + profile.getImageUrl());
                         console.log('Email: ' + profile.getEmail());
+                        
                     }
                 </script> 
+                <h:form id="googSignIn" style="display:none">
+                        <p:inputText id="firstName" value="#{userController.firstName}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_firstName}">
+                        </p:inputText>   
+                        <p:inputText id="lastName" value="#{userController.lastName}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_lastName}">
+                        </p:inputText>
+                        <p:inputText id="email" value="#{userController.email}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_email}">
+                        </p:inputText>
+ 
+
+                        <p:inputText id="username" value="#{userController.username}" required="true" class="inputTextField"
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}">
+ 
+                        </p:inputText>
+                    <p:inputText id="googleId" value="#{userController.googleId}" />
+
+                </h:form>
                 <script src="https://apis.google.com/js/platform.js?onload=renderButton" async="True" defer="True"></script>
 
             </div>
