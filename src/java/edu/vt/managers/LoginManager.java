@@ -5,11 +5,16 @@ import edu.vt.globals.Password;
 import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.globals.Methods;
-
+import edu.vt.controllers.TextMessageController;
+import java.util.Properties;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.MimeMessage;
 
 @Named(value = "loginManager")
 @SessionScoped
@@ -19,6 +24,12 @@ public class LoginManager implements Serializable {
     /* Instance variables */
     private String username;
     private String password;
+    private String passcode;
+    private Double randomNumber;
+    private String pcode;
+    Properties emailServerProperties;   // java.util.Properties
+    Session emailSession;               // javax.mail.Session  
+    MimeMessage mimeEmailMessage;       // javax.mail.internet.MimeMessage
 
     @EJB
     private UserFacade userFacade;
@@ -43,6 +54,14 @@ public class LoginManager implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getPasscode() {
+        return passcode;
+    }
+    
+    public void setPasscode(String passcode) {
+        this.passcode = passcode;
+    }
 
     public UserFacade getUserFacade() {
         return userFacade;
@@ -50,7 +69,7 @@ public class LoginManager implements Serializable {
 
     /* Instance Methods */
     // Sign in the user and redirect to their profile page.
-    public String loginUser() {
+    public String loginUser() throws AddressException, MessagingException {
         Methods.preserveMessages();
         
         String enteredUsername = getUsername();
@@ -85,10 +104,35 @@ public class LoginManager implements Serializable {
                 return "";
             }
 
-            // Redirect to show the Profile page
+            //pcode = Math.floor((Math.random() * 10000) + 1);
+            randomNumber = Math.floor(100000 + Math.random() * 900000);
+            pcode = randomNumber.toString().substring(0, 4);
+            TextMessageController send = new TextMessageController();
+            send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
+            send.setCellPhoneNumber(user.getPhoneNumber());
+            send.setMmsTextMessage(pcode);
+            send.sendTextMessage();
+            
+            return "/TwoFactorSignIn.xhtml?faces-redirect=true";
+        }
+    }
+    
+    public String twoFactorLogin() {
+        String enteredUsername = getUsername();
+        User user = getUserFacade().findByUsername(enteredUsername);
+        
+        if (pcode.equals(passcode)) {
+            pcode = null;
             initializeSessionMap(user);
+            Methods.preserveMessages();
+            Methods.showMessage("Information", "Login Successful", "Welcome User!");
             return "/userAccount/Profile.xhtml?faces-redirect=true";
         }
+        
+        pcode = null;
+        Methods.preserveMessages();
+        Methods.showMessage("Fatal Error", "Invalid Code!", "Please sign in again!");
+        return "/index.xhtml?faces-redirect=true";
     }
 
     // Initialize the session map with attributes we care about
