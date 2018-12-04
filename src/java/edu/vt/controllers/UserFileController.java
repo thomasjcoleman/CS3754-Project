@@ -41,6 +41,8 @@ public class UserFileController implements Serializable {
   private String selectedRowNumber = "0";
   HashMap<Integer, String> cleanedFileNameHashMap = null;
 
+  private int tripId;
+
   public UserFileController() {
   }
 
@@ -51,30 +53,38 @@ public class UserFileController implements Serializable {
   public void setSelected(UserFile selected) {
     this.selected = selected;
   }
-  
+
   public String getSelectedRowNumber() {
-        return selectedRowNumber;
-    }
+    return selectedRowNumber;
+  }
 
-    public void setSelectedRowNumber(String selectedRowNumber) {
-        this.selectedRowNumber = selectedRowNumber;
-    }
-  
+  public void setSelectedRowNumber(String selectedRowNumber) {
+    this.selectedRowNumber = selectedRowNumber;
+  }
+
   public UserFacade getUserFacade() {
-        return userFacade;
-    }
+    return userFacade;
+  }
 
-    public void setUserFacade(UserFacade userFacade) {
-        this.userFacade = userFacade;
-    }
+  public void setUserFacade(UserFacade userFacade) {
+    this.userFacade = userFacade;
+  }
 
-    public UserFileFacade getUserFileFacade() {
-        return userFileFacade;
-    }
+  public UserFileFacade getUserFileFacade() {
+    return userFileFacade;
+  }
 
-    public void setUserFileFacade(UserFileFacade userFileFacade) {
-        this.userFileFacade = userFileFacade;
-    }
+  public void setUserFileFacade(UserFileFacade userFileFacade) {
+    this.userFileFacade = userFileFacade;
+  }
+
+  public int getTripId() {
+    return tripId;
+  }
+
+  public void setTripId(int tripId) {
+    this.tripId = tripId;
+  }
 
   public UserFile prepareCreate() {
     selected = new UserFile();
@@ -103,46 +113,39 @@ public class UserFileController implements Serializable {
 
   public List<UserFile> getItems() {
 
-        if (items == null) {
-            User signedInUser = (User) Methods.sessionMap().get("user");
+    // Obtain only those files from the database that belong to the signed-in user
+    items = getUserFileFacade().findUserFilesByTripId(tripId);
 
-            // Obtain the database primary key of the signedInUser object
-            Integer primaryKey = signedInUser.getId();
+    // Instantiate a new hash map object
+    cleanedFileNameHashMap = new HashMap<>();
 
-            // Obtain only those files from the database that belong to the signed-in user
-            items = getUserFileFacade().findUserFilesByUserPrimaryKey(primaryKey);
+    // Loop over a list with lambda
+    items.forEach(userFile -> {
 
-            // Instantiate a new hash map object
-            cleanedFileNameHashMap = new HashMap<>();
+      String storedFileName = userFile.getFilename();
 
-            // Loop over a list with lambda
-            items.forEach(userFile -> {
+      // Remove the "userId_" (e.g., "4_") prefix in the stored filename
+      String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
 
-                String storedFileName = userFile.getFilename();
+      // Obtain the file database Primary Key id
+      Integer fileId = userFile.getId();
 
-                // Remove the "userId_" (e.g., "4_") prefix in the stored filename
-                String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
-
-                // Obtain the file database Primary Key id
-                Integer fileId = userFile.getId();
-
-                // Create an entry in the hash map as a key-value pair
-                cleanedFileNameHashMap.put(fileId, cleanedFileName);
-            });
-        }
-        return items;
-    }
+      // Create an entry in the hash map as a key-value pair
+      cleanedFileNameHashMap.put(fileId, cleanedFileName);
+    });
+    return items;
+  }
 
   /**
-     * @param persistAction refers to CREATE, UPDATE (Edit) or DELETE action
-     * @param successMessage displayed to inform the user about the result
-     */
-    private void persist(PersistAction persistAction, String successMessage) {
+   * @param persistAction refers to CREATE, UPDATE (Edit) or DELETE action
+   * @param successMessage displayed to inform the user about the result
+   */
+  private void persist(PersistAction persistAction, String successMessage) {
 
-        if (selected != null) {
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    /*
+    if (selected != null) {
+      try {
+        if (persistAction != PersistAction.DELETE) {
+          /*
                      -------------------------------------------------
                      Perform CREATE or EDIT operation in the database.
                      -------------------------------------------------
@@ -151,39 +154,39 @@ public class UserFileController implements Serializable {
                      created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
                     
                      UserFileFacade inherits the edit(selected) method from the AbstractFacade class.
-                     */
-                    getUserFileFacade().edit(selected);
-                } else {
-                    /*
+           */
+          getUserFileFacade().edit(selected);
+        } else {
+          /*
                      -----------------------------------------
                      Perform DELETE operation in the database.
                      -----------------------------------------
                      The remove method performs the DELETE operation in the database.
                     
                      UserFileFacade inherits the remove(selected) method from the AbstractFacade class.
-                     */
-                    getUserFileFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-
-            } catch (EJBException ex) {
-
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccurred"));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccurred"));
-            }
+           */
+          getUserFileFacade().remove(selected);
         }
+        JsfUtil.addSuccessMessage(successMessage);
+
+      } catch (EJBException ex) {
+
+        String msg = "";
+        Throwable cause = ex.getCause();
+        if (cause != null) {
+          msg = cause.getLocalizedMessage();
+        }
+        if (msg.length() > 0) {
+          JsfUtil.addErrorMessage(msg);
+        } else {
+          JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccurred"));
+        }
+      } catch (Exception ex) {
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccurred"));
+      }
     }
+  }
 
   public UserFile getUserFile(java.lang.Integer id) {
     return getUserFileFacade().find(id);
@@ -237,140 +240,140 @@ public class UserFileController implements Serializable {
     }
 
   }
-  
+
   public String deleteSelectedUserFile() {
 
-        UserFile userFileToDelete = selected;
+    UserFile userFileToDelete = selected;
 
-        /*
+    /*
         We need to preserve the messages since we will redirect to show a
         different JSF page after successful deletion of the user file.
-         */
-        Methods.preserveMessages();
+     */
+    Methods.preserveMessages();
 
-        if (userFileToDelete == null) {
-            Methods.showMessage("Fatal Error", "No File Selected!", "You do not have a file to delete!");
-            return "";
-        } else {
-            try {
-                // Delete the file from CloudStorage/FileStorage
-                Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
+    if (userFileToDelete == null) {
+      Methods.showMessage("Fatal Error", "No File Selected!", "You do not have a file to delete!");
+      return "";
+    } else {
+      try {
+        // Delete the file from CloudStorage/FileStorage
+        Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
 
-                // Delete the user file record from the database
-                getUserFileFacade().remove(userFileToDelete);
-                // UserFileFacade inherits the remove() method from AbstractFacade
+        // Delete the user file record from the database
+        getUserFileFacade().remove(userFileToDelete);
+        // UserFileFacade inherits the remove() method from AbstractFacade
 
-                Methods.showMessage("Information", "Success!", "Selected File is Successfully Deleted!");
+        Methods.showMessage("Information", "Success!", "Selected File is Successfully Deleted!");
 
-                // See method below
-                refreshFileList();
+        // See method below
+        refreshFileList();
 
-                return "/userFile/ListUserFiles?faces-redirect=true";
+        return "/userFile/ListTripFiles?faces-redirect=true";
 
-            } catch (IOException ex) {
-                Methods.showMessage("Fatal Error", "Something went wrong while deleting the user file!",
-                        "See: " + ex.getMessage());
-                return "";
-            }
-        }
+      } catch (IOException ex) {
+        Methods.showMessage("Fatal Error", "Something went wrong while deleting the user file!",
+                "See: " + ex.getMessage());
+        return "";
+      }
     }
-  
+  }
+
   public void refreshFileList() {
-        /*
+    /*
         By setting the items to null, we force the getItems
         method above to retrieve all of the user's files again.
-         */
-        selected = null; // Remove selection
-        items = null;    // Invalidate list of items to trigger re-query.
-    }
-  
-  /**
-     *
-     * @param fileId database primary key value for a user file
-     * @return the file if it is an image file; otherwise return a blank image
      */
-    public String imageFile(Integer fileId) {
-        UserFile userFile = getUserFileFacade().getUserFile(fileId);
-        String imageFileName = userFile.getFilename();
+    selected = null; // Remove selection
+    items = null;    // Invalidate list of items to trigger re-query.
+  }
 
-        String fileExtension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
+  /**
+   *
+   * @param fileId database primary key value for a user file
+   * @return the file if it is an image file; otherwise return a blank image
+   */
+  public String imageFile(Integer fileId) {
+    UserFile userFile = getUserFileFacade().getUserFile(fileId);
+    String imageFileName = userFile.getFilename();
 
-        String fileExtensionInCaps = fileExtension.toUpperCase();
+    String fileExtension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
 
-        switch (fileExtensionInCaps) {
-            case "JPG":
-            case "JPEG":
-            case "PNG":
-            case "GIF":
-                return Constants.FILES_RELATIVE_PATH + imageFileName;
-            case "MP4":
-            case "MOV":
-            case "OGG":
-            case "WEBM":
-                return "/resources/images/videoFile.png";
-            default:
-                return "/resources/images/viewFile.png";
-        }
-    }
-    
-    public String cleanedFilenameForFileId(Integer fileId) {
-        String cleanedFileName = cleanedFileNameHashMap.get(fileId);
-        return cleanedFileName;
-    }
-    
-    public String cleanedFileNameForSelected() {
-        Integer fileId = selected.getId();
+    String fileExtensionInCaps = fileExtension.toUpperCase();
 
-        // Obtain the cleaned filename for the given fileId
-        String cleanedFileName = cleanedFileNameHashMap.get(fileId);
+    switch (fileExtensionInCaps) {
+      case "JPG":
+      case "JPEG":
+      case "PNG":
+      case "GIF":
+        return Constants.FILES_RELATIVE_PATH + imageFileName;
+      case "MP4":
+      case "MOV":
+      case "OGG":
+      case "WEBM":
+        return "/resources/images/videoFile.png";
+      default:
+        return "/resources/images/viewFile.png";
+    }
+  }
 
-        return cleanedFileName;
-    }
-    
-    public String selectedFileRelativePath() {
-        return Constants.FILES_RELATIVE_PATH + selected.getFilename();
-    }
-    
-    public boolean isImage() {
-        switch (extensionOfSelectedFileInCaps()) {
-            case "JPG":
-            case "JPEG":
-            case "PNG":
-            case "GIF":
-                return true;
-            default:
-                return false;
-        }
-    }
-    
-    public boolean isViewable() {
+  public String cleanedFilenameForFileId(Integer fileId) {
+    String cleanedFileName = cleanedFileNameHashMap.get(fileId);
+    return cleanedFileName;
+  }
 
-        switch (extensionOfSelectedFileInCaps()) {
-            case "CSS":
-            case "CSV":
-            case "HTML":
-            case "JAVA":
-            case "PDF":
-            case "SQL":
-            case "TXT":
-                return true;
-            default:
-                return false;
-        }
-    }
-    
-    public boolean isVideo() {
+  public String cleanedFileNameForSelected() {
+    Integer fileId = selected.getId();
 
-        String fileExtension = extensionOfSelectedFileInCaps();
+    // Obtain the cleaned filename for the given fileId
+    String cleanedFileName = cleanedFileNameHashMap.get(fileId);
 
-        return (fileExtension.equals("MP4") || fileExtension.equals("MOV") || fileExtension.equals("OGG") || fileExtension.equals("WEBM"));
+    return cleanedFileName;
+  }
+
+  public String selectedFileRelativePath() {
+    return Constants.FILES_RELATIVE_PATH + selected.getFilename();
+  }
+
+  public boolean isImage() {
+    switch (extensionOfSelectedFileInCaps()) {
+      case "JPG":
+      case "JPEG":
+      case "PNG":
+      case "GIF":
+        return true;
+      default:
+        return false;
     }
-    
-    public String extensionOfSelectedFileInCaps() {
-        String userFileName = selected.getFilename();
-        String fileExtension = userFileName.substring(userFileName.lastIndexOf(".") + 1);
-        String fileExtensionInCaps = fileExtension.toUpperCase();
-        return fileExtensionInCaps;
+  }
+
+  public boolean isViewable() {
+
+    switch (extensionOfSelectedFileInCaps()) {
+      case "CSS":
+      case "CSV":
+      case "HTML":
+      case "JAVA":
+      case "PDF":
+      case "SQL":
+      case "TXT":
+        return true;
+      default:
+        return false;
     }
+  }
+
+  public boolean isVideo() {
+
+    String fileExtension = extensionOfSelectedFileInCaps();
+
+    return (fileExtension.equals("MP4") || fileExtension.equals("MOV") || fileExtension.equals("OGG") || fileExtension.equals("WEBM"));
+  }
+
+  public String extensionOfSelectedFileInCaps() {
+    String userFileName = selected.getFilename();
+    String fileExtension = userFileName.substring(userFileName.lastIndexOf(".") + 1);
+    String fileExtensionInCaps = fileExtension.toUpperCase();
+    return fileExtensionInCaps;
+  }
 
 }

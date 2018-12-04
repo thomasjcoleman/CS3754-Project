@@ -387,6 +387,11 @@ Used in Profile
   background-color: lightskyblue;
 }
 
+.listValue {
+    text-align: center;
+    font-size: 14pt;
+}
+
 /*
 -----------------------------------------
 Skinning PrimeFaces Galleria Image Slider

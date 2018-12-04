@@ -38,12 +38,12 @@ Copyright © 2018 Christian Dufrois. All rights reserved.
                 <p:graphicImage url="#{trailController.getTrailByID(item.trailId).getImgUrl()}" width="150px" style="float:left" />
               </p:column>
               
-              <p:column sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="Trail Name">
-                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getName()}"/>
+              <p:column class="listValue" sortBy="#{trailController.getTrailByID(item.trailId).getName()}" headerText="Trail Name">
+                <h:outputText value="#{trailController.getTrailByID(item.trailId).getName()}"/>
               </p:column>
 
-              <p:column sortBy="#{trailController.getTrailByID(item.trailId).getLocation()}" headerText="Trail Location">
-                <h:outputText class="inputTextField" value="#{trailController.getTrailByID(item.trailId).getLocation()}"/>
+              <p:column class="listValue" sortBy="#{trailController.getTrailByID(item.trailId).getLocation()}" headerText="Trail Location">
+                <h:outputText value="#{trailController.getTrailByID(item.trailId).getLocation()}"/>
               </p:column>
 
 
