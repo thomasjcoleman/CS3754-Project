@@ -42,14 +42,17 @@ public class UserTrip implements Serializable {
   @Basic(optional = false)
   @Column(name = "id")
   private Integer id;
+  
   @Basic(optional = false)
   @Column(name = "trail_id")
   private Integer trailId;
+  
   @Basic(optional = false)
   @NotNull
   @Size(min = 1, max = 256)
   @Column(name = "trip_name")
   private String tripName;
+  
   @Basic(optional = false)
   @NotNull
   @Column(name = "trip_date")
