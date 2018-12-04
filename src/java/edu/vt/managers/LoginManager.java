@@ -142,10 +142,9 @@ public class LoginManager implements Serializable {
             return "/userAccount/Profile.xhtml?faces-redirect=true";
         }
         
-        pcode = null;
         Methods.preserveMessages();
-        Methods.showMessage("Fatal Error", "Invalid Code!", "Please sign in again!");
-        return "/index.xhtml?faces-redirect=true";
+        Methods.showMessage("Fatal Error", "Invalid Code!", "Please try again!");
+        return "";
     }
 
     // Initialize the session map with attributes we care about

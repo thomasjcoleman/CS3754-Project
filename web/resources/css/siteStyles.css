@@ -200,6 +200,11 @@ Social Media Buttons Spin Animated
   white-space: nowrap;
 }
 
+.panelGridColumn3 {
+    text-align: left;
+    background-color:oldlace;
+}
+
 /* Style standard text and input text field text */
 .standardText, .inputTextField {
   font-family: Arial, Helvetica, sans-serif;
