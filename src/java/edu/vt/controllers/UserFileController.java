@@ -1,5 +1,9 @@
 package edu.vt.controllers;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.lang.GeoLocation;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.GpsDirectory;
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserFile;
 import edu.vt.FacadeBeans.UserFacade;
@@ -8,11 +12,13 @@ import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.FacadeBeans.UserFileFacade;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
+import java.io.File;
 import java.io.IOException;
 
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -374,6 +380,54 @@ public class UserFileController implements Serializable {
     String fileExtension = userFileName.substring(userFileName.lastIndexOf(".") + 1);
     String fileExtensionInCaps = fileExtension.toUpperCase();
     return fileExtensionInCaps;
+  }
+  
+  /**
+   * Check if the selected file has geocoding data.
+   * @return True if there is geocoding data.
+   */
+  public boolean fileHasGeocoding() {
+    if (selected == null) { return false; }
+    String filename = selected.getFilename();
+    File imgFile = new File(Constants.FILES_ABSOLUTE_PATH, filename);
+    try {
+      Metadata metadata = ImageMetadataReader.readMetadata(imgFile);
+      Collection<GpsDirectory> gpsDirectories = metadata.getDirectoriesOfType(GpsDirectory.class);
+      for (GpsDirectory gpsDirectory : gpsDirectories) {
+        // Try to read out the location, making sure it's non-zero
+        GeoLocation geoLocation = gpsDirectory.getGeoLocation();
+        if (geoLocation != null && !geoLocation.isZero()) {
+          // Geocoding data is available
+          return true;
+        }
+      }
+    } catch (Exception e) {
+    }
+    return false;
+  }
+  
+  /**
+   * Get geocoding data in JSON format for a file.
+   * @return The string containing the geolocation data and related info.
+   */
+  public String getFileGeocoding() {
+    String filename = selected.getFilename();
+    File imgFile = new File(Constants.FILES_ABSOLUTE_PATH, filename);
+    try {
+      Metadata metadata = ImageMetadataReader.readMetadata(imgFile);
+      Collection<GpsDirectory> gpsDirectories = metadata.getDirectoriesOfType(GpsDirectory.class);
+      for (GpsDirectory gpsDirectory : gpsDirectories) {
+        // Try to read out the location, making sure it's non-zero
+        GeoLocation geoLocation = gpsDirectory.getGeoLocation();
+        if (geoLocation != null && !geoLocation.isZero()) {
+          // Add to the output JSON
+          return String.format("{filename: '%s', filepath: '%s', lat: %f, lng: %f}",
+                  filename, Constants.FILES_RELATIVE_PATH + filename, geoLocation.getLatitude(), geoLocation.getLongitude());
+        }
+      }
+    } catch (Exception e) {
+    }
+    return "";
   }
 
 }

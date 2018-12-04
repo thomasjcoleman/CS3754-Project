@@ -144,7 +144,7 @@
                 <p:commandButton id="geolocateButton" value="Geolocate File" 
                                  action="/userFile/GeolocateFile?faces-redirect=true" 
                                  ajax="false" icon="fas fa-globe"  
-                                 disabled="#{empty userFileController.selected}" />
+                                 disabled="#{!userFileController.fileHasGeocoding()}" />
               </f:facet>
 
             </p:dataTable>

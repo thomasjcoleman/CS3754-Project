@@ -30,7 +30,7 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
 
       <input type="hidden" id="jsonData" value="#{trailController.jsonResults}" />
       <input type="hidden" id="trailGPX" value="../TrailblazerStorage/gpxStorage/#{trailController.selected.id}.gpx" />
-      <input type="hidden" id="geocodedData" value="#{trailController.getFileGeocoding(userFileController.selected.filename)}" />
+      <input type="hidden" id="geocodedData" value="#{userFileController.getFileGeocoding()}" />
       <script type="text/javascript">
         initializeMap();
       </script>
