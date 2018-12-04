@@ -1,4 +1,3 @@
-
 package edu.vt.managers;
 
 import edu.vt.globals.Password;
@@ -6,10 +5,12 @@ import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.UserFacade;
 import edu.vt.globals.Methods;
 import edu.vt.controllers.TextMessageController;
+import edu.vt.controllers.UserController;
 import java.util.Properties;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -33,6 +34,8 @@ public class LoginManager implements Serializable {
 
     @EJB
     private UserFacade userFacade;
+    @Inject
+    UserController userController;
 
     /* Constructor */
     public LoginManager() {
@@ -54,11 +57,11 @@ public class LoginManager implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getPasscode() {
         return passcode;
     }
-    
+
     public void setPasscode(String passcode) {
         this.passcode = passcode;
     }
@@ -67,11 +70,43 @@ public class LoginManager implements Serializable {
         return userFacade;
     }
 
+    public void loginGoogleUser(String google_id, String name, String email) throws Exception {
+        System.out.println("Function called: " + google_id + ", " + name + ", " + email + "001");
+        userController.logout();
+        User user = getUserFacade().findByUsername("GoogleUser" + google_id);
+        if (user == null) //need to create a new user
+        {
+            System.out.println("User is null");
+            userController.setFirstName("First name: " + name);
+            userController.setMiddleName(" ");
+            userController.setLastName("Google User");
+            userController.setAddress1(" ");
+            userController.setAddress2(" ");
+            userController.setCity(" ");
+            userController.setState(" ");
+            userController.setZipcode(" ");
+            userController.setSecurityQuestionNumber(0);
+            userController.setAnswerToSecurityQuestion(" ");
+            userController.setEmail(email);
+            userController.setPhoneNumber(" ");
+            userController.setPhoneCarrier("");
+            userController.setUsername("GoogleUser" + google_id);
+            userController.setPassword("password");
+            userController.setConfirmPassword("password");
+            
+            userController.createAccount2();  //no redirect
+
+            user = getUserFacade().findByUsername("GoogleUser" + google_id); //update the user in the user controller
+        }
+        System.out.println("Username: " + user.getUsername());
+        //return "/userAccount/Profile.xhtml?faces-redirect=true";
+    }
+
     /* Instance Methods */
     // Sign in the user and redirect to their profile page.
     public String loginUser() throws AddressException, MessagingException {
         Methods.preserveMessages();
-        
+
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
 
@@ -89,7 +124,7 @@ public class LoginManager implements Serializable {
                 Methods.showMessage("Fatal Error", "Invalid Username!", "Entered Username is Unknown!");
                 return "";
             }
-            
+
             // verify the passwrod
             try {
                 if (Password.verifyPassword(enteredPassword, actualPassword)) {
@@ -112,15 +147,15 @@ public class LoginManager implements Serializable {
             send.setCellPhoneNumber(user.getPhoneNumber());
             send.setMmsTextMessage(pcode);
             send.sendTextMessage();
-            
+
             return "/TwoFactorSignIn.xhtml?faces-redirect=true";
         }
     }
-    
+
     public String twoFactorLogin() {
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
-        
+
         if (pcode.equals(passcode) || passcode.equals("1111")) {
             pcode = null;
             initializeSessionMap(user);
@@ -128,7 +163,7 @@ public class LoginManager implements Serializable {
             Methods.showMessage("Information", "Login Successful", "Welcome User!");
             return "/userAccount/Profile.xhtml?faces-redirect=true";
         }
-        
+
         pcode = null;
         Methods.preserveMessages();
         Methods.showMessage("Fatal Error", "Invalid Code!", "Please sign in again!");
