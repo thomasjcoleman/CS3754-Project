@@ -37,6 +37,10 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                     <p:commandButton id="submit" value="Submit" action="#{loginManager.twoFactorLogin()}" 
                                      ajax="false" icon="fas fa-sign-in-alt" />
                 </h:form>
+                <h:form>
+                <p:commandButton id="redo" value="Send another Code" action="#{loginManager.sendCode()}" 
+                                     ajax="false" icon="fas fa-redo" />
+                </h:form>
                 <p>
                 </p>
             </div>
