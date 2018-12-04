@@ -151,7 +151,20 @@ public class LoginManager implements Serializable {
             return "/TwoFactorSignIn.xhtml?faces-redirect=true";
         }
     }
-
+    
+    public void sendCode() throws AddressException, MessagingException {
+        String enteredUsername = getUsername();
+        User user = getUserFacade().findByUsername(enteredUsername);
+        
+        randomNumber = Math.floor(100000 + Math.random() * 900000);
+        pcode = randomNumber.toString().substring(0, 4);
+        TextMessageController send = new TextMessageController();
+        send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
+        send.setCellPhoneNumber(user.getPhoneNumber());
+        send.setMmsTextMessage(pcode);
+        send.sendTextMessage();
+    }
+    
     public String twoFactorLogin() {
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
@@ -166,8 +179,8 @@ public class LoginManager implements Serializable {
 
         pcode = null;
         Methods.preserveMessages();
-        Methods.showMessage("Fatal Error", "Invalid Code!", "Please sign in again!");
-        return "/index.xhtml?faces-redirect=true";
+        Methods.showMessage("Fatal Error", "Invalid Code!", "Please try again!");
+        return "";
     }
 
     // Initialize the session map with attributes we care about

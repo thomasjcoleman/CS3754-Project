@@ -11,5 +11,5 @@
   </jsp-config>
   
   <!-- DocRoot foler. -->
-  <property name="alternatedocroot_1" value="from=/TrailblazerStorage/* dir=C:/Users/tcole/OneDrive/Documents/NetBeansProjects/Trailblazer-Team8" />
+  <property name="alternatedocroot_1" value="from=\TrailblazerStorage\* dir=C:\Users\Devin Drake\Desktop\CS3754-Project-master" />
 </glassfish-web-app>

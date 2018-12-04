@@ -8,8 +8,8 @@ public final class Constants {
     |             Absolute File Paths                |
     ==================================================
    */
-  public static final String FILES_ABSOLUTE_PATH = "C:/Users/tcole/OneDrive/Documents/NetBeansProjects/Trailblazer-Team8/TrailblazerStorage/UserFileStorage";
-  public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/tcole/OneDrive/Documents/NetBeansProjects/Trailblazer-Team8/TrailblazerStorage/UserPhotoStorage";
+  public static final String FILES_ABSOLUTE_PATH = "C:\\Users\\Devin Drake\\Desktop\\CS3754-Project-master\\TrailblazerStorage\\UserPhotoStorage";
+  public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\Devin Drake\\Desktop\\CS3754-Project-master\\TrailblazerStorage\\UserPhotoStoragee";
 
   /*
     ==================================================

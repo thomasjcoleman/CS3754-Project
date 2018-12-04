@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
   , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
   , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
   , @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+  , @NamedQuery(name = "UserFile.findUserFilesByTripId", query = "SELECT u FROM UserFile u WHERE u.tripId = :tripId")
 })
 public class UserFile implements Serializable {
 
@@ -48,9 +49,10 @@ public class UserFile implements Serializable {
   @Size(min = 1, max = 256)
   @Column(name = "filename")
   private String filename;
-  @JoinColumn(name = "trip_id", referencedColumnName = "id")
-  @ManyToOne
-  private User tripId;
+  
+  @Basic(optional = false)
+  @Column(name = "trip_id")
+  private Integer tripId;
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   @ManyToOne
   private User userId;
@@ -62,15 +64,17 @@ public class UserFile implements Serializable {
     this.id = id;
   }
 
-  public UserFile(Integer id, String filename) {
+  public UserFile(Integer id, String filename, Integer tripId) {
     this.id = id;
     this.filename = filename;
+    this.tripId = tripId;
   }
-  
-  public UserFile(String filename, User id) {
-        this.filename = filename;
-        userId = id;
-    }
+
+  public UserFile(String filename, User id, Integer tripId) {
+    this.filename = filename;
+    this.userId = id;
+    this.tripId = tripId;
+  }
 
   public Integer getId() {
     return id;
@@ -88,11 +92,11 @@ public class UserFile implements Serializable {
     this.filename = filename;
   }
 
-  public User getTripId() {
+  public Integer getTripId() {
     return tripId;
   }
 
-  public void setTripId(User tripId) {
+  public void setTripId(Integer tripId) {
     this.tripId = tripId;
   }
 
@@ -128,9 +132,9 @@ public class UserFile implements Serializable {
   public String toString() {
     return "edu.vt.EntityBeans.UserFile[ id=" + id + " ]";
   }
-  
+
   public String getFilePath() {
-        return Constants.FILES_ABSOLUTE_PATH + getFilename();
-    }
-  
+    return Constants.FILES_ABSOLUTE_PATH + getFilename();
+  }
+
 }

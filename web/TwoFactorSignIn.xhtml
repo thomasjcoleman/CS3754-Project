@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Thomas Coleman on 2018.10.30
-Copyright © 2018 Thomas Coleman. All rights reserved.
+Created by Matthew Croll on 2018.10.30
+Copyright © 2018 Matthew Croll. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
@@ -21,21 +21,26 @@ Copyright © 2018 Thomas Coleman. All rights reserved.
                 <br />
 
                 <h:form>
-                    <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
+                    <p:panelGrid columns="2" styleClass="ui-noborder" columnClasses="panelGridColumn3, panelGridColumn3">
+                        <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
 
-                        <h:outputLabel value="Enter 4 Digit Passcode:" for="passcode" />
-                        <p:inputText id="passcode" value="#{loginManager.passcode}" required="true" class="inputTextFieldShort"
+                            <h:outputLabel value="Enter 4 Digit Passcode:" for="passcode" />
+                            <p:inputText id="passcode" value="#{loginManager.passcode}" required="true" class="inputTextFieldShort"
                                      requiredMessage="Please enter passcode" label="Passcode" >
-                        </p:inputText>
-
+                            </p:inputText>
+                        </p:panelGrid>
+                        <p:commandButton style="margin-bottom:10px" id="submit" value="Submit" action="#{loginManager.twoFactorLogin()}" 
+                                        ajax="false" icon="fas fa-sign-in-alt"/>
                     </p:panelGrid>
-
                     <br/>
                     <br/>
-
-                    <!-- Passcode Submit -->
-                    <p:commandButton id="submit" value="Submit" action="#{loginManager.twoFactorLogin()}" 
-                                     ajax="false" icon="fas fa-sign-in-alt" />
+                    
+                </h:form>
+                <h:form>
+                <p:commandButton id="redo" value="Send another Code" action="#{loginManager.sendCode()}" 
+                                     ajax="false" icon="fas fa-redo" />
+                &nbsp;
+                <p:button outcome="/index" value="Cancel" icon="fas fa-ban"  />
                 </h:form>
                 <p>
                 </p>

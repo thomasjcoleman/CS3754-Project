@@ -316,7 +316,7 @@ public class UserController implements Serializable {
       Methods.showMessage("Fatal Error", "Username Already Exists!", "Please Select a Different One!");
       return "";
     }
-
+    
     // Should be good now, try to make a new user...
     try {
       User newUser = new User();
@@ -339,7 +339,7 @@ public class UserController implements Serializable {
       // securely hash the password
       String parts = Password.createHash(password);
       newUser.setPassword(parts);
-
+      
       // add the user to the database
       getUserFacade().create(newUser);
 
@@ -488,6 +488,63 @@ public class UserController implements Serializable {
   // Delete all of the user's files
   public void deleteAllUserFiles(int userKey) {
     // TODO
+  }
+  
+  // Create the user's account and redirect to sign-in page.
+  public void createAccount2() {
+    // Check that password and confirmed password match
+    if (!password.equals(confirmPassword)) {
+      Methods.showMessage("Fatal Error", "Unmatched Passwords!",
+              "Password and Confirm Password must Match!");
+      return;
+    }
+
+    Methods.preserveMessages();
+
+    // Now check if the username is already being used...
+    User aUser = getUserFacade().findByUsername(username);
+    if (aUser != null) {
+      // A user already exists
+      username = "";
+      Methods.showMessage("Fatal Error", "Username Already Exists!", "Please Select a Different One!");
+      return;
+    }
+    
+    // Should be good now, try to make a new user...
+    try {
+      User newUser = new User();
+
+      newUser.setFirstName(firstName);
+      newUser.setMiddleName(middleName);
+      newUser.setLastName(lastName);
+      newUser.setAddress1(address1);
+      newUser.setAddress2(address2);
+      newUser.setCity(city);
+      newUser.setState(state);
+      newUser.setZipcode(zipcode);
+      newUser.setSecurityQuestionNumber(securityQuestionNumber);
+      newUser.setSecurityAnswer(answerToSecurityQuestion);
+      newUser.setEmail(email);
+      newUser.setPhoneNumber(phoneNumber);
+      newUser.setPhoneCarrier(phoneCarrier);
+      newUser.setUsername(username);
+
+      // securely hash the password
+      String parts = Password.createHash(password);
+      newUser.setPassword(parts);
+      
+      // add the user to the database
+      getUserFacade().create(newUser);
+
+    } catch (EJBException | Password.CannotPerformOperationException ex) {
+      username = "";
+      Methods.showMessage("Fatal Error", "Something went wrong while creating user's account!",
+              "See: " + ex.getMessage());
+      return;
+    }
+
+    /* Finally, redirect to the sign-in page. */
+    Methods.showMessage("Information", "Success!", "User Account is Successfully Created!");
   }
 
 }

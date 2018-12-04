@@ -58,48 +58,48 @@ public class User implements Serializable {
   private Integer id;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 32)
+  //@Size(min = 1, max = 32)
   @Column(name = "username")
   private String username;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 256)
+  //@Size(min = 1, max = 256)
   @Column(name = "password")
   private String password;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 32)
+  //@Size(min = 1, max = 32)
   @Column(name = "first_name")
   private String firstName;
-  @Size(max = 32)
+  //@Size(max = 32)
   @Column(name = "middle_name")
   private String middleName;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 32)
+  //@Size(min = 1, max = 32)
   @Column(name = "last_name")
   private String lastName;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 128)
+  //@Size(min = 1, max = 128)
   @Column(name = "address1")
   private String address1;
-  @Size(max = 128)
+  //@Size(max = 128)
   @Column(name = "address2")
   private String address2;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 64)
+  //@Size(min = 1, max = 64)
   @Column(name = "city")
   private String city;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 2)
+  //@Size(min = 1, max = 2)
   @Column(name = "state")
   private String state;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 10)
+  //@Size(min = 1, max = 10)
   @Column(name = "zipcode")
   private String zipcode;
   @Basic(optional = false)
@@ -108,23 +108,23 @@ public class User implements Serializable {
   private int securityQuestionNumber;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 128)
+  //@Size(min = 1, max = 128)
   @Column(name = "security_answer")
   private String securityAnswer;
   // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 128)
+  //@Size(min = 1, max = 128)
   @Column(name = "email")
   private String email;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 128)
+  //@Size(min = 1, max = 128)
   @Column(name = "phone_number")
   private String phoneNumber;
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 128)
+  //@Size(min = 1, max = 128)
   @Column(name = "phone_carrier")
   private String phoneCarrier;
   @Column(name = "google_id")

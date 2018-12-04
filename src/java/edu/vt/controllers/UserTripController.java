@@ -25,7 +25,7 @@ public class UserTripController implements Serializable {
 
   @EJB
   private edu.vt.FacadeBeans.UserTripFacade ejbFacade;
-  
+
   private List<UserTrip> items = null;
   private UserTrip selected;
 
@@ -56,11 +56,13 @@ public class UserTripController implements Serializable {
     return selected;
   }
 
-  public void create() {
+  public String create() {
     persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("UserTripCreated"));
     if (!JsfUtil.isValidationFailed()) {
       items = null;    // Invalidate list of items to trigger re-query.
+      return "/userTrip/ListTrips?faces-redirect=true";
     }
+    return "";
   }
 
   public void update() {
