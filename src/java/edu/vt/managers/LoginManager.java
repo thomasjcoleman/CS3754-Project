@@ -25,7 +25,8 @@ public class LoginManager implements Serializable {
     private String username;
     private String password;
     private String passcode;
-    private Double pcode;
+    private Double randomNumber;
+    private String pcode;
     Properties emailServerProperties;   // java.util.Properties
     Session emailSession;               // javax.mail.Session  
     MimeMessage mimeEmailMessage;       // javax.mail.internet.MimeMessage
@@ -103,11 +104,13 @@ public class LoginManager implements Serializable {
                 return "";
             }
 
-            pcode = Math.floor((Math.random() * 10000) + 1);
+            //pcode = Math.floor((Math.random() * 10000) + 1);
+            randomNumber = Math.floor(100000 + Math.random() * 900000);
+            pcode = randomNumber.toString().substring(0, 4);
             TextMessageController send = new TextMessageController();
             send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
             send.setCellPhoneNumber(user.getPhoneNumber());
-            send.setMmsTextMessage(pcode.toString().replace(".0", ""));
+            send.setMmsTextMessage(pcode);
             send.sendTextMessage();
             
             return "/TwoFactorSignIn.xhtml?faces-redirect=true";
@@ -118,7 +121,7 @@ public class LoginManager implements Serializable {
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
         
-        if (pcode.toString().replace(".0", "").equals(passcode)) {
+        if (pcode.equals(passcode)) {
             pcode = null;
             initializeSessionMap(user);
             return "/userAccount/Profile.xhtml?faces-redirect=true";
