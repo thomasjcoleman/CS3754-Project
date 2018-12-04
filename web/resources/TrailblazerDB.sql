@@ -19,7 +19,7 @@ CREATE TABLE User (
   email VARCHAR(128) NOT NULL,
   phone_number VARCHAR(128) NOT NULL,
   phone_carrier VARCHAR(128) NOT NULL,
-  google_id INT,
+  google_id VARCHAR(128),
   PRIMARY KEY (id)
 );
 

@@ -414,6 +414,7 @@ public class UserFileController implements Serializable {
     String filename = selected.getFilename();
     File imgFile = new File(Constants.FILES_ABSOLUTE_PATH, filename);
     try {
+      // Get the metadata for the file
       Metadata metadata = ImageMetadataReader.readMetadata(imgFile);
       Collection<GpsDirectory> gpsDirectories = metadata.getDirectoriesOfType(GpsDirectory.class);
       for (GpsDirectory gpsDirectory : gpsDirectories) {

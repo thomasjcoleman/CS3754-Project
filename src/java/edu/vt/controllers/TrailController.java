@@ -192,13 +192,17 @@ public class TrailController implements Serializable {
 
   // Get trails within an area.
   public List<Trail> getTrailsInRadius(double lat, double lon, double maxDistance) {
+    // Form the search string.
     String searchData = String.format("?lat=%f&lon=%f&maxDistance=%f&maxResults=150", lat, lon, maxDistance);
     try {
+      // Fetch the results from the page, and parse it as a JSON object.
       jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       if (jsonData.optInt("success", 0) == 0) {
+        // If the "success" value is 0, then the seach failed to find anything.
         Methods.showMessage("Fatal Error", "No trails found within range.", "");
       } else {
+        // Otherwise, form a list from all the collected trails.
         List<Trail> trails = new ArrayList<>();
         JSONArray trailArray = jsonData.getJSONArray("trails");
         trailArray.forEach(trailObj -> {
@@ -207,6 +211,7 @@ public class TrailController implements Serializable {
         return trails;
       }
     } catch (Exception ex) {
+      // The API could not be reached or a fatal error occurred.
       Methods.showMessage("Fatal Error",
               "Hiking project API is unreachable!",
               "See: " + ex.getMessage());
@@ -218,6 +223,7 @@ public class TrailController implements Serializable {
   public String performSearch() {
     selected = null;
     results = new ArrayList();
+    // Form the search string
     String searchData = "?lat=" + latitudeQuery + "&lon=" + longitudeQuery + "&maxDistance=" + distanceQuery + "&maxResults=250";
     try {
       jsonResults = readUrlContent(apiUrl + "get-trails" + searchData + apiKey);
@@ -230,6 +236,7 @@ public class TrailController implements Serializable {
         trailArray.forEach(trailObj -> {
           results.add(createTrailFromJSON((JSONObject) trailObj));
         });
+        // Filter any trails that don't match our paramters
         if (!searchDifficulty.equals("0")) {
           results.removeIf(p -> !p.getDifficulty().equals(searchDifficulty));
         }

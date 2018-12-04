@@ -128,7 +128,7 @@ public class User implements Serializable {
   @Column(name = "phone_carrier")
   private String phoneCarrier;
   @Column(name = "google_id")
-  private Integer googleId;
+  private String googleId;
   @OneToMany(mappedBy = "userId")
   private Collection<UserPhoto> userPhotoCollection;
   @OneToMany(mappedBy = "userId")
@@ -143,7 +143,7 @@ public class User implements Serializable {
     this.id = id;
   }
 
-  public User(Integer id, String username, String password, String firstName, String lastName, String address1, String city, String state, String zipcode, int securityQuestionNumber, String securityAnswer, String email, String phoneNumber, String phoneCarrier, Integer googleId) {
+  public User(Integer id, String username, String password, String firstName, String lastName, String address1, String city, String state, String zipcode, int securityQuestionNumber, String securityAnswer, String email, String phoneNumber, String phoneCarrier, String googleId) {
     this.id = id;
     this.username = username;
     this.password = password;
@@ -289,11 +289,11 @@ public class User implements Serializable {
     this.phoneCarrier = phoneCarrier;
   }
   
-  public Integer getGoogleId() {
+  public String getGoogleId() {
     return googleId;
   }
 
-  public void setGoogleId(Integer googleId) {
+  public void setGoogleId(String googleId) {
     this.googleId = googleId;
   }
 
