@@ -1,7 +1,3 @@
-/*
- * Created by Osman Balci on 2018.06.26
- * Copyright © 2018 Osman Balci. All rights reserved.
- */
 package edu.vt.controllers;
 
 import edu.vt.globals.Methods;
@@ -17,21 +13,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-/* 
- The @Named class annotation designates the bean object created by this class 
- as a Contexts and Dependency Injection (CDI) managed bean. The object reference
- of a CDI-managed bean can be @Inject'ed in another CDI-Managed bean so that
- the other CDI-managed bean can access the methods and properties of this bean.
-
- Using the Expression Language (EL) in a JSF XHTML page, you can invoke a CDI-managed
- bean's method or set/get its property by using the logical name given with the 'value'
- parameter of the @Named annotation, e.g., #{emailController.methodName() or property name}
- */
 @Named(value = "emailController")
-/* 
- The @RequestScoped annotation indicates that the user’s interaction with
- this CDI-managed bean will be active only in a single HTTP request.
- */
 @RequestScoped
 
 public class EmailController {
@@ -58,22 +40,6 @@ public class EmailController {
     Session emailSession;               // javax.mail.Session
     MimeMessage htmlEmailMessage;       // javax.mail.internet.MimeMessage
 
-    /*
-    ************************************************************************************************
-    The import javax.inject.Inject; brings in the javax.inject package into our project. 
-    "This package specifies a means for obtaining objects in such a way as to maximize 
-    reusability, testability and maintainability compared to traditional approaches such as
-    constructors, factories, and service locators (e.g., JNDI). This process, known as 
-    dependency injection, is beneficial to most nontrivial applications." [Oracle] 
-    
-    The @Inject annotation of the instance variable "private EditorController editorController;" 
-    directs the CDI Container Manager to store the object reference of the EditorController class
-    bean object, after it is instantiated at runtime, into the instance variable "editorController".
-
-    With this injection, the instance variables and instance methods of the EditorController
-    class can be accessed in this CDI-managed bean.
-    ************************************************************************************************
-     */
     @Inject
     private EditorController editorController;
 

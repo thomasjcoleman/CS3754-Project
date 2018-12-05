@@ -1,13 +1,3 @@
-/*
- ******************************************************************************
- * Created by CrackStation.net on 2017.08.01
- * Copyright © 2017 CrackStation.net. Free reuse with citation of source.
- * Website: https://crackstation.net/hashing-security.htm
- * Code Downloaded From: 
- * https://github.com/defuse/password-hashing/blob/master/PasswordStorage.java
- * Documentation by Osman Balci on 2018-04-30
- ******************************************************************************
- */
 package edu.vt.globals;
 
 import java.security.SecureRandom;
@@ -17,15 +7,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import javax.xml.bind.DatatypeConverter;
 
-/*
-=======================================================================
-|   This class implements Salting and Hashing a Password for secure   |
-|   storage and retrieval with Key Stretching using the algorithm     |
-|   called Password-Based Key Derivation Function 2 (PBKDF2) with     |
-|   Hash-based Message Authentication Code (HMAC)                     |
-|   Secure Hash Algorithm 1 (SHA-1): "PBKDF2WithHmacSHA1"             |
-=======================================================================
- */
 public class Password {
 
     // @SuppressWarnings("serial") suppresses serialVersionUID warning messages

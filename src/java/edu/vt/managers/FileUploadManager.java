@@ -36,31 +36,10 @@ public class FileUploadManager implements Serializable {
     ===============================
    */
   private UploadedFile uploadedFile;
-
-  /*
-    The instance variable 'userFacade' is annotated with the @EJB annotation.
-    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
-    of the UserFacade object, after it is instantiated at runtime, into the instance variable 'userFacade'.
-   */
   @EJB
   private UserFacade userFacade;
-
-  /*
-    The instance variable 'userFileFacade' is annotated with the @EJB annotation.
-    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference 
-    of the UserFileFacade object, after it is instantiated at runtime, into the instance variable 'userFileFacade'.
-   */
   @EJB
   private UserFileFacade userFileFacade;
-
-  /*
-    The instance variable 'userFileController' is annotated with the @Inject annotation.
-    The @Inject annotation directs the JavaServer Faces (JSF) CDI Container to inject (store) the object reference 
-    of the UserFileController object, after it is instantiated at runtime, into the instance variable 'userFileController'.
-    
-    We can do this because we annotated the UserFileController class with @Named to indicate
-    that the CDI container will manage the objects instantiated from the UserFileController class.
-   */
   @Inject
   private UserFileController userFileController;
 
@@ -114,51 +93,21 @@ public class FileUploadManager implements Serializable {
 
       User user = getUserFacade().findByUsername(user_name);
 
-      /*
-            To associate the file to the user, record "userId_filename" in the database.
-            Since each file has its own primary key (unique id), the user can upload
-            multiple files with the same name.
-       */
+      // Get the string to use as the file name.
       String userId_filename = user.getId() + "_" + tripId + "_" + event.getFile().getFileName();
-
-      /*
-            "The try-with-resources statement is a try statement that declares one or more resources. 
-            A resource is an object that must be closed after the program is finished with it. 
-            The try-with-resources statement ensures that each resource is closed at the end of the
-            statement." [Oracle] 
-       */
       try (InputStream inputStream = event.getFile().getInputstream();) {
         inputStreamToFile(inputStream, userId_filename);
         inputStream.close();
       }
 
-      /*
-            Create a new UserFile object with attibutes: (See UserFile table definition inputStream DB)
-                <> id = auto generated as the unique Primary key for the user file object
-                <> filename = userId_filename
-                <> user_id = user
-       */
       UserFile newUserFile = new UserFile(userId_filename, user, tripId);
 
-      /*
-            ==============================================================
-            If the userId_filename was used before, delete the earlier file.
-            ==============================================================
-       */
+      // If the filename has been used before, replace it.
       List<UserFile> filesFound = getUserFileFacade().findByFilename(userId_filename);
-
-      /*
-            If the userId_filename already exists in the database, 
-            the filesFound List will not be empty.
-       */
       if (!filesFound.isEmpty()) {
-
-        // Remove the file with the same name from the database
         getUserFileFacade().remove(filesFound.get(0));
       }
 
-      //---------------------------------------------------------------
-      //
       // Create the new UserFile entity (row) in the database
       getUserFileFacade().create(newUserFile);
 
@@ -199,8 +148,6 @@ public class FileUploadManager implements Serializable {
    * @throws java.io.IOException
    */
   public void copyFile(UploadedFile file) throws IOException {
-
-    // This sets the necessary flag to ensure the messages are preserved.
     FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
     try {
@@ -209,19 +156,8 @@ public class FileUploadManager implements Serializable {
 
       User user = getUserFacade().findByUsername(user_name);
 
-      /*
-            To associate the file to the user, record "userId_filename" in the database.
-            Since each file has its own primary key (unique id), the user can upload
-            multiple files with the same name.
-       */
+      // Form the file string
       String userId_filename = user.getId() + "_"  + tripId + "_" + file.getFileName();
-
-      /*
-            "The try-with-resources statement is a try statement that declares one or more resources. 
-            A resource is an object that must be closed after the program is finished with it. 
-            The try-with-resources statement ensures that each resource is closed at the end of the
-            statement." [Oracle] 
-       */
       try (InputStream inputStream = file.getInputstream();) {
         inputStreamToFile(inputStream, userId_filename);
         inputStream.close();

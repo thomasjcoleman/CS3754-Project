@@ -24,15 +24,6 @@ public class FileDownloadManager implements Serializable {
     ===============================
      */
 
-    /*
-    Using the @Inject annotation, the compiler is directed to store the object reference of the
-    UserFileController CDI-managed bean into the instance variable userFileController at runtime.
-    With this injection, the instance variables and instance methods of the UserFileController
-    class can be accessed in this CDI-managed bean. The following imports are required for the injection:
-    
-        import com.mycompany.jsfclasses.UserFileController;
-        import javax.inject.Inject;
-     */
     @Inject
     private UserFileController userFileController;
 

@@ -28,13 +28,12 @@ public class TrailController implements Serializable {
   // API information
   private final String apiKey = "&key=200392046-9c791c4bdcbda3ac77e4fea595465cf7";
   private final String apiUrl = "https://www.hikingproject.com/data/";
-  
-  private String weatherAPIKey = "af5a8e96d48b2f143623831e3777c43a";
-  private String weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat=";
+
+  private final String weatherAPIKey = "af5a8e96d48b2f143623831e3777c43a";
+  private final String weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather";
 
   // Properties
   private String jsonResults;
-  private String jsonResultsWeather;
 
   private List<Trail> results;
   private Trail selected;
@@ -372,34 +371,36 @@ public class TrailController implements Serializable {
     searchDifficulty = null;
     searchRating = null;
   }
-         
-  private String formWeatherUrl(String lat, String lon)
-  {
-      String retVal = weatherAPIUrl;
-      retVal += lat;
-      retVal += "&lon=";
-      retVal += lon;
-      retVal += "&appid=";
-      retVal += weatherAPIKey;
-      return retVal;
-      
+
+  // Get the weather API call string for a given latitude/longitude.
+  private String formWeatherUrl(String lat, String lon) {
+    return weatherAPIUrl
+            + "?lat=" + lat
+            + "&lon=" + lon
+            + "&appid=" + weatherAPIKey;
+
   }
-  
-  public String getTemperature() throws Exception
-  {
+
+  // Get the temperature at the selected trail's latitude/longitude.
+  public String getTemperature() {
+    try {
       jsonResults = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       JSONObject weatherObject = jsonData.getJSONObject("main");
       String retVal = weatherObject.optString("temp", "");
       Double temp = Double.parseDouble(retVal);
       //convert K to F: (K − 273.15) × 9/5 + 32
-      temp = round((temp - 273.15) * (9/5) + 32, 1);
+      temp = round((temp - 273.15) * (9 / 5) + 32, 1);
       retVal = temp.toString();
       return retVal;
+    } catch (Exception ex) {
+      return "";
+    }
   }
-  
-  public String getWeatherConditions() throws Exception
-  {
+
+  // Fetch the weather at the selected trail's latitude/longitude
+  public String getWeatherConditions() {
+    try {
       jsonResults = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       JSONArray weatherArray = jsonData.getJSONArray("weather");
@@ -407,14 +408,10 @@ public class TrailController implements Serializable {
       String input = obj.optString("description", "");
       return input.substring(0, 1).toUpperCase() + input.substring(1);
   }
-  
-  private static double round (double value, int precision) {
+
+  private static double round(double value, int precision) {
     int scale = (int) Math.pow(10, precision);
     return (double) Math.round(value * scale) / scale;
-}
-  
-  
-  
-  
-          
+  }
+
 }

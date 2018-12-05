@@ -1,7 +1,3 @@
-/*
- * Created by Osman Balci on 2018.06.26
- * Copyright © 2018 Osman Balci. All rights reserved.
- */
 package edu.vt.validators;
 
 import javax.faces.application.FacesMessage;
@@ -11,14 +7,6 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-/*
-The @FacesValidator annotation on a class automatically registers the class with the runtime as a Validator. 
-The "emailAddressesValidator" attribute is the validator-id used in the JSF facelets page Email.xhtml within
-
-    <f:validator validatorId="emailAddressesValidator" />
-
-to invoke the "validate" method of the annotated class given below.                           
- */
 @FacesValidator("emailAddressesValidator")
 
 public class EmailAddressesValidator implements Validator {
