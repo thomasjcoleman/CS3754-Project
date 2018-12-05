@@ -23,12 +23,13 @@ Copyright © 2018 Matthew Croll. All rights reserved.
                 <h:form>
                     <p:panelGrid columns="2" styleClass="ui-noborder" columnClasses="panelGridColumn3, panelGridColumn3">
                         <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2">
-
+                            <!-- The inputText accepts the user's input which is supplied to loginmanager'passcode variable. -->
                             <h:outputLabel value="Enter 4 Digit Passcode:" for="passcode" />
                             <p:inputText id="passcode" value="#{loginManager.passcode}" required="true" class="inputTextFieldShort"
                                      requiredMessage="Please enter passcode" label="Passcode" >
                             </p:inputText>
                         </p:panelGrid>
+                        <!-- The submit button carries out loninManager's twoFactorLogin() method to login the user -->
                         <p:commandButton style="margin-bottom:10px" id="submit" value="Submit" action="#{loginManager.twoFactorLogin()}" 
                                         ajax="false" icon="fas fa-sign-in-alt"/>
                     </p:panelGrid>
@@ -37,6 +38,7 @@ Copyright © 2018 Matthew Croll. All rights reserved.
                     
                 </h:form>
                 <h:form>
+                <!-- The send code button calls loginManager's sendCode method to send the user a different code. -->
                 <p:commandButton id="redo" value="Send another Code" action="#{loginManager.sendCode()}" 
                                      ajax="false" icon="fas fa-redo" />
                 &nbsp;

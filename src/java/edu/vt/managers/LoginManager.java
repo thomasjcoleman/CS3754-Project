@@ -107,44 +107,67 @@ public class LoginManager implements Serializable {
                 return "";
             }
 
-            //pcode = Math.floor((Math.random() * 10000) + 1);
+            //Randomly generates a number from 1000-9000
             randomNumber = Math.floor(100000 + Math.random() * 900000);
             pcode = randomNumber.toString().substring(0, 4);
+            
+            //Creates a new TextMessageController object to send the code.
             TextMessageController send = new TextMessageController();
+            
+            //The new controller is supplied with the user's carrier, number, and passcode.
             send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
             send.setCellPhoneNumber(user.getPhoneNumber());
+            
+            //Here the text message controller sends the code.
             send.setMmsTextMessage(pcode);
             send.sendTextMessage();
-
+            
+            //Instead of initializing a session map and redirecting to the
+            //profile page, the user is redirected to the 2nd factor authentication
+            //to submit the passcode recieved in their text message.
             return "/TwoFactorSignIn.xhtml?faces-redirect=true";
         }
     }
     
+    //This function enables the use to resend a new passcode
     public void sendCode() throws AddressException, MessagingException {
+        //A user object is instantiated.
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
         
+        //A new random number is generated for the passcode and sent to the user.
         randomNumber = Math.floor(100000 + Math.random() * 900000);
         pcode = randomNumber.toString().substring(0, 4);
+        //As before we create a new TextMessageController object.
         TextMessageController send = new TextMessageController();
+        
         send.setCellPhoneCarrierDomain(user.getPhoneCarrier());
         send.setCellPhoneNumber(user.getPhoneNumber());
         send.setMmsTextMessage(pcode);
+        
         send.sendTextMessage();
     }
     
+    //This function checks the passcode entered by the user to login.
     public String twoFactorLogin() {
+        //A user object is instantiated.
         String enteredUsername = getUsername();
         User user = getUserFacade().findByUsername(enteredUsername);
-
+        
+        //The user's inputed passcode is checked against the actual generated code.
+        //A code bypass is also created for testing purposes.
         if (pcode.equals(passcode) || passcode.equals("1111")) {
             pcode = null;
+            //Once a match is achieved the user is logged in and recieves
+            //An information message.
             initializeSessionMap(user);
             Methods.preserveMessages();
             Methods.showMessage("Information", "Login Successful", "Welcome User!");
             return "/userAccount/Profile.xhtml?faces-redirect=true";
         }
-
+        
+        //An incorrect passcode results in the fatal error message implogin the
+        //user to try again.
         pcode = null;
         Methods.preserveMessages();
         Methods.showMessage("Fatal Error", "Invalid Code!", "Please try again!");
