@@ -384,8 +384,8 @@ public class TrailController implements Serializable {
   // Get the temperature at the selected trail's latitude/longitude.
   public String getTemperature() {
     try {
-      jsonResults = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
-      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
+      String json = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
+      JSONObject jsonData = (JSONObject) new JSONObject(json);
       JSONObject weatherObject = jsonData.getJSONObject("main");
       String retVal = weatherObject.optString("temp", "");
       Double temp = Double.parseDouble(retVal);
@@ -401,8 +401,8 @@ public class TrailController implements Serializable {
   // Fetch the weather at the selected trail's latitude/longitude
   public String getWeatherConditions() {
     try {
-      jsonResults = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
-      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
+      String json = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
+      JSONObject jsonData = (JSONObject) new JSONObject(json);
       JSONArray weatherArray = jsonData.getJSONArray("weather");
       JSONObject obj = weatherArray.getJSONObject(0);
       String input = obj.optString("description", "");
