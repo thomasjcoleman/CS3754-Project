@@ -407,6 +407,9 @@ public class TrailController implements Serializable {
       JSONObject obj = weatherArray.getJSONObject(0);
       String input = obj.optString("description", "");
       return input.substring(0, 1).toUpperCase() + input.substring(1);
+    } catch(Exception ex) {
+      return "";
+    }
   }
 
   private static double round(double value, int precision) {
