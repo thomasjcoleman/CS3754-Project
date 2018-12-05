@@ -28,9 +28,13 @@ public class TrailController implements Serializable {
   // API information
   private final String apiKey = "&key=200392046-9c791c4bdcbda3ac77e4fea595465cf7";
   private final String apiUrl = "https://www.hikingproject.com/data/";
+  
+  private String weatherAPIKey = "af5a8e96d48b2f143623831e3777c43a";
+  private String weatherAPIUrl = "https://api.openweathermap.org/data/2.5/weather?lat=";
 
   // Properties
   private String jsonResults;
+  private String jsonResultsWeather;
 
   private List<Trail> results;
   private Trail selected;
@@ -368,4 +372,48 @@ public class TrailController implements Serializable {
     searchDifficulty = null;
     searchRating = null;
   }
+         
+  private String formWeatherUrl(String lat, String lon)
+  {
+      String retVal = weatherAPIUrl;
+      retVal += lat;
+      retVal += "&lon=";
+      retVal += lon;
+      retVal += "&appid=";
+      retVal += weatherAPIKey;
+      return retVal;
+      
+  }
+  
+  public String getTemperature() throws Exception
+  {
+      jsonResults = readUrlContent(formWeatherUrl(latitudeQuery, longitudeQuery));
+      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
+      JSONObject weatherObject = jsonData.getJSONObject("main");
+      String retVal = weatherObject.optString("temp", "");
+      Double temp = Double.parseDouble(retVal);
+      //convert K to F: (K − 273.15) × 9/5 + 32
+      temp = round((temp - 273.15) * (9/5) + 32, 1);
+      retVal = temp.toString();
+      return retVal;
+  }
+  
+  public String getWeatherConditions() throws Exception
+  {
+      jsonResults = readUrlContent(formWeatherUrl(latitudeQuery, longitudeQuery));
+      JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
+      JSONArray weatherArray = jsonData.getJSONArray("weather");
+      JSONObject obj = weatherArray.getJSONObject(0);
+      return obj.optString("description", "");
+  }
+  
+  private static double round (double value, int precision) {
+    int scale = (int) Math.pow(10, precision);
+    return (double) Math.round(value * scale) / scale;
+}
+  
+  
+  
+  
+          
 }
