@@ -387,7 +387,7 @@ public class TrailController implements Serializable {
   
   public String getTemperature() throws Exception
   {
-      jsonResults = readUrlContent(formWeatherUrl(latitudeQuery, longitudeQuery));
+      jsonResults = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       JSONObject weatherObject = jsonData.getJSONObject("main");
       String retVal = weatherObject.optString("temp", "");
@@ -400,7 +400,7 @@ public class TrailController implements Serializable {
   
   public String getWeatherConditions() throws Exception
   {
-      jsonResults = readUrlContent(formWeatherUrl(latitudeQuery, longitudeQuery));
+      jsonResults = readUrlContent(formWeatherUrl(selected.getLatitude().toString(), selected.getLongitude().toString()));
       JSONObject jsonData = (JSONObject) new JSONObject(jsonResults);
       JSONArray weatherArray = jsonData.getJSONArray("weather");
       JSONObject obj = weatherArray.getJSONObject(0);
