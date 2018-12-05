@@ -119,7 +119,7 @@ public class FileUploadManager implements Serializable {
             Since each file has its own primary key (unique id), the user can upload
             multiple files with the same name.
        */
-      String userId_filename = user.getId() + "_" + event.getFile().getFileName();
+      String userId_filename = user.getId() + "_" + tripId + "_" + event.getFile().getFileName();
 
       /*
             "The try-with-resources statement is a try statement that declares one or more resources. 
@@ -214,7 +214,7 @@ public class FileUploadManager implements Serializable {
             Since each file has its own primary key (unique id), the user can upload
             multiple files with the same name.
        */
-      String userId_filename = user.getId() + "_" + file.getFileName();
+      String userId_filename = user.getId() + "_"  + tripId + "_" + file.getFileName();
 
       /*
             "The try-with-resources statement is a try statement that declares one or more resources. 

@@ -130,8 +130,8 @@ public class UserFileController implements Serializable {
 
       String storedFileName = userFile.getFilename();
 
-      // Remove the "userId_" (e.g., "4_") prefix in the stored filename
-      String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+      // Remove the "userId_tripId_" (e.g., "4_1_") prefix in the stored filename
+      String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_", storedFileName.indexOf("_") + 1) + 1);
 
       // Obtain the file database Primary Key id
       Integer fileId = userFile.getId();

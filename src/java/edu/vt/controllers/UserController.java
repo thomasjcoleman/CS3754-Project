@@ -528,7 +528,7 @@ public class UserController implements Serializable {
     Methods.preserveMessages();
     User user = getUserFacade().findByGoogleId(googleId);
     if (user == null) {
-      // need to create a new user.
+      // Need to create a new user; try to do so.
       try {
         user = new User();
 
@@ -551,11 +551,10 @@ public class UserController implements Serializable {
         String parts = Password.createHash(googleId);
         user.setPassword(parts);
 
-        // add the user to the database
+        // Add the user to the database
         getUserFacade().create(user);
-        Methods.showMessage("Information", "Success!", "User Account is Successfully Created!");
 
-        // now to try and get the profile image...
+        // Now to try and get the profile image...
         if (!googlePhoto.equals("")) {
           try {
             String ext = googlePhoto.substring(googlePhoto.lastIndexOf('.') + 1);
@@ -563,16 +562,15 @@ public class UserController implements Serializable {
             getUserPhotoFacade().create(newPhoto);
             UserPhoto inputPhoto = getUserPhotoFacade().findPhotosByUserPrimaryKey(user.getId()).get(0);
 
-            // read the URL into new file objects and save it
+            // Read the URL into new file objects and save it
             BufferedImage uploadedPhoto = ImageIO.read(new URL(googlePhoto));
             BufferedImage thumbnailPhoto = Scalr.resize(uploadedPhoto, Constants.THUMBNAIL_SIZE);
             File thumbnailPhotoFile = new File(Constants.PHOTOS_ABSOLUTE_PATH, inputPhoto.getThumbnailFileName());
             ImageIO.write(thumbnailPhoto, inputPhoto.getExtension(), thumbnailPhotoFile);
-
           } catch (IOException ex) {
           }
-
         }
+        Methods.showMessage("Information", "Success!", "User Account is Successfully Created!");
 
       } catch (EJBException | Password.CannotPerformOperationException ex) {
         username = "";
